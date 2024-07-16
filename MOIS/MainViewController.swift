@@ -15,7 +15,6 @@ class MainViewController: UIViewController {
     private lazy var pagingTabBar = PagingTabBar(categoryTitleList: categoryTitleList)
     private lazy var pagingView = PagingView(categoryTitleList: categoryTitleList, pagingTabBar: pagingTabBar)
     
-    let bleScanner = BLEScanner()
     let locationManager = LocationManager()
     
     var bleTimer: DispatchSourceTimer?
@@ -24,9 +23,9 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupLayout()
-        bleScanner.startScan()
+        BLEScanner.shared.startScan()
         startTimer()
+        setupLayout()
     }
     
     func startTimer() {
@@ -45,7 +44,7 @@ class MainViewController: UIViewController {
     }
     
     @objc func bleTimerUpdate() {
-        let BLE = bleScanner.getBLE()
+        let BLE = BLEScanner.shared.getBLE()
         
         for (key, value) in BLE.Info {
             let rssiValue = mean(of: value.RSSI)

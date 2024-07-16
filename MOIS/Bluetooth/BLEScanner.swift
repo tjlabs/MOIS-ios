@@ -6,13 +6,12 @@ enum TrimBleDataError: Error {
 }
 
 class BLEScanner: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
+    static let shared = BLEScanner()
     let TRIMMING_TIME: Int = 5*1000
     
     var BLE = BLEDevices(Info: [String: BLEInfo]())
-    
     var centralManager: CBCentralManager!
     var peripherals = [CBPeripheral]()
-    
     var discoveredPeripheral: CBPeripheral?
     private var discoveredPeripherals: [UUID: CBPeripheral] = [:]
     var readCharacteristic: CBCharacteristic?
