@@ -7,23 +7,51 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B37069282C465B3C00A49D77 /* PagingTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37069272C465B3C00A49D77 /* PagingTabBar.swift */; };
+		B370692A2C465B9D00A49D77 /* PagingTabBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37069292C465B9D00A49D77 /* PagingTabBarCell.swift */; };
+		B370692C2C465BFE00A49D77 /* PagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B370692B2C465BFE00A49D77 /* PagingView.swift */; };
+		B370692E2C465C1200A49D77 /* PagingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B370692D2C465C1200A49D77 /* PagingCollectionViewCell.swift */; };
 		B3C622A22C44A6F100371531 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622A12C44A6F100371531 /* AppDelegate.swift */; };
 		B3C622A42C44A6F100371531 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622A32C44A6F100371531 /* SceneDelegate.swift */; };
-		B3C622A62C44A6F100371531 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622A52C44A6F100371531 /* ViewController.swift */; };
+		B3C622A62C44A6F100371531 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622A52C44A6F100371531 /* MainViewController.swift */; };
 		B3C622A92C44A6F100371531 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = B3C622A82C44A6F100371531 /* Base */; };
 		B3C622AB2C44A6F400371531 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3C622AA2C44A6F400371531 /* Assets.xcassets */; };
 		B3C622AE2C44A6F400371531 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = B3C622AD2C44A6F400371531 /* Base */; };
+		B3C622BA2C44AF0700371531 /* TimeFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622B92C44AF0700371531 /* TimeFunctions.swift */; };
+		B3C622BD2C44AF9500371531 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622BC2C44AF9500371531 /* StringExtension.swift */; };
+		B3C622C12C44C76D00371531 /* DataExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622C02C44C76D00371531 /* DataExtension.swift */; };
+		B3C622C32C44E27200371531 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622C22C44E27200371531 /* LocationManager.swift */; };
+		B3C622C52C45037000371531 /* BLEScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622C42C45037000371531 /* BLEScanner.swift */; };
+		B3C622C82C4627EC00371531 /* BLEDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622C72C4627EC00371531 /* BLEDevice.swift */; };
+		B3C622CA2C46372C00371531 /* CompanyIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622C92C46372C00371531 /* CompanyIdentifier.swift */; };
+		B3C622CC2C464ECE00371531 /* MathFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622CB2C464ECE00371531 /* MathFunctions.swift */; };
+		DB3D5CAEDF062E1DFE763B9B /* Pods_MOIS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FF14A9EF8B2A887B772AD6 /* Pods_MOIS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B37069272C465B3C00A49D77 /* PagingTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingTabBar.swift; sourceTree = "<group>"; };
+		B37069292C465B9D00A49D77 /* PagingTabBarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingTabBarCell.swift; sourceTree = "<group>"; };
+		B370692B2C465BFE00A49D77 /* PagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingView.swift; sourceTree = "<group>"; };
+		B370692D2C465C1200A49D77 /* PagingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingCollectionViewCell.swift; sourceTree = "<group>"; };
 		B3C6229E2C44A6F100371531 /* MOIS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MOIS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3C622A12C44A6F100371531 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B3C622A32C44A6F100371531 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B3C622A52C44A6F100371531 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B3C622A52C44A6F100371531 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		B3C622A82C44A6F100371531 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B3C622AA2C44A6F400371531 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B3C622AD2C44A6F400371531 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B3C622AF2C44A6F400371531 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B3C622B92C44AF0700371531 /* TimeFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFunctions.swift; sourceTree = "<group>"; };
+		B3C622BC2C44AF9500371531 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		B3C622C02C44C76D00371531 /* DataExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataExtension.swift; sourceTree = "<group>"; };
+		B3C622C22C44E27200371531 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		B3C622C42C45037000371531 /* BLEScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEScanner.swift; sourceTree = "<group>"; };
+		B3C622C72C4627EC00371531 /* BLEDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEDevice.swift; sourceTree = "<group>"; };
+		B3C622C92C46372C00371531 /* CompanyIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyIdentifier.swift; sourceTree = "<group>"; };
+		B3C622CB2C464ECE00371531 /* MathFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathFunctions.swift; sourceTree = "<group>"; };
+		B73AA56AF692D3BE78997730 /* Pods-MOIS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOIS.release.xcconfig"; path = "Target Support Files/Pods-MOIS/Pods-MOIS.release.xcconfig"; sourceTree = "<group>"; };
+		D037876B38EA6B445A9189B3 /* Pods-MOIS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOIS.debug.xcconfig"; path = "Target Support Files/Pods-MOIS/Pods-MOIS.debug.xcconfig"; sourceTree = "<group>"; };
+		E5FF14A9EF8B2A887B772AD6 /* Pods_MOIS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MOIS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +59,47 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB3D5CAEDF062E1DFE763B9B /* Pods_MOIS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		930CE20E53D778275772034C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E5FF14A9EF8B2A887B772AD6 /* Pods_MOIS.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B37E9EFC2C4656C000A08F60 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				B3C622AA2C44A6F400371531 /* Assets.xcassets */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		B37E9EFD2C4657DB00A08F60 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B37069272C465B3C00A49D77 /* PagingTabBar.swift */,
+				B37069292C465B9D00A49D77 /* PagingTabBarCell.swift */,
+				B370692B2C465BFE00A49D77 /* PagingView.swift */,
+				B370692D2C465C1200A49D77 /* PagingCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		B3C622952C44A6F100371531 = {
 			isa = PBXGroup;
 			children = (
 				B3C622A02C44A6F100371531 /* MOIS */,
 				B3C6229F2C44A6F100371531 /* Products */,
+				D17185DF227BD88792AD3733 /* Pods */,
+				930CE20E53D778275772034C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,15 +114,65 @@
 		B3C622A02C44A6F100371531 /* MOIS */ = {
 			isa = PBXGroup;
 			children = (
+				B37E9EFD2C4657DB00A08F60 /* View */,
+				B37E9EFC2C4656C000A08F60 /* Assets */,
+				B3C622C62C46276900371531 /* Model */,
+				B3C622BB2C44AF8100371531 /* Extensions */,
+				B3C622B82C44AEF600371531 /* Utils */,
+				B3C622B52C44A85000371531 /* Bluetooth */,
 				B3C622A12C44A6F100371531 /* AppDelegate.swift */,
 				B3C622A32C44A6F100371531 /* SceneDelegate.swift */,
-				B3C622A52C44A6F100371531 /* ViewController.swift */,
+				B3C622A52C44A6F100371531 /* MainViewController.swift */,
 				B3C622A72C44A6F100371531 /* Main.storyboard */,
-				B3C622AA2C44A6F400371531 /* Assets.xcassets */,
 				B3C622AC2C44A6F400371531 /* LaunchScreen.storyboard */,
 				B3C622AF2C44A6F400371531 /* Info.plist */,
 			);
 			path = MOIS;
+			sourceTree = "<group>";
+		};
+		B3C622B52C44A85000371531 /* Bluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				B3C622C22C44E27200371531 /* LocationManager.swift */,
+				B3C622C42C45037000371531 /* BLEScanner.swift */,
+			);
+			path = Bluetooth;
+			sourceTree = "<group>";
+		};
+		B3C622B82C44AEF600371531 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				B3C622B92C44AF0700371531 /* TimeFunctions.swift */,
+				B3C622CB2C464ECE00371531 /* MathFunctions.swift */,
+			);
+			path = "\U0010Utils";
+			sourceTree = "<group>";
+		};
+		B3C622BB2C44AF8100371531 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B3C622BC2C44AF9500371531 /* StringExtension.swift */,
+				B3C622C02C44C76D00371531 /* DataExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		B3C622C62C46276900371531 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B3C622C72C4627EC00371531 /* BLEDevice.swift */,
+				B3C622C92C46372C00371531 /* CompanyIdentifier.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D17185DF227BD88792AD3733 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D037876B38EA6B445A9189B3 /* Pods-MOIS.debug.xcconfig */,
+				B73AA56AF692D3BE78997730 /* Pods-MOIS.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +182,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B3C622B22C44A6F400371531 /* Build configuration list for PBXNativeTarget "MOIS" */;
 			buildPhases = (
+				4920525CAD5B931E98D05C10 /* [CP] Check Pods Manifest.lock */,
 				B3C6229A2C44A6F100371531 /* Sources */,
 				B3C6229B2C44A6F100371531 /* Frameworks */,
 				B3C6229C2C44A6F100371531 /* Resources */,
+				5800427155E75F0311FD3DC7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -133,14 +243,68 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4920525CAD5B931E98D05C10 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MOIS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5800427155E75F0311FD3DC7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MOIS/Pods-MOIS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MOIS/Pods-MOIS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MOIS/Pods-MOIS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		B3C6229A2C44A6F100371531 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3C622A62C44A6F100371531 /* ViewController.swift in Sources */,
+				B3C622A62C44A6F100371531 /* MainViewController.swift in Sources */,
+				B3C622C52C45037000371531 /* BLEScanner.swift in Sources */,
 				B3C622A22C44A6F100371531 /* AppDelegate.swift in Sources */,
+				B370692C2C465BFE00A49D77 /* PagingView.swift in Sources */,
+				B3C622CA2C46372C00371531 /* CompanyIdentifier.swift in Sources */,
+				B3C622BD2C44AF9500371531 /* StringExtension.swift in Sources */,
+				B370692E2C465C1200A49D77 /* PagingCollectionViewCell.swift in Sources */,
+				B370692A2C465B9D00A49D77 /* PagingTabBarCell.swift in Sources */,
+				B3C622BA2C44AF0700371531 /* TimeFunctions.swift in Sources */,
+				B3C622CC2C464ECE00371531 /* MathFunctions.swift in Sources */,
+				B3C622C12C44C76D00371531 /* DataExtension.swift in Sources */,
+				B37069282C465B3C00A49D77 /* PagingTabBar.swift in Sources */,
+				B3C622C82C4627EC00371531 /* BLEDevice.swift in Sources */,
 				B3C622A42C44A6F100371531 /* SceneDelegate.swift in Sources */,
+				B3C622C32C44E27200371531 /* LocationManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,7 +367,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -218,7 +382,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -266,7 +430,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -275,7 +439,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -287,6 +451,7 @@
 		};
 		B3C622B32C44A6F400371531 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D037876B38EA6B445A9189B3 /* Pods-MOIS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -295,11 +460,18 @@
 				DEVELOPMENT_TEAM = G75UAV755N;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MOIS/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "TJLABS는 블루투스 신호를 이용하여 사용자에게 위치 정보를 제공하므로, 블루투스 관련 권한 허용이 필요합니다.";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "TJLABS는 블루투스 신호를 이용하여 사용자에게 위치 정보를 제공하므로, 블루투스 관련 권한 허용이 필요합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "TJLABS에서 제공하는 실내 위치 정보를 제공받기 위해서는 위치 권한이 필요합니다.";
+				INFOPLIST_KEY_NSMotionUsageDescription = "Allow my app to access motion usage.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = "accelerometer gyroscope magnetometer bluetooth-le";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -307,14 +479,19 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tjlabscorp.ios.mois.MOIS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		B3C622B42C44A6F400371531 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B73AA56AF692D3BE78997730 /* Pods-MOIS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -323,11 +500,18 @@
 				DEVELOPMENT_TEAM = G75UAV755N;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MOIS/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "TJLABS는 블루투스 신호를 이용하여 사용자에게 위치 정보를 제공하므로, 블루투스 관련 권한 허용이 필요합니다.";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "TJLABS는 블루투스 신호를 이용하여 사용자에게 위치 정보를 제공하므로, 블루투스 관련 권한 허용이 필요합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "TJLABS에서 제공하는 실내 위치 정보를 제공받기 위해서는 위치 권한이 필요합니다.";
+				INFOPLIST_KEY_NSMotionUsageDescription = "Allow my app to access motion usage.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = "accelerometer gyroscope magnetometer bluetooth-le";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -335,9 +519,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tjlabscorp.ios.mois.MOIS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
