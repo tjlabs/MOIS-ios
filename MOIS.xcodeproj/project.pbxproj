@@ -11,6 +11,7 @@
 		B370692A2C465B9D00A49D77 /* PagingTabBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37069292C465B9D00A49D77 /* PagingTabBarCell.swift */; };
 		B370692C2C465BFE00A49D77 /* PagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B370692B2C465BFE00A49D77 /* PagingView.swift */; };
 		B370692E2C465C1200A49D77 /* PagingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B370692D2C465C1200A49D77 /* PagingCollectionViewCell.swift */; };
+		B37069302C46662800A49D77 /* ScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B370692F2C46662800A49D77 /* ScanView.swift */; };
 		B3C622A22C44A6F100371531 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622A12C44A6F100371531 /* AppDelegate.swift */; };
 		B3C622A42C44A6F100371531 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622A32C44A6F100371531 /* SceneDelegate.swift */; };
 		B3C622A62C44A6F100371531 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622A52C44A6F100371531 /* MainViewController.swift */; };
@@ -33,6 +34,7 @@
 		B37069292C465B9D00A49D77 /* PagingTabBarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingTabBarCell.swift; sourceTree = "<group>"; };
 		B370692B2C465BFE00A49D77 /* PagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingView.swift; sourceTree = "<group>"; };
 		B370692D2C465C1200A49D77 /* PagingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingCollectionViewCell.swift; sourceTree = "<group>"; };
+		B370692F2C46662800A49D77 /* ScanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanView.swift; sourceTree = "<group>"; };
 		B3C6229E2C44A6F100371531 /* MOIS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MOIS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3C622A12C44A6F100371531 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B3C622A32C44A6F100371531 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 				B37069292C465B9D00A49D77 /* PagingTabBarCell.swift */,
 				B370692B2C465BFE00A49D77 /* PagingView.swift */,
 				B370692D2C465C1200A49D77 /* PagingCollectionViewCell.swift */,
+				B370692F2C46662800A49D77 /* ScanView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -299,6 +302,7 @@
 				B370692E2C465C1200A49D77 /* PagingCollectionViewCell.swift in Sources */,
 				B370692A2C465B9D00A49D77 /* PagingTabBarCell.swift in Sources */,
 				B3C622BA2C44AF0700371531 /* TimeFunctions.swift in Sources */,
+				B37069302C46662800A49D77 /* ScanView.swift in Sources */,
 				B3C622CC2C464ECE00371531 /* MathFunctions.swift in Sources */,
 				B3C622C12C44C76D00371531 /* DataExtension.swift in Sources */,
 				B37069282C465B3C00A49D77 /* PagingTabBar.swift in Sources */,

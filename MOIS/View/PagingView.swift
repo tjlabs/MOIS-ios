@@ -62,7 +62,21 @@ extension PagingView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PagingCollectionViewCell.identifier, for: indexPath) as? PagingCollectionViewCell else { return UICollectionViewCell() }
-        cell.setupView(title: categoryTitleList[indexPath.row])
+        
+        let categoryName = categoryTitleList[indexPath.row]
+        let customView: UIView
+        
+        switch categoryName {
+        case "Scan":
+            customView = ScanView()
+            cell.contentView.addSubview(customView)
+                customView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+        default:
+            cell.setupView(title: categoryTitleList[indexPath.row])
+        }
+        
         return cell
     }
 }
