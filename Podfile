@@ -7,4 +7,6 @@ target 'MOIS' do
 
   # Pods for MOIS
   pod 'SnapKit' 
+  pod 'RxSwift', '~> 6.5.0'
+  pod 'RxCocoa', '~> 6.5.0'
 end
