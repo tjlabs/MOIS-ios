@@ -5,8 +5,8 @@ enum TrimBleDataError: Error {
     case noValidData
 }
 
-class BLEScanner: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
-    static let shared = BLEScanner()
+class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
+    static let shared = BLEManager()
     let TRIMMING_TIME: Int = 5*1000
     
     var BLE = BLEDevices(Info: [String: BLEInfo]())
@@ -55,7 +55,6 @@ class BLEScanner: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         
         if bluetoothReady {
             self.centralManager.scanForPeripherals(withServices: nil, options: [CBCentralManagerScanOptionAllowDuplicatesKey: NSNumber(value: true)])
-//            self.centralManager.scanForPeripherals(withServices: nil, options: nil)
             self.isScanning = true
             print(getLocalTimeString() + " , (BLE Scan) : Started scanning for BLE devices")
         }
@@ -73,35 +72,6 @@ class BLEScanner: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             discoveredPeripherals[peripheral.identifier] = peripheral
         }
         parseScannedData(peripheral: peripheral, advertisementData: advertisementData, rssi: RSSI)
-//        let localName = advertisementData[CBAdvertisementDataLocalNameKey] as? String
-//        let deviceName = localName ?? peripheral.name ?? "Unnamed"
-//        if deviceName == "Unnamed" {
-//            peripheral.delegate = self
-//            centralManager.connect(peripheral, options: nil)
-//        }
-//        
-//        print(getLocalTimeString() + " , (BLE Scan) : uuidString = \(peripheral.identifier.uuidString) // name = \(deviceName) // RSSI = \(RSSI)")
-//        
-//        if let manufacturer = advertisementData[CBAdvertisementDataManufacturerDataKey] as? Data {
-//            print(getLocalTimeString() + " , (BLE Scan) : manufacturer = \(manufacturer.dataToHexString)")
-//        }
-//        
-//        if let serviceUUIDs = advertisementData[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID] {
-//            for uuid in serviceUUIDs {
-//                print(getLocalTimeString() + " , (BLE Scan) : Service UUID = \(uuid.uuidString)")
-//            }
-//        }
-//        if let serviceData = advertisementData[CBAdvertisementDataServiceDataKey] {
-//            print(getLocalTimeString() + " , (BLE Scan) : serviceData = \(serviceData)")
-//        }
-//        if let localName = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
-//            print(getLocalTimeString() + " , (BLE Scan) : localName = \(localName)")
-//        }
-//        if let solicitedServiceUUIDs = advertisementData[CBAdvertisementDataSolicitedServiceUUIDsKey] {
-//            print(getLocalTimeString() + " , (BLE Scan) : solicitedServiceUUIDs = \(solicitedServiceUUIDs)")
-//        }
-//        print(getLocalTimeString() + " , (BLE Scan) : -------------------------------------------------")
-        
     }
     
     func peripheralDidUpdateName(_ peripheral: CBPeripheral) {
@@ -245,30 +215,6 @@ class BLEScanner: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                 companyName = convertedManufacturer
             }
         }
-        
-        // 1. Check Manufacturer
-//        let convertedManufacturer = convertManufacturer(manufacturer: manufacturer)
-//        if convertedManufacturer == "Unknown" {
-//            // 2. Check Service UUID
-//            let convertedService = convertService(serviceUUID: serviceUUID)
-//            if convertedService == "Unknown" {
-//                let appleKeywords = ["Apple", "iPhone", "Mac", "Airpod"]
-//                
-//                if deviceName.contains("TJ-") {
-//                    companyName = "TJLABS Corp."
-//                } else if appleKeywords.contains(where: deviceName.contains) {
-//                    companyName = "Apple, Inc."
-//                } else if deviceName.contains("Galaxy") {
-//                    companyName = "Samsung Electronics Co. Ltd."
-//                } else {
-//                    companyName = "Apple, Inc."
-//                }
-//            } else {
-//                companyName = convertedService
-//            }
-//        } else {
-//            companyName = convertedManufacturer
-//        }
         return companyName
     }
     

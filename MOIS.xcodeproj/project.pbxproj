@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B30902AC2C476B390032A7E4 /* ScanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902AB2C476B390032A7E4 /* ScanViewModel.swift */; };
+		B30902AE2C476CFC0032A7E4 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902AD2C476CFC0032A7E4 /* Protocols.swift */; };
+		B30902B42C477C190032A7E4 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902B32C477C190032A7E4 /* LoginRequest.swift */; };
+		B30902B62C477C2E0032A7E4 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902B52C477C2E0032A7E4 /* LoginViewModel.swift */; };
+		B30902BA2C477D710032A7E4 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902B92C477D710032A7E4 /* LoginView.swift */; };
+		B30902BC2C477EBD0032A7E4 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902BB2C477EBD0032A7E4 /* UIViewExtension.swift */; };
+		B30902BE2C4782810032A7E4 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902BD2C4782810032A7E4 /* FilterView.swift */; };
+		B30902C02C4783970032A7E4 /* FilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902BF2C4783970032A7E4 /* FilterCollectionViewCell.swift */; };
+		B30902C22C47851E0032A7E4 /* FilterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902C12C47851E0032A7E4 /* FilterModel.swift */; };
+		B30902C42C479E8D0032A7E4 /* DeviceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902C32C479E8D0032A7E4 /* DeviceInfoView.swift */; };
 		B37069282C465B3C00A49D77 /* PagingTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37069272C465B3C00A49D77 /* PagingTabBar.swift */; };
 		B370692A2C465B9D00A49D77 /* PagingTabBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37069292C465B9D00A49D77 /* PagingTabBarCell.swift */; };
 		B370692C2C465BFE00A49D77 /* PagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B370692B2C465BFE00A49D77 /* PagingView.swift */; };
@@ -22,7 +32,7 @@
 		B3C622BD2C44AF9500371531 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622BC2C44AF9500371531 /* StringExtension.swift */; };
 		B3C622C12C44C76D00371531 /* DataExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622C02C44C76D00371531 /* DataExtension.swift */; };
 		B3C622C32C44E27200371531 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622C22C44E27200371531 /* LocationManager.swift */; };
-		B3C622C52C45037000371531 /* BLEScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622C42C45037000371531 /* BLEScanner.swift */; };
+		B3C622C52C45037000371531 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622C42C45037000371531 /* BLEManager.swift */; };
 		B3C622C82C4627EC00371531 /* BLEDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622C72C4627EC00371531 /* BLEDevice.swift */; };
 		B3C622CA2C46372C00371531 /* CompanyIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622C92C46372C00371531 /* CompanyIdentifier.swift */; };
 		B3C622CC2C464ECE00371531 /* MathFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622CB2C464ECE00371531 /* MathFunctions.swift */; };
@@ -30,6 +40,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B30902AB2C476B390032A7E4 /* ScanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanViewModel.swift; sourceTree = "<group>"; };
+		B30902AD2C476CFC0032A7E4 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		B30902B32C477C190032A7E4 /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
+		B30902B52C477C2E0032A7E4 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		B30902B92C477D710032A7E4 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		B30902BB2C477EBD0032A7E4 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		B30902BD2C4782810032A7E4 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
+		B30902BF2C4783970032A7E4 /* FilterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCollectionViewCell.swift; sourceTree = "<group>"; };
+		B30902C12C47851E0032A7E4 /* FilterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterModel.swift; sourceTree = "<group>"; };
+		B30902C32C479E8D0032A7E4 /* DeviceInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfoView.swift; sourceTree = "<group>"; };
 		B37069272C465B3C00A49D77 /* PagingTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingTabBar.swift; sourceTree = "<group>"; };
 		B37069292C465B9D00A49D77 /* PagingTabBarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingTabBarCell.swift; sourceTree = "<group>"; };
 		B370692B2C465BFE00A49D77 /* PagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingView.swift; sourceTree = "<group>"; };
@@ -47,7 +67,7 @@
 		B3C622BC2C44AF9500371531 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		B3C622C02C44C76D00371531 /* DataExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataExtension.swift; sourceTree = "<group>"; };
 		B3C622C22C44E27200371531 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-		B3C622C42C45037000371531 /* BLEScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEScanner.swift; sourceTree = "<group>"; };
+		B3C622C42C45037000371531 /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
 		B3C622C72C4627EC00371531 /* BLEDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEDevice.swift; sourceTree = "<group>"; };
 		B3C622C92C46372C00371531 /* CompanyIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyIdentifier.swift; sourceTree = "<group>"; };
 		B3C622CB2C464ECE00371531 /* MathFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathFunctions.swift; sourceTree = "<group>"; };
@@ -76,6 +96,76 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B30902A62C4765850032A7E4 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				B37E9EFD2C4657DB00A08F60 /* View */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		B30902A82C4765BC0032A7E4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B30902AB2C476B390032A7E4 /* ScanViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B30902A92C47661B0032A7E4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B370692F2C46662800A49D77 /* ScanView.swift */,
+				B30902BD2C4782810032A7E4 /* FilterView.swift */,
+				B30902BF2C4783970032A7E4 /* FilterCollectionViewCell.swift */,
+				B30902C32C479E8D0032A7E4 /* DeviceInfoView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		B30902AA2C476ADF0032A7E4 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				B3C622C22C44E27200371531 /* LocationManager.swift */,
+				B3C622C42C45037000371531 /* BLEManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		B30902AF2C477BE30032A7E4 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				B30902B22C477BFF0032A7E4 /* View */,
+				B30902B12C477BFA0032A7E4 /* ViewModel */,
+				B30902B02C477BF30032A7E4 /* Model */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		B30902B02C477BF30032A7E4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B30902B32C477C190032A7E4 /* LoginRequest.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B30902B12C477BFA0032A7E4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B30902B52C477C2E0032A7E4 /* LoginViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B30902B22C477BFF0032A7E4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B30902B92C477D710032A7E4 /* LoginView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		B37E9EFC2C4656C000A08F60 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -91,7 +181,7 @@
 				B37069292C465B9D00A49D77 /* PagingTabBarCell.swift */,
 				B370692B2C465BFE00A49D77 /* PagingView.swift */,
 				B370692D2C465C1200A49D77 /* PagingCollectionViewCell.swift */,
-				B370692F2C46662800A49D77 /* ScanView.swift */,
+				B3C622A52C44A6F100371531 /* MainViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -117,15 +207,15 @@
 		B3C622A02C44A6F100371531 /* MOIS */ = {
 			isa = PBXGroup;
 			children = (
-				B37E9EFD2C4657DB00A08F60 /* View */,
+				B30902AF2C477BE30032A7E4 /* Login */,
+				B30902A62C4765850032A7E4 /* Main */,
 				B37E9EFC2C4656C000A08F60 /* Assets */,
-				B3C622C62C46276900371531 /* Model */,
 				B3C622BB2C44AF8100371531 /* Extensions */,
 				B3C622B82C44AEF600371531 /* Utils */,
-				B3C622B52C44A85000371531 /* Bluetooth */,
-				B3C622A12C44A6F100371531 /* AppDelegate.swift */,
+				B3C622B52C44A85000371531 /* Scan */,
+				B30902AA2C476ADF0032A7E4 /* Manager */,
 				B3C622A32C44A6F100371531 /* SceneDelegate.swift */,
-				B3C622A52C44A6F100371531 /* MainViewController.swift */,
+				B3C622A12C44A6F100371531 /* AppDelegate.swift */,
 				B3C622A72C44A6F100371531 /* Main.storyboard */,
 				B3C622AC2C44A6F400371531 /* LaunchScreen.storyboard */,
 				B3C622AF2C44A6F400371531 /* Info.plist */,
@@ -133,13 +223,14 @@
 			path = MOIS;
 			sourceTree = "<group>";
 		};
-		B3C622B52C44A85000371531 /* Bluetooth */ = {
+		B3C622B52C44A85000371531 /* Scan */ = {
 			isa = PBXGroup;
 			children = (
-				B3C622C22C44E27200371531 /* LocationManager.swift */,
-				B3C622C42C45037000371531 /* BLEScanner.swift */,
+				B30902A92C47661B0032A7E4 /* View */,
+				B3C622C62C46276900371531 /* Model */,
+				B30902A82C4765BC0032A7E4 /* ViewModel */,
 			);
-			path = Bluetooth;
+			path = Scan;
 			sourceTree = "<group>";
 		};
 		B3C622B82C44AEF600371531 /* Utils */ = {
@@ -147,6 +238,7 @@
 			children = (
 				B3C622B92C44AF0700371531 /* TimeFunctions.swift */,
 				B3C622CB2C464ECE00371531 /* MathFunctions.swift */,
+				B30902AD2C476CFC0032A7E4 /* Protocols.swift */,
 			);
 			path = "\U0010Utils";
 			sourceTree = "<group>";
@@ -156,6 +248,7 @@
 			children = (
 				B3C622BC2C44AF9500371531 /* StringExtension.swift */,
 				B3C622C02C44C76D00371531 /* DataExtension.swift */,
+				B30902BB2C477EBD0032A7E4 /* UIViewExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -165,6 +258,7 @@
 			children = (
 				B3C622C72C4627EC00371531 /* BLEDevice.swift */,
 				B3C622C92C46372C00371531 /* CompanyIdentifier.swift */,
+				B30902C12C47851E0032A7E4 /* FilterModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -293,11 +387,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B30902AC2C476B390032A7E4 /* ScanViewModel.swift in Sources */,
 				B3C622A62C44A6F100371531 /* MainViewController.swift in Sources */,
-				B3C622C52C45037000371531 /* BLEScanner.swift in Sources */,
+				B30902C42C479E8D0032A7E4 /* DeviceInfoView.swift in Sources */,
+				B30902BC2C477EBD0032A7E4 /* UIViewExtension.swift in Sources */,
+				B30902B42C477C190032A7E4 /* LoginRequest.swift in Sources */,
+				B3C622C52C45037000371531 /* BLEManager.swift in Sources */,
+				B30902AE2C476CFC0032A7E4 /* Protocols.swift in Sources */,
+				B30902BE2C4782810032A7E4 /* FilterView.swift in Sources */,
 				B3C622A22C44A6F100371531 /* AppDelegate.swift in Sources */,
 				B370692C2C465BFE00A49D77 /* PagingView.swift in Sources */,
 				B3C622CA2C46372C00371531 /* CompanyIdentifier.swift in Sources */,
+				B30902BA2C477D710032A7E4 /* LoginView.swift in Sources */,
+				B30902B62C477C2E0032A7E4 /* LoginViewModel.swift in Sources */,
 				B3C622BD2C44AF9500371531 /* StringExtension.swift in Sources */,
 				B370692E2C465C1200A49D77 /* PagingCollectionViewCell.swift in Sources */,
 				B370692A2C465B9D00A49D77 /* PagingTabBarCell.swift in Sources */,
@@ -306,7 +408,9 @@
 				B3C622CC2C464ECE00371531 /* MathFunctions.swift in Sources */,
 				B3C622C12C44C76D00371531 /* DataExtension.swift in Sources */,
 				B37069282C465B3C00A49D77 /* PagingTabBar.swift in Sources */,
+				B30902C22C47851E0032A7E4 /* FilterModel.swift in Sources */,
 				B3C622C82C4627EC00371531 /* BLEDevice.swift in Sources */,
+				B30902C02C4783970032A7E4 /* FilterCollectionViewCell.swift in Sources */,
 				B3C622A42C44A6F100371531 /* SceneDelegate.swift in Sources */,
 				B3C622C32C44E27200371531 /* LocationManager.swift in Sources */,
 			);

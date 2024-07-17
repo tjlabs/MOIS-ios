@@ -73,6 +73,12 @@ extension PagingView: UICollectionViewDataSource {
                 customView.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
+        case "Flow":
+            customView = LoginView()
+            cell.contentView.addSubview(customView)
+                customView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
         default:
             cell.setupView(title: categoryTitleList[indexPath.row])
         }

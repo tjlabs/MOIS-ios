@@ -15,7 +15,7 @@ class PagingTabBar: UIView {
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal // scrollDirection의 기본값은 .vertical이다
+        layout.scrollDirection = .horizontal
         
         let inset: CGFloat = 16.0
         layout.itemSize = CGSize(width: (UIScreen.main.bounds.width - inset*2.0)/CGFloat(categoryTitleList.count), height: cellHeight)
@@ -58,9 +58,7 @@ extension PagingTabBar: UICollectionViewDataSource {
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PagingTabBarCell.identifier, for: indexPath) as? PagingTabBarCell else { return UICollectionViewCell() }
-        
         cell.setupView(title: categoryTitleList[indexPath.row])
-        
         return cell
     }
 }

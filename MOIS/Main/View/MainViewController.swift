@@ -1,4 +1,5 @@
 import UIKit
+import SnapKit
 
 class MainViewController: UIViewController {
     private let categoryTitleList = [ "Scan", "Flow", "Knock" ]
@@ -15,43 +16,43 @@ class MainViewController: UIViewController {
     private lazy var pagingTabBar = PagingTabBar(categoryTitleList: categoryTitleList)
     private lazy var pagingView = PagingView(categoryTitleList: categoryTitleList, pagingTabBar: pagingTabBar)
     
-    let locationManager = LocationManager()
+//    let locationManager = LocationManager()
     
-    var bleTimer: DispatchSourceTimer?
-    let BLE_TIMER_INTERVAL: TimeInterval = 5
+//    var bleTimer: DispatchSourceTimer?
+//    let BLE_TIMER_INTERVAL: TimeInterval = 5
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        BLEScanner.shared.startScan()
-        startTimer()
+//        BLEScanner.shared.startScan()
+//        startTimer()
         setupLayout()
     }
     
-    func startTimer() {
-        if (self.bleTimer == nil) {
-            let queueBLE = DispatchQueue(label: Bundle.main.bundleIdentifier! + ".bleTimer")
-            self.bleTimer = DispatchSource.makeTimerSource(queue: queueBLE)
-            self.bleTimer!.schedule(deadline: .now(), repeating: BLE_TIMER_INTERVAL)
-            self.bleTimer!.setEventHandler(handler: self.bleTimerUpdate)
-            self.bleTimer!.resume()
-        }
-    }
-    
-    func stopTimer() {
-        self.bleTimer?.cancel()
-        self.bleTimer = nil
-    }
-    
-    @objc func bleTimerUpdate() {
-        let BLE = BLEScanner.shared.getBLE()
-        
-        for (key, value) in BLE.Info {
-            let rssiValue = mean(of: value.RSSI)
-            print(getLocalTimeString() + " , (BLE Scan) : UUID = \(key) // company = \(value.manufacturer) // RSSI = \(rssiValue)")
-        }
-        print(getLocalTimeString() + " , (BLE Scan) : --------------------------------")
-    }
+//    func startTimer() {
+//        if (self.bleTimer == nil) {
+//            let queueBLE = DispatchQueue(label: Bundle.main.bundleIdentifier! + ".bleTimer")
+//            self.bleTimer = DispatchSource.makeTimerSource(queue: queueBLE)
+//            self.bleTimer!.schedule(deadline: .now(), repeating: BLE_TIMER_INTERVAL)
+//            self.bleTimer!.setEventHandler(handler: self.bleTimerUpdate)
+//            self.bleTimer!.resume()
+//        }
+//    }
+//    
+//    func stopTimer() {
+//        self.bleTimer?.cancel()
+//        self.bleTimer = nil
+//    }
+//    
+//    @objc func bleTimerUpdate() {
+//        let BLE = BLEScanner.shared.getBLE()
+//        
+//        for (key, value) in BLE.Info {
+//            let rssiValue = mean(of: value.RSSI)
+//            print(getLocalTimeString() + " , (BLE Scan) : UUID = \(key) // company = \(value.manufacturer) // RSSI = \(rssiValue)")
+//        }
+//        print(getLocalTimeString() + " , (BLE Scan) : --------------------------------")
+//    }
 }
 
 private extension MainViewController {
