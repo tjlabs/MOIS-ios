@@ -13,10 +13,11 @@
 		B30902B62C477C2E0032A7E4 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902B52C477C2E0032A7E4 /* LoginViewModel.swift */; };
 		B30902BA2C477D710032A7E4 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902B92C477D710032A7E4 /* LoginView.swift */; };
 		B30902BC2C477EBD0032A7E4 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902BB2C477EBD0032A7E4 /* UIViewExtension.swift */; };
-		B30902BE2C4782810032A7E4 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902BD2C4782810032A7E4 /* FilterView.swift */; };
-		B30902C02C4783970032A7E4 /* FilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902BF2C4783970032A7E4 /* FilterCollectionViewCell.swift */; };
 		B30902C22C47851E0032A7E4 /* FilterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902C12C47851E0032A7E4 /* FilterModel.swift */; };
 		B30902C42C479E8D0032A7E4 /* DeviceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902C32C479E8D0032A7E4 /* DeviceInfoView.swift */; };
+		B30902C62C47AEF90032A7E4 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902C52C47AEF90032A7E4 /* FilterView.swift */; };
+		B30902C82C47BADA0032A7E4 /* FilterSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902C72C47BADA0032A7E4 /* FilterSectionHeaderView.swift */; };
+		B30902CA2C47BB2A0032A7E4 /* ManufacturerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902C92C47BB2A0032A7E4 /* ManufacturerCell.swift */; };
 		B37069282C465B3C00A49D77 /* PagingTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37069272C465B3C00A49D77 /* PagingTabBar.swift */; };
 		B370692A2C465B9D00A49D77 /* PagingTabBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37069292C465B9D00A49D77 /* PagingTabBarCell.swift */; };
 		B370692C2C465BFE00A49D77 /* PagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B370692B2C465BFE00A49D77 /* PagingView.swift */; };
@@ -46,10 +47,11 @@
 		B30902B52C477C2E0032A7E4 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		B30902B92C477D710032A7E4 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		B30902BB2C477EBD0032A7E4 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
-		B30902BD2C4782810032A7E4 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
-		B30902BF2C4783970032A7E4 /* FilterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCollectionViewCell.swift; sourceTree = "<group>"; };
 		B30902C12C47851E0032A7E4 /* FilterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterModel.swift; sourceTree = "<group>"; };
 		B30902C32C479E8D0032A7E4 /* DeviceInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfoView.swift; sourceTree = "<group>"; };
+		B30902C52C47AEF90032A7E4 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
+		B30902C72C47BADA0032A7E4 /* FilterSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSectionHeaderView.swift; sourceTree = "<group>"; };
+		B30902C92C47BB2A0032A7E4 /* ManufacturerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManufacturerCell.swift; sourceTree = "<group>"; };
 		B37069272C465B3C00A49D77 /* PagingTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingTabBar.swift; sourceTree = "<group>"; };
 		B37069292C465B9D00A49D77 /* PagingTabBarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingTabBarCell.swift; sourceTree = "<group>"; };
 		B370692B2C465BFE00A49D77 /* PagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingView.swift; sourceTree = "<group>"; };
@@ -116,9 +118,10 @@
 			isa = PBXGroup;
 			children = (
 				B370692F2C46662800A49D77 /* ScanView.swift */,
-				B30902BD2C4782810032A7E4 /* FilterView.swift */,
-				B30902BF2C4783970032A7E4 /* FilterCollectionViewCell.swift */,
 				B30902C32C479E8D0032A7E4 /* DeviceInfoView.swift */,
+				B30902C52C47AEF90032A7E4 /* FilterView.swift */,
+				B30902C72C47BADA0032A7E4 /* FilterSectionHeaderView.swift */,
+				B30902C92C47BB2A0032A7E4 /* ManufacturerCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -394,10 +397,11 @@
 				B30902B42C477C190032A7E4 /* LoginRequest.swift in Sources */,
 				B3C622C52C45037000371531 /* BLEManager.swift in Sources */,
 				B30902AE2C476CFC0032A7E4 /* Protocols.swift in Sources */,
-				B30902BE2C4782810032A7E4 /* FilterView.swift in Sources */,
 				B3C622A22C44A6F100371531 /* AppDelegate.swift in Sources */,
 				B370692C2C465BFE00A49D77 /* PagingView.swift in Sources */,
+				B30902CA2C47BB2A0032A7E4 /* ManufacturerCell.swift in Sources */,
 				B3C622CA2C46372C00371531 /* CompanyIdentifier.swift in Sources */,
+				B30902C82C47BADA0032A7E4 /* FilterSectionHeaderView.swift in Sources */,
 				B30902BA2C477D710032A7E4 /* LoginView.swift in Sources */,
 				B30902B62C477C2E0032A7E4 /* LoginViewModel.swift in Sources */,
 				B3C622BD2C44AF9500371531 /* StringExtension.swift in Sources */,
@@ -410,7 +414,7 @@
 				B37069282C465B3C00A49D77 /* PagingTabBar.swift in Sources */,
 				B30902C22C47851E0032A7E4 /* FilterModel.swift in Sources */,
 				B3C622C82C4627EC00371531 /* BLEDevice.swift in Sources */,
-				B30902C02C4783970032A7E4 /* FilterCollectionViewCell.swift in Sources */,
+				B30902C62C47AEF90032A7E4 /* FilterView.swift in Sources */,
 				B3C622A42C44A6F100371531 /* SceneDelegate.swift in Sources */,
 				B3C622C32C44E27200371531 /* LocationManager.swift in Sources */,
 			);

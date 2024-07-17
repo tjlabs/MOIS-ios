@@ -8,9 +8,13 @@ import SnapKit
 
 class ScanView: UIView {
     
-    let filterList = [FilterCellData(opened: false, title: "Filter", sectionData: ["Cell1", "Cell2"]),
-                      FilterCellData(opened: false, title: "Filter2", sectionData: ["Cell1", "Cell2"])]
-    private lazy var filterView = FilterView(filterList: filterList)
+    let filterInfo = FilterInfo(opened: false, title: "Filter", manufacuterers: [
+                            Manufacturer(name: "Apple"),
+                            Manufacturer(name: "Google"),
+                            Manufacturer(name: "Samsung"),
+                            Manufacturer(name: "Etc")])
+    
+    private lazy var filterView = FilterView(filterInfo: filterInfo)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -30,7 +34,8 @@ private extension ScanView {
         addSubview(filterView)
         
         filterView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalToSuperview().offset(10)
+            make.leading.trailing.bottom.equalToSuperview()
         }
     }
 }

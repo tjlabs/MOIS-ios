@@ -6,10 +6,11 @@ import Then
 
 final class FilterView: UIView {
     // MARK: - Data
-    private var filterList: [FilterCellData]
+    private var filterInfo: FilterInfo
+    private var isSectionExpanded: Bool = false
     
-    init(filterList: [FilterCellData]) {
-        self.filterList = filterList
+    init(filterInfo: FilterInfo) {
+        self.filterInfo = filterInfo
         super.init(frame: .zero)
         setupLayout()
     }
@@ -26,47 +27,69 @@ final class FilterView: UIView {
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(FilterCollectionViewCell.self, forCellWithReuseIdentifier: FilterCollectionViewCell.identifier)
+        collectionView.register(FilterSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: FilterSectionHeaderView.identifier)
+        collectionView.register(ManufacturerCell.self, forCellWithReuseIdentifier: ManufacturerCell.identifier)
         
         return collectionView
     }()
     
+    private let disposeBag = DisposeBag()
 }
 
 extension FilterView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let collectionViewFrame = collectionView.frame
-//        return CGSize(width: collectionViewFrame.width, height: collectionViewFrame.height)
-        return CGSize(width: collectionViewFrame.width, height: 30)
+        return CGSize(width: collectionView.frame.width, height: 44)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: 44)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
+        return UIEdgeInsets.zero
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0.0
-    }
-    
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        let indexPath = IndexPath(row: Int(targetContentOffset.pointee.x / UIScreen.main.bounds.width), section: 0)
-//        pagingTabBar.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+        return 0
     }
 }
 
 extension FilterView: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return filterList.count
+        return isSectionExpanded ? filterInfo.manufacuterers.count : 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterCollectionViewCell.identifier, for: indexPath) as? FilterCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ManufacturerCell.identifier, for: indexPath) as? ManufacturerCell else {
+            return UICollectionViewCell()
+        }
         
-        let categoryName = filterList[indexPath.row]
-        cell.setupView(title: categoryName.title)
-//        cell.setupView()
+        let manufacturer = filterInfo.manufacuterers[indexPath.row]
+        cell.configure(with: manufacturer)
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard kind == UICollectionView.elementKindSectionHeader,
+              let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: FilterSectionHeaderView.identifier, for: indexPath) as? FilterSectionHeaderView else {
+            return UICollectionReusableView()
+        }
+        
+        headerView.titleLabel.text = filterInfo.title
+        headerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggleSection)))
+        headerView.configure(isExpanded: isSectionExpanded)
+        
+        return headerView
+    }
+    
+    @objc private func toggleSection() {
+        isSectionExpanded.toggle()
+        collectionView.reloadSections(IndexSet(integer: 0))
     }
 }
 
