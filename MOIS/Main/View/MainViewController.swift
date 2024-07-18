@@ -16,6 +16,12 @@ class MainViewController: UIViewController {
     private lazy var pagingTabBar = PagingTabBar(categoryTitleList: categoryTitleList)
     private lazy var pagingView = PagingView(categoryTitleList: categoryTitleList, pagingTabBar: pagingTabBar)
     
+    private lazy var separatorView: UIView = {
+            let view = UIView()
+            view.backgroundColor = .black
+            return view
+    }()
+    
 //    let locationManager = LocationManager()
     
 //    var bleTimer: DispatchSourceTimer?
@@ -59,14 +65,23 @@ private extension MainViewController {
     func setupLayout() {
         [
             titleLabel,
+            separatorView,
             pagingTabBar,
             pagingView
         ].forEach { view.addSubview($0) }
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(-30)
+//            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(-32)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(30)
+        }
+        
+        separatorView.snp.makeConstraints { make in
+//            make.top.equalTo(titleLabel.snp.bottom).offset(2)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(-2)
+            make.leading.trailing.equalToSuperview().inset(15)
+            make.height.equalTo(1)
         }
         
         pagingTabBar.snp.makeConstraints { make in

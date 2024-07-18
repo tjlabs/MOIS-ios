@@ -9,10 +9,18 @@ final class FilterView: UIView {
     private var filterInfo: FilterInfo
     private var isSectionExpanded: Bool = false
     
+    private let disposeBag = DisposeBag()
+    let sectionExpandedRelay = BehaviorRelay<Bool>(value: false)
+    
+    var contentHeight: CGFloat {
+        return collectionView.contentSize.height
+    }
+    
     init(filterInfo: FilterInfo) {
         self.filterInfo = filterInfo
         super.init(frame: .zero)
         setupLayout()
+        bindCollectionViewContentSize()
     }
     
     required init?(coder: NSCoder) {
@@ -28,12 +36,31 @@ final class FilterView: UIView {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(FilterSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: FilterSectionHeaderView.identifier)
-        collectionView.register(ManufacturerCell.self, forCellWithReuseIdentifier: ManufacturerCell.identifier)
+        collectionView.register(FilterManufacturerCell.self, forCellWithReuseIdentifier: FilterManufacturerCell.identifier)
+        collectionView.register(FilterRSSICell.self, forCellWithReuseIdentifier: FilterRSSICell.identifier)
         
         return collectionView
     }()
     
-    private let disposeBag = DisposeBag()
+    private func setupLayout() {
+        addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+    
+    private func bindCollectionViewContentSize() {
+        collectionView.rx.observe(CGSize.self, "contentSize")
+            .compactMap { $0?.height }
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                if self.isSectionExpanded {
+                    self.sectionExpandedRelay.accept(true)
+                }
+            })
+            .disposed(by: disposeBag)
+    }
 }
 
 extension FilterView: UICollectionViewDelegateFlowLayout {
@@ -60,18 +87,36 @@ extension FilterView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return isSectionExpanded ? filterInfo.manufacuterers.count : 0
+        return isSectionExpanded ? filterInfo.manufacuterers.count+1 : 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ManufacturerCell.identifier, for: indexPath) as? ManufacturerCell else {
-            return UICollectionViewCell()
+//        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterManufacturerCell.identifier, for: indexPath) as? FilterManufacturerCell else {
+//            return UICollectionViewCell()
+//        }
+//        
+//        let manufacturer = filterInfo.manufacuterers[indexPath.row]
+//        cell.configure(with: manufacturer)
+//        
+//        return cell
+        
+        if indexPath.row < filterInfo.manufacuterers.count {
+            guard let manufacturerCell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterManufacturerCell.identifier, for: indexPath) as? FilterManufacturerCell else {
+                return UICollectionViewCell()
+            }
+            
+            let manufacturer = filterInfo.manufacuterers[indexPath.row]
+            manufacturerCell.configure(with: manufacturer)
+            
+            return manufacturerCell
+        } else {
+            guard let rssiCell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterRSSICell.identifier, for: indexPath) as? FilterRSSICell else {
+                return UICollectionViewCell()
+            }
+            rssiCell.configure(with: filterInfo.rssi)
+            
+            return rssiCell
         }
-        
-        let manufacturer = filterInfo.manufacuterers[indexPath.row]
-        cell.configure(with: manufacturer)
-        
-        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -89,15 +134,7 @@ extension FilterView: UICollectionViewDataSource {
     
     @objc private func toggleSection() {
         isSectionExpanded.toggle()
+        sectionExpandedRelay.accept(isSectionExpanded)
         collectionView.reloadSections(IndexSet(integer: 0))
-    }
-}
-
-private extension FilterView {
-    func setupLayout() {
-        addSubview(collectionView)
-        collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
     }
 }
