@@ -63,6 +63,8 @@ extension PagingView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PagingCollectionViewCell.identifier, for: indexPath) as? PagingCollectionViewCell else { return UICollectionViewCell() }
         
+        cell.contentView.subviews.forEach { $0.removeFromSuperview() }
+        
         let categoryName = categoryTitleList[indexPath.row]
         let customView: UIView
         

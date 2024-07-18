@@ -5,7 +5,7 @@ final class DeviceInfoSectionHeaderView: UICollectionReusableView {
     static let identifier = "DeviceInfoSectionHeaderView"
     
     let stateLabel = UILabel().then {
-        $0.font = UIFont.boldSystemFont(ofSize: 18)
+        $0.font = UIFont.boldSystemFont(ofSize: 14)
         $0.text = "State"
         $0.textAlignment = .center
         $0.textColor = .black
@@ -13,7 +13,7 @@ final class DeviceInfoSectionHeaderView: UICollectionReusableView {
     }
     
     let deviceCategoryLabel = UILabel().then {
-        $0.font = UIFont.boldSystemFont(ofSize: 18)
+        $0.font = UIFont.boldSystemFont(ofSize: 14)
         $0.text = "Device Category"
         $0.textAlignment = .center
         $0.textColor = .black
@@ -21,7 +21,7 @@ final class DeviceInfoSectionHeaderView: UICollectionReusableView {
     }
     
     let rssiLabel = UILabel().then {
-        $0.font = UIFont.boldSystemFont(ofSize: 18)
+        $0.font = UIFont.boldSystemFont(ofSize: 14)
         $0.text = "RSSI"
         $0.textAlignment = .center
         $0.textColor = .black
@@ -29,7 +29,7 @@ final class DeviceInfoSectionHeaderView: UICollectionReusableView {
     }
     
     let distanceLabel = UILabel().then {
-        $0.font = UIFont.boldSystemFont(ofSize: 18)
+        $0.font = UIFont.boldSystemFont(ofSize: 14)
         $0.text = "Distacne"
         $0.textAlignment = .center
         $0.textColor = .black

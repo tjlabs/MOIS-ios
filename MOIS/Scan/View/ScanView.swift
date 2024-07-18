@@ -17,21 +17,36 @@ class ScanView: UIView {
                             rssi: RSSI())
     
     private lazy var filterView = FilterView(filterInfo: filterInfo)
-    private lazy var separatorView: UIView = {
+    private lazy var separatorViewForInfo: UIView = {
             let view = UIView()
             view.backgroundColor = .lightGray
             return view
     }()
     private lazy var deviceInfoView = DeviceInfoView()
+    private lazy var separatorViewForCount: UIView = {
+            let view = UIView()
+            view.backgroundColor = .lightGray
+            return view
+    }()
+    private lazy var deviceCountView = DeviceCountView()
+    
+    var deviceScanDataList = [DeviceScanData]()
     
     private let disposeBag = DisposeBag()
     private var filterViewHeightConstraint: Constraint?
+    
+    let locationManager = LocationManager()
+    var bleTimer: DispatchSourceTimer?
+    let BLE_TIMER_INTERVAL: TimeInterval = 2
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .clear
         setupLayout()
         bindFilterView()
+        
+        BLEManager.shared.startScan()
+        startTimer()
     }
     
     required init?(coder: NSCoder) {
@@ -40,8 +55,11 @@ class ScanView: UIView {
     
     func setupLayout() {
         addSubview(filterView)
-        addSubview(separatorView)
+        addSubview(separatorViewForInfo)
         addSubview(deviceInfoView)
+        
+        addSubview(separatorViewForCount)
+        addSubview(deviceCountView)
         
         filterView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
@@ -49,18 +67,78 @@ class ScanView: UIView {
             filterViewHeightConstraint = make.height.equalTo(44).constraint
         }
         
-        separatorView.snp.makeConstraints { make in
-                    make.top.equalTo(filterView.snp.bottom)
-                    make.leading.trailing.equalToSuperview()
-                    make.height.equalTo(1) // Height of the separator line
-                }
-        
-        deviceInfoView.snp.makeConstraints { make in
-            make.top.equalTo(separatorView.snp.bottom).offset(0)
+        separatorViewForInfo.snp.makeConstraints { make in
+            make.top.equalTo(filterView.snp.bottom)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(44)
+            make.height.equalTo(1) // Height of the separator line
+        }
+        
+        deviceCountView.snp.makeConstraints { make in
+            make.bottom.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(100)
 //            make.bottom.equalToSuperview().offset(-10)
         }
+        
+        deviceInfoView.snp.makeConstraints { make in
+            make.top.equalTo(separatorViewForInfo.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+//            make.bottom.equalTo(separatorViewForCount.snp.top)
+            make.height.equalTo(200)
+        }
+        
+        separatorViewForCount.snp.makeConstraints { make in
+            make.bottom.equalTo(deviceCountView.snp.top)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(1)
+        }
+        
+//        deviceInfoView.snp.makeConstraints { make in
+//            make.top.equalTo(separatorViewForInfo.snp.bottom).offset(0)
+////            make.bottom.equalTo(separatorViewForCount.snp.top)
+//            make.leading.trailing.equalToSuperview()
+//            make.height.equalTo(200)
+////            make.bottom.equalToSuperview().offset(-10)
+//        }
+        
+        deviceInfoView.backgroundColor = .systemBrown
+    }
+    
+    func startTimer() {
+        if (self.bleTimer == nil) {
+            let queueBLE = DispatchQueue(label: Bundle.main.bundleIdentifier! + ".bleTimer")
+            self.bleTimer = DispatchSource.makeTimerSource(queue: queueBLE)
+            self.bleTimer!.schedule(deadline: .now(), repeating: BLE_TIMER_INTERVAL)
+            self.bleTimer!.setEventHandler(handler: self.bleTimerUpdate)
+            self.bleTimer!.resume()
+        }
+    }
+    
+    func stopTimer() {
+        self.bleTimer?.cancel()
+        self.bleTimer = nil
+    }
+    
+    @objc func bleTimerUpdate() {
+        makeDeviceScanDataList()
+    }
+    
+    private func makeDeviceScanDataList() {
+        var scanDataList = [DeviceScanData]()
+        
+        let BLE = BLEManager.shared.getBLE()
+        for (key, value) in BLE.Info {
+            let rssiValue = mean(of: value.RSSI)
+//            print(getLocalTimeString() + " , (BLE Scan) : UUID = \(key) // company = \(value.manufacturer) // RSSI = \(rssiValue)")
+            
+            let category = BLEManager.shared.convertCompanyToCategory(company: value.manufacturer)
+            let distance = BLEManager.shared.convertRSSItoDistance(RSSI: rssiValue)
+            let scanData = DeviceScanData(state: .STATIC_STATE, category: category, rssi: rssiValue, distance: distance)
+            scanDataList.append(scanData)
+            print(getLocalTimeString() + " , (BLE Scan) : scanData = \(scanData)")
+        }
+        print(getLocalTimeString() + " , (BLE Scan) : timer --------------------------------")
+        self.deviceScanDataList = scanDataList
     }
     
     private func bindFilterView() {

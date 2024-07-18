@@ -22,6 +22,9 @@
 		B30902CE2C48B4ED0032A7E4 /* DeviceInfoSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902CD2C48B4ED0032A7E4 /* DeviceInfoSectionHeaderView.swift */; };
 		B30902D02C48B6D90032A7E4 /* DeviceInfoDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902CF2C48B6D90032A7E4 /* DeviceInfoDataCell.swift */; };
 		B30902D22C48D04A0032A7E4 /* DeviceInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902D12C48D04A0032A7E4 /* DeviceInfoModel.swift */; };
+		B30902D42C49376D0032A7E4 /* DeviceCountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902D32C49376D0032A7E4 /* DeviceCountModel.swift */; };
+		B30902D62C49385D0032A7E4 /* DeviceCountSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902D52C49385D0032A7E4 /* DeviceCountSectionHeaderView.swift */; };
+		B30902D82C4939A40032A7E4 /* DeviceCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902D72C4939A40032A7E4 /* DeviceCountView.swift */; };
 		B37069282C465B3C00A49D77 /* PagingTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37069272C465B3C00A49D77 /* PagingTabBar.swift */; };
 		B370692A2C465B9D00A49D77 /* PagingTabBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37069292C465B9D00A49D77 /* PagingTabBarCell.swift */; };
 		B370692C2C465BFE00A49D77 /* PagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B370692B2C465BFE00A49D77 /* PagingView.swift */; };
@@ -60,6 +63,9 @@
 		B30902CD2C48B4ED0032A7E4 /* DeviceInfoSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfoSectionHeaderView.swift; sourceTree = "<group>"; };
 		B30902CF2C48B6D90032A7E4 /* DeviceInfoDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfoDataCell.swift; sourceTree = "<group>"; };
 		B30902D12C48D04A0032A7E4 /* DeviceInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfoModel.swift; sourceTree = "<group>"; };
+		B30902D32C49376D0032A7E4 /* DeviceCountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCountModel.swift; sourceTree = "<group>"; };
+		B30902D52C49385D0032A7E4 /* DeviceCountSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCountSectionHeaderView.swift; sourceTree = "<group>"; };
+		B30902D72C4939A40032A7E4 /* DeviceCountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCountView.swift; sourceTree = "<group>"; };
 		B37069272C465B3C00A49D77 /* PagingTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingTabBar.swift; sourceTree = "<group>"; };
 		B37069292C465B9D00A49D77 /* PagingTabBarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingTabBarCell.swift; sourceTree = "<group>"; };
 		B370692B2C465BFE00A49D77 /* PagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingView.swift; sourceTree = "<group>"; };
@@ -133,6 +139,8 @@
 				B30902CB2C48A5700032A7E4 /* FilterRSSICell.swift */,
 				B30902CD2C48B4ED0032A7E4 /* DeviceInfoSectionHeaderView.swift */,
 				B30902CF2C48B6D90032A7E4 /* DeviceInfoDataCell.swift */,
+				B30902D52C49385D0032A7E4 /* DeviceCountSectionHeaderView.swift */,
+				B30902D72C4939A40032A7E4 /* DeviceCountView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -274,6 +282,7 @@
 				B3C622C92C46372C00371531 /* CompanyIdentifier.swift */,
 				B30902C12C47851E0032A7E4 /* FilterModel.swift */,
 				B30902D12C48D04A0032A7E4 /* DeviceInfoModel.swift */,
+				B30902D32C49376D0032A7E4 /* DeviceCountModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -408,6 +417,7 @@
 				B30902BC2C477EBD0032A7E4 /* UIViewExtension.swift in Sources */,
 				B30902B42C477C190032A7E4 /* LoginRequest.swift in Sources */,
 				B3C622C52C45037000371531 /* BLEManager.swift in Sources */,
+				B30902D82C4939A40032A7E4 /* DeviceCountView.swift in Sources */,
 				B30902AE2C476CFC0032A7E4 /* Protocols.swift in Sources */,
 				B30902D02C48B6D90032A7E4 /* DeviceInfoDataCell.swift in Sources */,
 				B3C622A22C44A6F100371531 /* AppDelegate.swift in Sources */,
@@ -420,6 +430,7 @@
 				B30902B62C477C2E0032A7E4 /* LoginViewModel.swift in Sources */,
 				B30902CC2C48A5710032A7E4 /* FilterRSSICell.swift in Sources */,
 				B3C622BD2C44AF9500371531 /* StringExtension.swift in Sources */,
+				B30902D62C49385D0032A7E4 /* DeviceCountSectionHeaderView.swift in Sources */,
 				B370692E2C465C1200A49D77 /* PagingCollectionViewCell.swift in Sources */,
 				B370692A2C465B9D00A49D77 /* PagingTabBarCell.swift in Sources */,
 				B30902CE2C48B4ED0032A7E4 /* DeviceInfoSectionHeaderView.swift in Sources */,
@@ -429,6 +440,7 @@
 				B3C622C12C44C76D00371531 /* DataExtension.swift in Sources */,
 				B37069282C465B3C00A49D77 /* PagingTabBar.swift in Sources */,
 				B30902C22C47851E0032A7E4 /* FilterModel.swift in Sources */,
+				B30902D42C49376D0032A7E4 /* DeviceCountModel.swift in Sources */,
 				B3C622C82C4627EC00371531 /* BLEDevice.swift in Sources */,
 				B30902C62C47AEF90032A7E4 /* FilterView.swift in Sources */,
 				B3C622A42C44A6F100371531 /* SceneDelegate.swift in Sources */,

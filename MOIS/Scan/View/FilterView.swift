@@ -91,15 +91,6 @@ extension FilterView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterManufacturerCell.identifier, for: indexPath) as? FilterManufacturerCell else {
-//            return UICollectionViewCell()
-//        }
-//        
-//        let manufacturer = filterInfo.manufacuterers[indexPath.row]
-//        cell.configure(with: manufacturer)
-//        
-//        return cell
-        
         if indexPath.row < filterInfo.manufacuterers.count {
             guard let manufacturerCell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterManufacturerCell.identifier, for: indexPath) as? FilterManufacturerCell else {
                 return UICollectionViewCell()

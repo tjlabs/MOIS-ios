@@ -268,4 +268,32 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     public func getBLE() -> BLEDevices {
         return self.BLE
     }
+    
+    public func convertCompanyToCategory(company: String) -> String {
+        var category: String = "Etc"
+        
+        if company.contains("TJLABS") {
+            category = "TJLABS"
+        } else if company.contains("Samsung") {
+            category = "Samsung"
+        } else if company.contains("LG") {
+            category = "LG"
+        } else if company.contains("Google") {
+            category = "Google"
+        } else if company.contains("Microsoft") {
+            category = "Microsoft"
+        } else if company.contains("Apple") {
+            category = "Apple"
+        } else if company.contains("Sony") {
+            category = "Sony"
+        }
+
+        return category
+    }
+    
+    public func convertRSSItoDistance(RSSI: Int) -> Int {
+        var distance = 10
+        
+        return distance
+    }
 }
