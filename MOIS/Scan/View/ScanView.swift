@@ -28,10 +28,13 @@ class ScanView: UIView {
             view.backgroundColor = .lightGray
             return view
     }()
+    
+    let deviceScanDataRelay = BehaviorRelay<[DeviceScanData]>(value: [])
     private lazy var deviceCountView = DeviceCountView()
     
-    var deviceScanDataList = [DeviceScanData]()
+//    var deviceScanDataList = [DeviceScanData]()
     
+    private let viewModel = ScanViewModel()
     private let disposeBag = DisposeBag()
     private var filterViewHeightConstraint: Constraint?
     
@@ -43,10 +46,10 @@ class ScanView: UIView {
         super.init(frame: frame)
         backgroundColor = .clear
         setupLayout()
-        bindFilterView()
+        bindViewModel()
         
-        BLEManager.shared.startScan()
-        startTimer()
+//        BLEManager.shared.startScan()
+//        startTimer()
     }
     
     required init?(coder: NSCoder) {
@@ -104,44 +107,32 @@ class ScanView: UIView {
         deviceInfoView.backgroundColor = .systemBrown
     }
     
-    func startTimer() {
-        if (self.bleTimer == nil) {
-            let queueBLE = DispatchQueue(label: Bundle.main.bundleIdentifier! + ".bleTimer")
-            self.bleTimer = DispatchSource.makeTimerSource(queue: queueBLE)
-            self.bleTimer!.schedule(deadline: .now(), repeating: BLE_TIMER_INTERVAL)
-            self.bleTimer!.setEventHandler(handler: self.bleTimerUpdate)
-            self.bleTimer!.resume()
-        }
-    }
     
-    func stopTimer() {
-        self.bleTimer?.cancel()
-        self.bleTimer = nil
-    }
+//    private func bindFilterView() {
+//        filterView.sectionExpandedRelay
+//            .observe(on: MainScheduler.instance)
+//            .subscribe(onNext: { [weak self] isExpanded in
+//                guard let self = self else { return }
+//                let contentHeight = self.filterView.contentHeight
+//                self.filterViewHeightConstraint?.update(offset: isExpanded ? contentHeight : 44)
+//                UIView.animate(withDuration: 0.3) {
+//                    self.layoutIfNeeded()
+//                }
+//            })
+//            .disposed(by: disposeBag)
+//    }
     
-    @objc func bleTimerUpdate() {
-        makeDeviceScanDataList()
-    }
-    
-    private func makeDeviceScanDataList() {
-        var scanDataList = [DeviceScanData]()
+    private func bindViewModel() {
+        viewModel.deviceScanDataList
+            .observe(on: MainScheduler.instance)
+            .bind(to: deviceInfoView.deviceScanDataRelay)
+            .disposed(by: disposeBag)
         
-        let BLE = BLEManager.shared.getBLE()
-        for (key, value) in BLE.Info {
-            let rssiValue = mean(of: value.RSSI)
-//            print(getLocalTimeString() + " , (BLE Scan) : UUID = \(key) // company = \(value.manufacturer) // RSSI = \(rssiValue)")
-            
-            let category = BLEManager.shared.convertCompanyToCategory(company: value.manufacturer)
-            let distance = BLEManager.shared.convertRSSItoDistance(RSSI: rssiValue)
-            let scanData = DeviceScanData(state: .STATIC_STATE, category: category, rssi: rssiValue, distance: distance)
-            scanDataList.append(scanData)
-            print(getLocalTimeString() + " , (BLE Scan) : scanData = \(scanData)")
-        }
-        print(getLocalTimeString() + " , (BLE Scan) : timer --------------------------------")
-        self.deviceScanDataList = scanDataList
-    }
-    
-    private func bindFilterView() {
+        viewModel.deviceScanDataList
+            .observe(on: MainScheduler.instance)
+            .bind(to: deviceCountView.deviceScanDataRelay)
+            .disposed(by: disposeBag)
+        
         filterView.sectionExpandedRelay
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] isExpanded in

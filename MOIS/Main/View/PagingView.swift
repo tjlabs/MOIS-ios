@@ -4,7 +4,6 @@ import SnapKit
 class PagingView: UIView {
     
     private let categoryTitleList: [String]
-    
     private let pagingTabBar: PagingTabBar
     
     private lazy var collectionView: UICollectionView = {

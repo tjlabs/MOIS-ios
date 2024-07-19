@@ -6,6 +6,9 @@ import Then
 
 final class DeviceCountView: UIView {
     
+    let deviceScanDataRelay = BehaviorRelay<[DeviceScanData]>(value: [])
+    private let disposeBag = DisposeBag()
+    
 //    init() {
 //        setupLayout()
 //    }
@@ -14,6 +17,7 @@ final class DeviceCountView: UIView {
         super.init(frame: frame)
         backgroundColor = .clear
         setupLayout()
+        bindData()
     }
     
     required init?(coder: NSCoder) {
@@ -34,7 +38,14 @@ final class DeviceCountView: UIView {
         return collectionView
     }()
     
-    
+    private func bindData() {
+        deviceScanDataRelay
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                self?.collectionView.reloadData()
+            })
+            .disposed(by: disposeBag)
+    }
 }
 
 extension DeviceCountView: UICollectionViewDelegateFlowLayout {
