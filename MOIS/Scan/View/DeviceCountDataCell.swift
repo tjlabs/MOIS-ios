@@ -3,39 +3,29 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-final class DeviceInfoDataCell: UICollectionViewCell {
-    static let identifier = "DeviceInfoDataCell"
-    
-    let stateImageView = UIImageView().then {
-        $0.contentMode = .scaleAspectFit
-        $0.image = UIImage(named: "blackCircle")
-    }
-    
-//    let deviceCategoryLabel = UILabel().then {
-//        $0.font = UIFont.boldSystemFont(ofSize: 14)
-//        $0.text = "Device Category"
-//        $0.textAlignment = .left
-//        $0.textColor = .black
-//    }
+final class DeviceCountDataCell: UICollectionViewCell {
+    static let identifier = "DeviceCountDataCell"
     
     let deviceCategoryLabel = PaddedLabel(padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)).then {
         $0.font = UIFont.boldSystemFont(ofSize: 14)
         $0.text = "Device Category"
         $0.textAlignment = .left
         $0.textColor = .black
+//        $0.backgroundColor = .yellow
     }
 
-    
-    let rssiValueLabel = UILabel().then {
+    let staticCountLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 14)
         $0.textAlignment = .center
         $0.textColor = .black
+//        $0.backgroundColor = .green
     }
     
-    let distanceLabel = UILabel().then {
+    let dynamicCountLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 14)
         $0.textAlignment = .center
         $0.textColor = .black
+//        $0.backgroundColor = .red
     }
     
     private let stackView: UIStackView = {
@@ -60,27 +50,22 @@ final class DeviceInfoDataCell: UICollectionViewCell {
     private func setupLayout() {
         addSubview(stackView)
         
-        stackView.addArrangedSubview(stateImageView)
         stackView.addArrangedSubview(deviceCategoryLabel)
-        stackView.addArrangedSubview(rssiValueLabel)
-        stackView.addArrangedSubview(distanceLabel)
+        stackView.addArrangedSubview(staticCountLabel)
+        stackView.addArrangedSubview(dynamicCountLabel)
         setupAppearance()
         
         stackView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(10)
-            make.top.bottom.equalToSuperview().inset(5)
-        }
-            
-        stateImageView.snp.makeConstraints { make in
-            make.width.equalTo(50)
+            make.top.bottom.equalToSuperview().inset(2)
         }
         
-        rssiValueLabel.snp.makeConstraints { make in
-            make.width.equalTo(80)
+        staticCountLabel.snp.makeConstraints { make in
+            make.width.equalTo(120)
         }
         
-        distanceLabel.snp.makeConstraints { make in
-            make.width.equalTo(80)
+        dynamicCountLabel.snp.makeConstraints { make in
+            make.width.equalTo(120)
         }
     }
     
@@ -91,9 +76,9 @@ final class DeviceInfoDataCell: UICollectionViewCell {
         stackView.layer.masksToBounds = true
     }
     
-    func configure(with data: DeviceScanData) {
+    func configure(with data: DeviceCountData) {
         deviceCategoryLabel.text = data.category
-        rssiValueLabel.text = "\(data.rssi) dBm"
-        distanceLabel.text = String(format: "%.1f m", data.distance)
+        staticCountLabel.text = "\(data.staticCount)"
+        dynamicCountLabel.text = "\(data.dynamicCount)"
     }
 }

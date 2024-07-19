@@ -5,39 +5,39 @@ final class DeviceCountSectionHeaderView: UICollectionReusableView {
     static let identifier = "DeviceCountSectionHeaderView"
     
     let deviceCategoryLabel = UILabel().then {
-        $0.font = UIFont.boldSystemFont(ofSize: 14)
+        $0.font = UIFont.boldSystemFont(ofSize: 10)
         $0.text = "Device Category"
         $0.textAlignment = .center
         $0.textColor = .black
-        $0.backgroundColor = .yellow
+//        $0.backgroundColor = .yellow
     }
     
     let staticCountLabel = UILabel().then {
-        $0.font = UIFont.boldSystemFont(ofSize: 14)
+        $0.font = UIFont.boldSystemFont(ofSize: 10)
         $0.text = "Static Count"
         $0.textAlignment = .center
         $0.textColor = .black
-        $0.backgroundColor = .green
+//        $0.backgroundColor = .green
     }
     
     let staticImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
         $0.image = UIImage(named: "blackCircle")
-        $0.backgroundColor = .systemPink
+//        $0.backgroundColor = .systemPink
     }
     
     let dynamicCountLabel = UILabel().then {
-        $0.font = UIFont.boldSystemFont(ofSize: 14)
+        $0.font = UIFont.boldSystemFont(ofSize: 10)
         $0.text = "Dynamic Count"
         $0.textAlignment = .center
         $0.textColor = .black
-        $0.backgroundColor = .red
+//        $0.backgroundColor = .red
     }
     
     let dynamicImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
-        $0.image = UIImage(named: "blackCircle")
-        $0.backgroundColor = .systemPink
+        $0.image = UIImage(named: "orangeCircle")
+//        $0.backgroundColor = .systemPink
     }
     
     private let stackView: UIStackView = {
@@ -54,7 +54,7 @@ final class DeviceCountSectionHeaderView: UICollectionReusableView {
         stackView.axis = .horizontal
         stackView.alignment = .fill
         stackView.distribution = .fillProportionally
-        stackView.spacing = 5
+        stackView.spacing = 2
         return stackView
     }()
     
@@ -63,7 +63,7 @@ final class DeviceCountSectionHeaderView: UICollectionReusableView {
         stackView.axis = .horizontal
         stackView.alignment = .fill
         stackView.distribution = .fillProportionally
-        stackView.spacing = 5
+        stackView.spacing = 2
         return stackView
     }()
     
@@ -87,9 +87,30 @@ final class DeviceCountSectionHeaderView: UICollectionReusableView {
         stackView.addArrangedSubview(stackViewStaticCount)
         stackView.addArrangedSubview(stackViewDynamicCount)
         
+//        stackView.snp.makeConstraints { make in
+//            make.leading.trailing.equalToSuperview().inset(10)
+//            make.top.bottom.equalToSuperview()
+//        }
+        
         stackView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(10)
             make.top.bottom.equalToSuperview()
+        }
+        
+        staticImageView.snp.makeConstraints { make in
+            make.width.equalTo(30)
+        }
+        
+        stackViewStaticCount.snp.makeConstraints { make in
+            make.width.equalTo(120)
+        }
+        
+        dynamicImageView.snp.makeConstraints { make in
+            make.width.equalTo(30)
+        }
+        
+        stackViewDynamicCount.snp.makeConstraints { make in
+            make.width.equalTo(120)
         }
     }
 }

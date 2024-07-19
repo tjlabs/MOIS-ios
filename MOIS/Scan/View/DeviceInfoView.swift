@@ -9,10 +9,6 @@ final class DeviceInfoView: UIView {
     let deviceScanDataRelay = BehaviorRelay<[DeviceScanData]>(value: [])
     private let disposeBag = DisposeBag()
     
-//    init() {
-//        setupLayout()
-//    }
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .clear
@@ -24,15 +20,24 @@ final class DeviceInfoView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private lazy var headerView: DeviceInfoSectionHeaderView = {
+        let view = DeviceInfoSectionHeaderView()
+//        view.backgroundColor = .blue
+        return view
+    }()
+    
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 0
+        layout.headerReferenceSize = .zero  // Ensure the header is not part of the collection view
+        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.isPagingEnabled = false
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(DeviceInfoSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: DeviceInfoSectionHeaderView.identifier)
         collectionView.register(DeviceInfoDataCell.self, forCellWithReuseIdentifier: DeviceInfoDataCell.identifier)
         
         return collectionView
@@ -50,19 +55,7 @@ final class DeviceInfoView: UIView {
 
 extension DeviceInfoView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 44)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 44)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets.zero
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return CGSize(width: collectionView.frame.width, height: 50)
     }
 }
 
@@ -72,34 +65,34 @@ extension DeviceInfoView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        return deviceScanDataRelay.value.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DeviceInfoDataCell.identifier, for: indexPath) as? DeviceInfoDataCell else {
             return UICollectionViewCell()
         }
-        cell.configure()
+        
+        let deviceScanData = deviceScanDataRelay.value[indexPath.row]
+        cell.configure(with: deviceScanData)
 
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard kind == UICollectionView.elementKindSectionHeader,
-              let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: DeviceInfoSectionHeaderView.identifier, for: indexPath) as? DeviceInfoSectionHeaderView else {
-            return UICollectionReusableView()
-        }
-        
-        headerView.backgroundColor = .blue
-        return headerView
     }
 }
 
 private extension DeviceInfoView {
     func setupLayout() {
+        addSubview(headerView)
         addSubview(collectionView)
+        
+        headerView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(44) // Set the height of the header view
+        }
+        
         collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(headerView.snp.bottom)
+            make.leading.trailing.bottom.equalToSuperview()
         }
     }
 }

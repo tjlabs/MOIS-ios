@@ -276,14 +276,14 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             category = "TJLABS"
         } else if company.contains("Samsung") {
             category = "Samsung"
+        } else if company.contains("Apple") {
+            category = "Apple"
         } else if company.contains("LG") {
             category = "LG"
         } else if company.contains("Google") {
             category = "Google"
         } else if company.contains("Microsoft") {
             category = "Microsoft"
-        } else if company.contains("Apple") {
-            category = "Apple"
         } else if company.contains("Sony") {
             category = "Sony"
         }

@@ -6,12 +6,8 @@ import Then
 
 final class DeviceCountView: UIView {
     
-    let deviceScanDataRelay = BehaviorRelay<[DeviceScanData]>(value: [])
+    let deviceCountDataRelay = BehaviorRelay<[DeviceCountData]>(value: [])
     private let disposeBag = DisposeBag()
-    
-//    init() {
-//        setupLayout()
-//    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -24,22 +20,31 @@ final class DeviceCountView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private lazy var headerView: DeviceCountSectionHeaderView = {
+        let view = DeviceCountSectionHeaderView()
+//        view.backgroundColor = .blue
+        return view
+    }()
+    
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 0
+        layout.headerReferenceSize = .zero  // Ensure the header is not part of the collection view
+        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.isPagingEnabled = false
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(DeviceCountSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: DeviceCountSectionHeaderView.identifier)
-        collectionView.register(DeviceInfoDataCell.self, forCellWithReuseIdentifier: DeviceInfoDataCell.identifier)
+        collectionView.register(DeviceCountDataCell.self, forCellWithReuseIdentifier: DeviceCountDataCell.identifier)
         
         return collectionView
     }()
     
     private func bindData() {
-        deviceScanDataRelay
+        deviceCountDataRelay
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
                 self?.collectionView.reloadData()
@@ -50,19 +55,7 @@ final class DeviceCountView: UIView {
 
 extension DeviceCountView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 44)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 44)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets.zero
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return CGSize(width: collectionView.frame.width, height: 30)
     }
 }
 
@@ -72,34 +65,34 @@ extension DeviceCountView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        return deviceCountDataRelay.value.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DeviceInfoDataCell.identifier, for: indexPath) as? DeviceInfoDataCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DeviceCountDataCell.identifier, for: indexPath) as? DeviceCountDataCell else {
             return UICollectionViewCell()
         }
-        cell.configure()
+        
+        let deviceCountData = deviceCountDataRelay.value[indexPath.row]
+        cell.configure(with: deviceCountData)
 
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard kind == UICollectionView.elementKindSectionHeader,
-              let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: DeviceCountSectionHeaderView.identifier, for: indexPath) as? DeviceCountSectionHeaderView else {
-            return UICollectionReusableView()
-        }
-        
-        headerView.backgroundColor = .blue
-        return headerView
     }
 }
 
 private extension DeviceCountView {
     func setupLayout() {
+        addSubview(headerView)
         addSubview(collectionView)
+        
+        headerView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(30) // Set the height of the header view
+        }
+        
         collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(headerView.snp.bottom)
+            make.leading.trailing.bottom.equalToSuperview()
         }
     }
 }

@@ -25,6 +25,8 @@
 		B30902D42C49376D0032A7E4 /* DeviceCountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902D32C49376D0032A7E4 /* DeviceCountModel.swift */; };
 		B30902D62C49385D0032A7E4 /* DeviceCountSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902D52C49385D0032A7E4 /* DeviceCountSectionHeaderView.swift */; };
 		B30902D82C4939A40032A7E4 /* DeviceCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902D72C4939A40032A7E4 /* DeviceCountView.swift */; };
+		B30902DA2C4A023E0032A7E4 /* PaddedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902D92C4A023E0032A7E4 /* PaddedLabel.swift */; };
+		B30902DC2C4A06390032A7E4 /* DeviceCountDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902DB2C4A06390032A7E4 /* DeviceCountDataCell.swift */; };
 		B37069282C465B3C00A49D77 /* PagingTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37069272C465B3C00A49D77 /* PagingTabBar.swift */; };
 		B370692A2C465B9D00A49D77 /* PagingTabBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37069292C465B9D00A49D77 /* PagingTabBarCell.swift */; };
 		B370692C2C465BFE00A49D77 /* PagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B370692B2C465BFE00A49D77 /* PagingView.swift */; };
@@ -66,6 +68,8 @@
 		B30902D32C49376D0032A7E4 /* DeviceCountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCountModel.swift; sourceTree = "<group>"; };
 		B30902D52C49385D0032A7E4 /* DeviceCountSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCountSectionHeaderView.swift; sourceTree = "<group>"; };
 		B30902D72C4939A40032A7E4 /* DeviceCountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCountView.swift; sourceTree = "<group>"; };
+		B30902D92C4A023E0032A7E4 /* PaddedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedLabel.swift; sourceTree = "<group>"; };
+		B30902DB2C4A06390032A7E4 /* DeviceCountDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCountDataCell.swift; sourceTree = "<group>"; };
 		B37069272C465B3C00A49D77 /* PagingTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingTabBar.swift; sourceTree = "<group>"; };
 		B37069292C465B9D00A49D77 /* PagingTabBarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingTabBarCell.swift; sourceTree = "<group>"; };
 		B370692B2C465BFE00A49D77 /* PagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingView.swift; sourceTree = "<group>"; };
@@ -141,6 +145,7 @@
 				B30902CF2C48B6D90032A7E4 /* DeviceInfoDataCell.swift */,
 				B30902D52C49385D0032A7E4 /* DeviceCountSectionHeaderView.swift */,
 				B30902D72C4939A40032A7E4 /* DeviceCountView.swift */,
+				B30902DB2C4A06390032A7E4 /* DeviceCountDataCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -261,6 +266,7 @@
 				B3C622B92C44AF0700371531 /* TimeFunctions.swift */,
 				B3C622CB2C464ECE00371531 /* MathFunctions.swift */,
 				B30902AD2C476CFC0032A7E4 /* Protocols.swift */,
+				B30902D92C4A023E0032A7E4 /* PaddedLabel.swift */,
 			);
 			path = "\U0010Utils";
 			sourceTree = "<group>";
@@ -429,6 +435,7 @@
 				B30902BA2C477D710032A7E4 /* LoginView.swift in Sources */,
 				B30902B62C477C2E0032A7E4 /* LoginViewModel.swift in Sources */,
 				B30902CC2C48A5710032A7E4 /* FilterRSSICell.swift in Sources */,
+				B30902DA2C4A023E0032A7E4 /* PaddedLabel.swift in Sources */,
 				B3C622BD2C44AF9500371531 /* StringExtension.swift in Sources */,
 				B30902D62C49385D0032A7E4 /* DeviceCountSectionHeaderView.swift in Sources */,
 				B370692E2C465C1200A49D77 /* PagingCollectionViewCell.swift in Sources */,
@@ -441,6 +448,7 @@
 				B37069282C465B3C00A49D77 /* PagingTabBar.swift in Sources */,
 				B30902C22C47851E0032A7E4 /* FilterModel.swift in Sources */,
 				B30902D42C49376D0032A7E4 /* DeviceCountModel.swift in Sources */,
+				B30902DC2C4A06390032A7E4 /* DeviceCountDataCell.swift in Sources */,
 				B3C622C82C4627EC00371531 /* BLEDevice.swift in Sources */,
 				B30902C62C47AEF90032A7E4 /* FilterView.swift in Sources */,
 				B3C622A42C44A6F100371531 /* SceneDelegate.swift in Sources */,

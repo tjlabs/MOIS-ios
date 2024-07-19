@@ -5,35 +5,35 @@ final class DeviceInfoSectionHeaderView: UICollectionReusableView {
     static let identifier = "DeviceInfoSectionHeaderView"
     
     let stateLabel = UILabel().then {
-        $0.font = UIFont.boldSystemFont(ofSize: 14)
+        $0.font = UIFont.boldSystemFont(ofSize: 12)
         $0.text = "State"
         $0.textAlignment = .center
         $0.textColor = .black
-        $0.backgroundColor = .white
+//        $0.backgroundColor = .red
     }
     
     let deviceCategoryLabel = UILabel().then {
-        $0.font = UIFont.boldSystemFont(ofSize: 14)
+        $0.font = UIFont.boldSystemFont(ofSize: 12)
         $0.text = "Device Category"
         $0.textAlignment = .center
         $0.textColor = .black
-        $0.backgroundColor = .yellow
+//        $0.backgroundColor = .green
     }
     
     let rssiLabel = UILabel().then {
-        $0.font = UIFont.boldSystemFont(ofSize: 14)
+        $0.font = UIFont.boldSystemFont(ofSize: 12)
         $0.text = "RSSI"
         $0.textAlignment = .center
         $0.textColor = .black
-        $0.backgroundColor = .green
+//        $0.backgroundColor = .blue
     }
     
     let distanceLabel = UILabel().then {
-        $0.font = UIFont.boldSystemFont(ofSize: 14)
+        $0.font = UIFont.boldSystemFont(ofSize: 12)
         $0.text = "Distacne"
         $0.textAlignment = .center
         $0.textColor = .black
-        $0.backgroundColor = .red
+//        $0.backgroundColor = .yellow
     }
     
     private let stackView: UIStackView = {
@@ -64,7 +64,18 @@ final class DeviceInfoSectionHeaderView: UICollectionReusableView {
         stackView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(10)
             make.top.bottom.equalToSuperview()
-//            make.edges.equalToSuperview()
+        }
+        
+        stateLabel.snp.makeConstraints { make in
+            make.width.equalTo(50)
+        }
+        
+        rssiLabel.snp.makeConstraints { make in
+            make.width.equalTo(80)
+        }
+        
+        distanceLabel.snp.makeConstraints { make in
+            make.width.equalTo(80)
         }
     }
 }

@@ -30,6 +30,7 @@ class ScanView: UIView {
     }()
     
     let deviceScanDataRelay = BehaviorRelay<[DeviceScanData]>(value: [])
+    let deviceCountDataRelay = BehaviorRelay<[DeviceCountData]>(value: [])
     private lazy var deviceCountView = DeviceCountView()
     
 //    var deviceScanDataList = [DeviceScanData]()
@@ -79,15 +80,14 @@ class ScanView: UIView {
         deviceCountView.snp.makeConstraints { make in
             make.bottom.equalToSuperview()
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(100)
+            make.height.equalTo(140)
 //            make.bottom.equalToSuperview().offset(-10)
         }
         
         deviceInfoView.snp.makeConstraints { make in
             make.top.equalTo(separatorViewForInfo.snp.bottom)
             make.leading.trailing.equalToSuperview()
-//            make.bottom.equalTo(separatorViewForCount.snp.top)
-            make.height.equalTo(200)
+            make.bottom.equalTo(separatorViewForCount.snp.top)
         }
         
         separatorViewForCount.snp.makeConstraints { make in
@@ -103,8 +103,6 @@ class ScanView: UIView {
 //            make.height.equalTo(200)
 ////            make.bottom.equalToSuperview().offset(-10)
 //        }
-        
-        deviceInfoView.backgroundColor = .systemBrown
     }
     
     
@@ -128,9 +126,9 @@ class ScanView: UIView {
             .bind(to: deviceInfoView.deviceScanDataRelay)
             .disposed(by: disposeBag)
         
-        viewModel.deviceScanDataList
+        viewModel.deviceCountDataList
             .observe(on: MainScheduler.instance)
-            .bind(to: deviceCountView.deviceScanDataRelay)
+            .bind(to: deviceCountView.deviceCountDataRelay)
             .disposed(by: disposeBag)
         
         filterView.sectionExpandedRelay
