@@ -12,9 +12,23 @@ final class DeviceCountSectionHeaderView: UICollectionReusableView {
 //        $0.backgroundColor = .yellow
     }
     
+    let fixedCountLabel = UILabel().then {
+        $0.font = UIFont.boldSystemFont(ofSize: 10)
+        $0.text = "Fixed"
+        $0.textAlignment = .center
+        $0.textColor = .black
+//        $0.backgroundColor = .green
+    }
+    
+    let fixedImageView = UIImageView().then {
+        $0.contentMode = .scaleAspectFit
+        $0.image = UIImage(named: "circleFixed")
+//        $0.backgroundColor = .systemPink
+    }
+    
     let staticCountLabel = UILabel().then {
         $0.font = UIFont.boldSystemFont(ofSize: 10)
-        $0.text = "Static Count"
+        $0.text = "Static"
         $0.textAlignment = .center
         $0.textColor = .black
 //        $0.backgroundColor = .green
@@ -22,13 +36,13 @@ final class DeviceCountSectionHeaderView: UICollectionReusableView {
     
     let staticImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
-        $0.image = UIImage(named: "blackCircle")
+        $0.image = UIImage(named: "circleStatic")
 //        $0.backgroundColor = .systemPink
     }
     
     let dynamicCountLabel = UILabel().then {
         $0.font = UIFont.boldSystemFont(ofSize: 10)
-        $0.text = "Dynamic Count"
+        $0.text = "Dynamic"
         $0.textAlignment = .center
         $0.textColor = .black
 //        $0.backgroundColor = .red
@@ -36,7 +50,7 @@ final class DeviceCountSectionHeaderView: UICollectionReusableView {
     
     let dynamicImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
-        $0.image = UIImage(named: "orangeCircle")
+        $0.image = UIImage(named: "circleDynamic")
 //        $0.backgroundColor = .systemPink
     }
     
@@ -46,6 +60,15 @@ final class DeviceCountSectionHeaderView: UICollectionReusableView {
         stackView.alignment = .fill
         stackView.distribution = .fillProportionally
         stackView.spacing = 10
+        return stackView
+    }()
+    
+    private let stackViewFixedCount: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.alignment = .fill
+        stackView.distribution = .fillProportionally
+        stackView.spacing = 2
         return stackView
     }()
     
@@ -78,12 +101,15 @@ final class DeviceCountSectionHeaderView: UICollectionReusableView {
     
     private func setupLayout() {
         addSubview(stackView)
+        stackViewFixedCount.addArrangedSubview(fixedCountLabel)
+        stackViewFixedCount.addArrangedSubview(fixedImageView)
         stackViewStaticCount.addArrangedSubview(staticCountLabel)
         stackViewStaticCount.addArrangedSubview(staticImageView)
         stackViewDynamicCount.addArrangedSubview(dynamicCountLabel)
         stackViewDynamicCount.addArrangedSubview(dynamicImageView)
         
         stackView.addArrangedSubview(deviceCategoryLabel)
+        stackView.addArrangedSubview(stackViewFixedCount)
         stackView.addArrangedSubview(stackViewStaticCount)
         stackView.addArrangedSubview(stackViewDynamicCount)
         
@@ -97,20 +123,28 @@ final class DeviceCountSectionHeaderView: UICollectionReusableView {
             make.top.bottom.equalToSuperview()
         }
         
+        fixedImageView.snp.makeConstraints { make in
+            make.width.equalTo(20)
+        }
+        
+        stackViewFixedCount.snp.makeConstraints { make in
+            make.width.equalTo(60)
+        }
+        
         staticImageView.snp.makeConstraints { make in
-            make.width.equalTo(30)
+            make.width.equalTo(20)
         }
         
         stackViewStaticCount.snp.makeConstraints { make in
-            make.width.equalTo(120)
+            make.width.equalTo(60)
         }
         
         dynamicImageView.snp.makeConstraints { make in
-            make.width.equalTo(30)
+            make.width.equalTo(20)
         }
         
         stackViewDynamicCount.snp.makeConstraints { make in
-            make.width.equalTo(120)
+            make.width.equalTo(80)
         }
     }
 }

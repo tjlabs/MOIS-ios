@@ -13,6 +13,13 @@ final class DeviceCountDataCell: UICollectionViewCell {
         $0.textColor = .black
 //        $0.backgroundColor = .yellow
     }
+    
+    let fixedCountLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 14)
+        $0.textAlignment = .center
+        $0.textColor = .black
+//        $0.backgroundColor = .green
+    }
 
     let staticCountLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 14)
@@ -51,6 +58,7 @@ final class DeviceCountDataCell: UICollectionViewCell {
         addSubview(stackView)
         
         stackView.addArrangedSubview(deviceCategoryLabel)
+        stackView.addArrangedSubview(fixedCountLabel)
         stackView.addArrangedSubview(staticCountLabel)
         stackView.addArrangedSubview(dynamicCountLabel)
         setupAppearance()
@@ -60,12 +68,16 @@ final class DeviceCountDataCell: UICollectionViewCell {
             make.top.bottom.equalToSuperview().inset(2)
         }
         
+        fixedCountLabel.snp.makeConstraints { make in
+            make.width.equalTo(60)
+        }
+        
         staticCountLabel.snp.makeConstraints { make in
-            make.width.equalTo(120)
+            make.width.equalTo(60)
         }
         
         dynamicCountLabel.snp.makeConstraints { make in
-            make.width.equalTo(120)
+            make.width.equalTo(80)
         }
     }
     
@@ -78,6 +90,7 @@ final class DeviceCountDataCell: UICollectionViewCell {
     
     func configure(with data: DeviceCountData) {
         deviceCategoryLabel.text = data.category
+        fixedCountLabel.text = "\(data.fixedCount)"
         staticCountLabel.text = "\(data.staticCount)"
         dynamicCountLabel.text = "\(data.dynamicCount)"
     }

@@ -10,9 +10,23 @@ class ScanViewModel {
     private let bleTimerInterval: TimeInterval
     private var bleTimer: DispatchSourceTimer?
     
+    private var filterInfo: FilterInfo?
+    
     init(bleTimerInterval: TimeInterval = 2.0) {
         self.bleTimerInterval = bleTimerInterval
         startTimer()
+    }
+    
+    public func setFilterModel(filterInfo: FilterInfo) {
+        self.filterInfo = filterInfo
+        print(getLocalTimeString() + " , (BLE Scan) ScanViewModel : filterInfo = \(self.filterInfo)")
+    }
+    
+    private func makeFilter() {
+        if let filterInfo = self.filterInfo {
+            filterInfo.manufacuterers
+            filterInfo.distance
+        }
     }
     
     private func startTimer() {
@@ -38,7 +52,7 @@ class ScanViewModel {
         var scanDeviceCountDataList = [DeviceCountData]()
         
         let BLE = BLEManager.shared.getBLE()
-        for (key, value) in BLE.Info {
+        for (_, value) in BLE.Info {
             let rssiValue = mean(of: value.RSSI)
             let category = BLEManager.shared.convertCompanyToCategory(company: value.manufacturer)
             let validCategory = convertToValidCategory(category: category)
@@ -50,29 +64,43 @@ class ScanViewModel {
             
             let categoryKey = validCategory
             if var counts = categoryCountDict[categoryKey] {
-                if scanData.state == .STATIC_STATE {
+                if scanData.state == .FIXED_STATE {
                     counts[0] += 1
-                } else {
+                } else if scanData.state == .STATIC_STATE {
                     counts[1] += 1
+                } else {
+                    counts[2] += 1
                 }
                 categoryCountDict[categoryKey] = counts
             } else {
-                categoryCountDict[categoryKey] = scanData.state == .STATIC_STATE ? [1, 0] : [0, 1]
+                if scanData.state == .FIXED_STATE {
+                    categoryCountDict[categoryKey] = [1, 0, 0]
+                } else if scanData.state == .STATIC_STATE {
+                    categoryCountDict[categoryKey] = [0, 1, 0]
+                } else {
+                    categoryCountDict[categoryKey] = [0, 0, 1]
+                }
+//                categoryCountDict[categoryKey] = scanData.state == .STATIC_STATE ? [1, 0] : [0, 1]
             }
         }
+        print(getLocalTimeString() + " , (BLE Scan) : All Count = \(BLE.Info.keys.count)")
         
         for (category, counts) in categoryCountDict {
-            let deviceCountData = DeviceCountData(category: category, staticCount: counts[0], dynamicCount: counts[1])
+            let deviceCountData = DeviceCountData(category: category, fixedCount: counts[0], staticCount: counts[1], dynamicCount: counts[2])
             scanDeviceCountDataList.append(deviceCountData)
         }
         
-        print(getLocalTimeString() + " , (BLE Scan) : timer --------------------------------")
         scanDataList.sort(by: { $0.rssi > $1.rssi })
         deviceScanDataList.accept(scanDataList)
         
         let predefinedOrder = FILTER_ORDER
         scanDeviceCountDataList.sort { predefinedOrder.firstIndex(of: $0.category)! < predefinedOrder.firstIndex(of: $1.category)! }
         
+        for item in scanDeviceCountDataList {
+            print(getLocalTimeString() + " , (BLE Scan) : category = \(item.category) // d_count = \(item.dynamicCount) // s_count = \(item.staticCount)")
+        }
+        
+        print(getLocalTimeString() + " , (BLE Scan) : timer --------------------------------")
         deviceCountDataList.accept(scanDeviceCountDataList)
     }
     

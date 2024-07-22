@@ -34,8 +34,6 @@ class ScanView: UIView {
     let deviceCountDataRelay = BehaviorRelay<[DeviceCountData]>(value: [])
     private lazy var deviceCountView = DeviceCountView()
     
-//    var deviceScanDataList = [DeviceScanData]()
-    
     private let viewModel = ScanViewModel()
     private let disposeBag = DisposeBag()
     private var filterViewHeightConstraint: Constraint?
@@ -50,6 +48,7 @@ class ScanView: UIView {
         setupLayout()
         bindFilterView()
         bindViewModel()
+        viewModel.setFilterModel(filterInfo: filterInfo)
         filterView.viewModel = viewModel
     }
     

@@ -101,7 +101,6 @@ extension FilterView: UICollectionViewDataSource {
             manufacturerCell.configure(with: manufacturer)
             manufacturerCell.switchValueChanged = { [weak self] isOn in
                 guard let self = self else { return }
-                // Notify ScanViewModel about the switch value change
                 self.viewModel?.updateManufacturerSwitchValue(manufacturer: manufacturer.name, isOn: isOn)
             }
             

@@ -8,7 +8,7 @@ final class DeviceInfoDataCell: UICollectionViewCell {
     
     let stateImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
-        $0.image = UIImage(named: "blackCircle")
+        $0.image = UIImage(named: "circleFixed")
     }
     
     let deviceCategoryLabel = PaddedLabel(padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)).then {
