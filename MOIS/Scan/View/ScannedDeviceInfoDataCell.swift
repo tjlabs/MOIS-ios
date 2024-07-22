@@ -3,8 +3,8 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-final class DeviceInfoDataCell: UICollectionViewCell {
-    static let identifier = "DeviceInfoDataCell"
+final class ScannedDeviceInfoDataCell: UICollectionViewCell {
+    static let identifier = "ScannedDeviceInfoDataCell"
     
     let stateImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
@@ -85,6 +85,13 @@ final class DeviceInfoDataCell: UICollectionViewCell {
     }
     
     func configure(with data: DeviceScanData) {
+        if data.state == .FIXED_STATE {
+            stateImageView.image = UIImage(named: "circleFixed")
+        } else if data.state == .STATIC_STATE {
+            stateImageView.image = UIImage(named: "circleStatic")
+        } else {
+            stateImageView.image = UIImage(named: "circleDynamic")
+        }
         deviceCategoryLabel.text = data.category
         rssiValueLabel.text = "\(data.rssi) dBm"
 //        distanceLabel.text = String(format: "%.1f m", data.distance)

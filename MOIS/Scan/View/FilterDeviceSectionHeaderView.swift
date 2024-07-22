@@ -1,8 +1,8 @@
 import UIKit
 import SnapKit
 
-final class FilterSectionHeaderView: UICollectionReusableView {
-    static let identifier = "FilterSectionHeaderView"
+final class FilterDeviceSectionHeaderView: UICollectionReusableView {
+    static let identifier = "FilterDeviceSectionHeaderView"
     
     let titleLabel = UILabel().then {
         $0.font = UIFont.boldSystemFont(ofSize: 18)

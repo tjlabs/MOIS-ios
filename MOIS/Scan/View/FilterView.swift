@@ -7,7 +7,8 @@ import Then
 final class FilterView: UIView {
     // MARK: - Data
     private var filterInfo: FilterInfo
-    private var isSectionExpanded: Bool = false
+    private var isStateSectionExpanded: Bool = false
+    private var isDeviceSectionExpanded: Bool = false
     private let disposeBag = DisposeBag()
     let sectionExpandedRelay = BehaviorRelay<Bool>(value: false)
     
@@ -36,9 +37,10 @@ final class FilterView: UIView {
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(FilterSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: FilterSectionHeaderView.identifier)
-        collectionView.register(FilterManufacturerCell.self, forCellWithReuseIdentifier: FilterManufacturerCell.identifier)
-        collectionView.register(FilterDistanceCell.self, forCellWithReuseIdentifier: FilterDistanceCell.identifier)
+        collectionView.register(FilterDeviceSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: FilterDeviceSectionHeaderView.identifier)
+        collectionView.register(FilterDeviceManufacturerCell.self, forCellWithReuseIdentifier: FilterDeviceManufacturerCell.identifier)
+        collectionView.register(FilterDeviceDistanceCell.self, forCellWithReuseIdentifier: FilterDeviceDistanceCell.identifier)
+//        collectionView.register(FilterStateSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: FilterStateSectionHeaderView.identifier)
         
         return collectionView
     }()
@@ -93,7 +95,7 @@ extension FilterView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.row < filterInfo.manufacuterers.count {
-            guard let manufacturerCell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterManufacturerCell.identifier, for: indexPath) as? FilterManufacturerCell else {
+            guard let manufacturerCell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterDeviceManufacturerCell.identifier, for: indexPath) as? FilterDeviceManufacturerCell else {
                 return UICollectionViewCell()
             }
             
@@ -106,7 +108,7 @@ extension FilterView: UICollectionViewDataSource {
             
             return manufacturerCell
         } else {
-            guard let distanceCell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterDistanceCell.identifier, for: indexPath) as? FilterDistanceCell else {
+            guard let distanceCell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterDeviceDistanceCell.identifier, for: indexPath) as? FilterDeviceDistanceCell else {
                 return UICollectionViewCell()
             }
             distanceCell.configure(with: filterInfo.distance)
@@ -121,7 +123,7 @@ extension FilterView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard kind == UICollectionView.elementKindSectionHeader,
-              let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: FilterSectionHeaderView.identifier, for: indexPath) as? FilterSectionHeaderView else {
+              let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: FilterDeviceSectionHeaderView.identifier, for: indexPath) as? FilterDeviceSectionHeaderView else {
             return UICollectionReusableView()
         }
         

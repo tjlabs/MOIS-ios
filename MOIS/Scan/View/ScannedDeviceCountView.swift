@@ -4,7 +4,7 @@ import RxSwift
 import SnapKit
 import Then
 
-final class DeviceCountView: UIView {
+final class ScannedDeviceCountView: UIView {
     
     let deviceCountDataRelay = BehaviorRelay<[DeviceCountData]>(value: [])
     private let disposeBag = DisposeBag()
@@ -20,8 +20,8 @@ final class DeviceCountView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private lazy var headerView: DeviceCountSectionHeaderView = {
-        let view = DeviceCountSectionHeaderView()
+    private lazy var headerView: ScannedDeviceCountSectionHeaderView = {
+        let view = ScannedDeviceCountSectionHeaderView()
 //        view.backgroundColor = .blue
         return view
     }()
@@ -38,7 +38,7 @@ final class DeviceCountView: UIView {
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(DeviceCountDataCell.self, forCellWithReuseIdentifier: DeviceCountDataCell.identifier)
+        collectionView.register(ScannedDeviceCountDataCell.self, forCellWithReuseIdentifier: ScannedDeviceCountDataCell.identifier)
         
         return collectionView
     }()
@@ -53,13 +53,13 @@ final class DeviceCountView: UIView {
     }
 }
 
-extension DeviceCountView: UICollectionViewDelegateFlowLayout {
+extension ScannedDeviceCountView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: 30)
     }
 }
 
-extension DeviceCountView: UICollectionViewDataSource {
+extension ScannedDeviceCountView: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -69,7 +69,7 @@ extension DeviceCountView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DeviceCountDataCell.identifier, for: indexPath) as? DeviceCountDataCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ScannedDeviceCountDataCell.identifier, for: indexPath) as? ScannedDeviceCountDataCell else {
             return UICollectionViewCell()
         }
         
@@ -80,7 +80,7 @@ extension DeviceCountView: UICollectionViewDataSource {
     }
 }
 
-private extension DeviceCountView {
+private extension ScannedDeviceCountView {
     func setupLayout() {
         addSubview(headerView)
         addSubview(collectionView)

@@ -3,8 +3,8 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-final class FilterDistanceCell: UICollectionViewCell {
-    static let identifier = "FilterDistanceCell"
+final class FilterDeviceRSSICell: UICollectionViewCell {
+    static let identifier = "FilterDeviceRSSICell"
     
     let nameLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 16)
@@ -12,7 +12,7 @@ final class FilterDistanceCell: UICollectionViewCell {
     }
     
     
-    let distanceLabel = UILabel().then {
+    let rssiValueLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 16)
         $0.textAlignment = .right
         $0.textColor = .black
@@ -28,7 +28,6 @@ final class FilterDistanceCell: UICollectionViewCell {
     
     private let disposeBag = DisposeBag()
     let sliderValueSubject = PublishSubject<Float>()
-    var sliderValueChanged: ((Float) -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -42,7 +41,7 @@ final class FilterDistanceCell: UICollectionViewCell {
     
     private func setupLayout() {
         contentView.addSubview(nameLabel)
-        contentView.addSubview(distanceLabel)
+        contentView.addSubview(rssiValueLabel)
         contentView.addSubview(slider)
         
         
@@ -51,7 +50,7 @@ final class FilterDistanceCell: UICollectionViewCell {
             make.centerY.equalToSuperview()
         }
         
-        distanceLabel.snp.makeConstraints { make in
+        rssiValueLabel.snp.makeConstraints { make in
             make.width.equalTo(90)
             make.trailing.equalToSuperview().inset(10)
             make.centerY.equalToSuperview()
@@ -59,7 +58,7 @@ final class FilterDistanceCell: UICollectionViewCell {
         
         slider.snp.makeConstraints { make in
             make.leading.equalTo(nameLabel.snp.trailing).offset(20)
-            make.trailing.equalTo(distanceLabel.snp.leading).offset(-20)
+            make.trailing.equalTo(rssiValueLabel.snp.leading).offset(-20)
             make.centerY.equalToSuperview()
         }
     }
@@ -68,16 +67,27 @@ final class FilterDistanceCell: UICollectionViewCell {
         slider.rx.value
             .subscribe(onNext: { [weak self] value in
                 guard let self = self else { return }
-                self.distanceLabel.text = "\(String(format: "%.1f", value)) m"
+                let rssiValue = self.convertSliderToRSSIValue(value: value)
+                
+                self.rssiValueLabel.text = "\(String(format: "%.1f", rssiValue)) dBm"
                 self.sliderValueSubject.onNext(value)
-                self.sliderValueChanged?(value)
             })
             .disposed(by: disposeBag)
     }
     
-    func configure(with distance: Distance){
-        nameLabel.text = "Distance"
-        distanceLabel.text = "\(distance.value) m"
-        slider.value = Float(distance.value)
+    func configure(with rssi: RSSI){
+        nameLabel.text = "RSSI"
+        let rssiValue = convertRSSItoSilderValue(value: rssi.value)
+        rssiValueLabel.text = "\(String(format: "%.1f", rssi.value)) dBm"
+        slider.value = rssiValue
+    }
+    
+    private func convertRSSItoSilderValue(value: Float) -> Float {
+        let newValue = value + 100
+        return Float(newValue)
+    }
+    
+    private func convertSliderToRSSIValue(value: Float) -> Float {
+        return value - 100
     }
 }

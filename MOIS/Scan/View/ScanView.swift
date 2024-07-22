@@ -8,7 +8,7 @@ import SnapKit
 
 class ScanView: UIView {
     
-    let filterInfo = FilterInfo(opened: false, title: "Filter", manufacuterers: [
+    let filterInfo = FilterInfo(opened: false, title: "Device Filter", manufacuterers: [
                             Manufacturer(name: "Apple"),
                             Manufacturer(name: "Google"),
                             Manufacturer(name: "Samsung"),
@@ -23,7 +23,7 @@ class ScanView: UIView {
             view.backgroundColor = .lightGray
             return view
     }()
-    private lazy var deviceInfoView = DeviceInfoView()
+    private lazy var deviceInfoView = ScannedDeviceInfoView()
     private lazy var separatorViewForCount: UIView = {
             let view = UIView()
             view.backgroundColor = .lightGray
@@ -32,7 +32,7 @@ class ScanView: UIView {
     
     let deviceScanDataRelay = BehaviorRelay<[DeviceScanData]>(value: [])
     let deviceCountDataRelay = BehaviorRelay<[DeviceCountData]>(value: [])
-    private lazy var deviceCountView = DeviceCountView()
+    private lazy var deviceCountView = ScannedDeviceCountView()
     
     private let viewModel = ScanViewModel()
     private let disposeBag = DisposeBag()

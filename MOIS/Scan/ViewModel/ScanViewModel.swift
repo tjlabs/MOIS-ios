@@ -57,7 +57,7 @@ class ScanViewModel {
             let category = BLEManager.shared.convertCompanyToCategory(company: value.manufacturer)
             let validCategory = convertToValidCategory(category: category)
             let distance = BLEManager.shared.convertRSSItoDistance(RSSI: rssiValue)
-            let scanData = DeviceScanData(state: .STATIC_STATE, category: category, rssi: rssiValue, distance: distance)
+            let scanData = DeviceScanData(state: .DYNAMIC_STATE, category: category, rssi: rssiValue, distance: distance)
             scanDataList.append(scanData)
             print(getLocalTimeString() + " , (BLE Scan) : \(value.pheripherl.identifier.uuidString) , \(value.localName) , \(value.manufacturer) , \(value.serviceUUID) , \(rssiValue)")
 //            print(getLocalTimeString() + " , (BLE Scan) : scanData = \(scanData)")

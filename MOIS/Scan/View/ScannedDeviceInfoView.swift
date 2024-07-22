@@ -4,7 +4,7 @@ import RxSwift
 import SnapKit
 import Then
 
-final class DeviceInfoView: UIView {
+final class ScannedDeviceInfoView: UIView {
     
     let deviceScanDataRelay = BehaviorRelay<[DeviceScanData]>(value: [])
     private let disposeBag = DisposeBag()
@@ -20,8 +20,8 @@ final class DeviceInfoView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private lazy var headerView: DeviceInfoSectionHeaderView = {
-        let view = DeviceInfoSectionHeaderView()
+    private lazy var headerView: ScannedDeviceInfoSectionHeaderView = {
+        let view = ScannedDeviceInfoSectionHeaderView()
 //        view.backgroundColor = .blue
         return view
     }()
@@ -38,7 +38,7 @@ final class DeviceInfoView: UIView {
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(DeviceInfoDataCell.self, forCellWithReuseIdentifier: DeviceInfoDataCell.identifier)
+        collectionView.register(ScannedDeviceInfoDataCell.self, forCellWithReuseIdentifier: ScannedDeviceInfoDataCell.identifier)
         
         return collectionView
     }()
@@ -53,13 +53,13 @@ final class DeviceInfoView: UIView {
     }
 }
 
-extension DeviceInfoView: UICollectionViewDelegateFlowLayout {
+extension ScannedDeviceInfoView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: 50)
     }
 }
 
-extension DeviceInfoView: UICollectionViewDataSource {
+extension ScannedDeviceInfoView: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -69,7 +69,7 @@ extension DeviceInfoView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DeviceInfoDataCell.identifier, for: indexPath) as? DeviceInfoDataCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ScannedDeviceInfoDataCell.identifier, for: indexPath) as? ScannedDeviceInfoDataCell else {
             return UICollectionViewCell()
         }
         
@@ -80,7 +80,7 @@ extension DeviceInfoView: UICollectionViewDataSource {
     }
 }
 
-private extension DeviceInfoView {
+private extension ScannedDeviceInfoView {
     func setupLayout() {
         addSubview(headerView)
         addSubview(collectionView)

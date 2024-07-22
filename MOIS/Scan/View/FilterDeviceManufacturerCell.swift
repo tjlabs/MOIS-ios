@@ -1,8 +1,8 @@
 import UIKit
 import SnapKit
 
-final class FilterManufacturerCell: UICollectionViewCell {
-    static let identifier = "FilterManufacturerCell"
+final class FilterDeviceManufacturerCell: UICollectionViewCell {
+    static let identifier = "FilterDeviceManufacturerCell"
     
     let nameLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 16)

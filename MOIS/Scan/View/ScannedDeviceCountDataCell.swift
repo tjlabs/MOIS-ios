@@ -3,8 +3,8 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-final class DeviceCountDataCell: UICollectionViewCell {
-    static let identifier = "DeviceCountDataCell"
+final class ScannedDeviceCountDataCell: UICollectionViewCell {
+    static let identifier = "ScannedDeviceCountDataCell"
     
     let deviceCategoryLabel = PaddedLabel(padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)).then {
         $0.font = UIFont.boldSystemFont(ofSize: 14)

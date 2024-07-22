@@ -1,8 +1,8 @@
 import UIKit
 import SnapKit
 
-final class DeviceCountSectionHeaderView: UICollectionReusableView {
-    static let identifier = "DeviceCountSectionHeaderView"
+final class ScannedDeviceCountSectionHeaderView: UICollectionReusableView {
+    static let identifier = "ScannedDeviceCountSectionHeaderView"
     
     let deviceCategoryLabel = UILabel().then {
         $0.font = UIFont.boldSystemFont(ofSize: 10)
