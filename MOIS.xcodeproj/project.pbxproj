@@ -15,7 +15,7 @@
 		B30902BC2C477EBD0032A7E4 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902BB2C477EBD0032A7E4 /* UIViewExtension.swift */; };
 		B30902C22C47851E0032A7E4 /* FilterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902C12C47851E0032A7E4 /* FilterModel.swift */; };
 		B30902C42C479E8D0032A7E4 /* ScannedDeviceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902C32C479E8D0032A7E4 /* ScannedDeviceInfoView.swift */; };
-		B30902C62C47AEF90032A7E4 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902C52C47AEF90032A7E4 /* FilterView.swift */; };
+		B30902C62C47AEF90032A7E4 /* FilterDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902C52C47AEF90032A7E4 /* FilterDeviceView.swift */; };
 		B30902C82C47BADA0032A7E4 /* FilterDeviceSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902C72C47BADA0032A7E4 /* FilterDeviceSectionHeaderView.swift */; };
 		B30902CA2C47BB2A0032A7E4 /* FilterDeviceManufacturerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902C92C47BB2A0032A7E4 /* FilterDeviceManufacturerCell.swift */; };
 		B30902CC2C48A5710032A7E4 /* FilterDeviceRSSICell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902CB2C48A5700032A7E4 /* FilterDeviceRSSICell.swift */; };
@@ -60,7 +60,7 @@
 		B30902BB2C477EBD0032A7E4 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		B30902C12C47851E0032A7E4 /* FilterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterModel.swift; sourceTree = "<group>"; };
 		B30902C32C479E8D0032A7E4 /* ScannedDeviceInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedDeviceInfoView.swift; sourceTree = "<group>"; };
-		B30902C52C47AEF90032A7E4 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
+		B30902C52C47AEF90032A7E4 /* FilterDeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDeviceView.swift; sourceTree = "<group>"; };
 		B30902C72C47BADA0032A7E4 /* FilterDeviceSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDeviceSectionHeaderView.swift; sourceTree = "<group>"; };
 		B30902C92C47BB2A0032A7E4 /* FilterDeviceManufacturerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDeviceManufacturerCell.swift; sourceTree = "<group>"; };
 		B30902CB2C48A5700032A7E4 /* FilterDeviceRSSICell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDeviceRSSICell.swift; sourceTree = "<group>"; };
@@ -140,7 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				B370692F2C46662800A49D77 /* ScanView.swift */,
-				B30902C52C47AEF90032A7E4 /* FilterView.swift */,
+				B30902C52C47AEF90032A7E4 /* FilterDeviceView.swift */,
 				B30902C72C47BADA0032A7E4 /* FilterDeviceSectionHeaderView.swift */,
 				B333F3A12C4E208300495539 /* FilterStateSectionHeaderView.swift */,
 				B30902C92C47BB2A0032A7E4 /* FilterDeviceManufacturerCell.swift */,
@@ -458,7 +458,7 @@
 				B30902DC2C4A06390032A7E4 /* ScannedDeviceCountDataCell.swift in Sources */,
 				B3C622C82C4627EC00371531 /* BLEDevice.swift in Sources */,
 				B333F3A02C4DE54A00495539 /* FilterDeviceDistanceCell.swift in Sources */,
-				B30902C62C47AEF90032A7E4 /* FilterView.swift in Sources */,
+				B30902C62C47AEF90032A7E4 /* FilterDeviceView.swift in Sources */,
 				B3C622A42C44A6F100371531 /* SceneDelegate.swift in Sources */,
 				B3C622C32C44E27200371531 /* LocationManager.swift in Sources */,
 			);

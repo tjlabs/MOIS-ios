@@ -10,22 +10,22 @@ class ScanViewModel {
     private let bleTimerInterval: TimeInterval
     private var bleTimer: DispatchSourceTimer?
     
-    private var filterInfo: FilterInfo?
+    private var filterDeviceInfo: FilterDeviceInfo?
     
     init(bleTimerInterval: TimeInterval = 2.0) {
         self.bleTimerInterval = bleTimerInterval
         startTimer()
     }
     
-    public func setFilterModel(filterInfo: FilterInfo) {
-        self.filterInfo = filterInfo
-        print(getLocalTimeString() + " , (BLE Scan) ScanViewModel : filterInfo = \(self.filterInfo)")
+    public func setFilterModel(filterDeviceInfo: FilterDeviceInfo) {
+        self.filterDeviceInfo = filterDeviceInfo
+        print(getLocalTimeString() + " , (BLE Scan) ScanViewModel : filterInfo = \(self.filterDeviceInfo)")
     }
     
     private func makeFilter() {
-        if let filterInfo = self.filterInfo {
-            filterInfo.manufacuterers
-            filterInfo.distance
+        if let filterDeviceInfo = self.filterDeviceInfo {
+//            filterDeviceInfo.manufacuterers
+//            filtefilterDeviceInforInfo.distance
         }
     }
     

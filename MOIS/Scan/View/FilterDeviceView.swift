@@ -4,11 +4,10 @@ import RxSwift
 import SnapKit
 import Then
 
-final class FilterView: UIView {
+final class FilterDeviceView: UIView {
     // MARK: - Data
-    private var filterInfo: FilterInfo
-    private var isStateSectionExpanded: Bool = false
-    private var isDeviceSectionExpanded: Bool = false
+    private var filterDeviceInfo: FilterDeviceInfo
+    private var isSectionExpanded: Bool = false
     private let disposeBag = DisposeBag()
     let sectionExpandedRelay = BehaviorRelay<Bool>(value: false)
     
@@ -18,8 +17,8 @@ final class FilterView: UIView {
     
     var viewModel: ScanViewModel?
     
-    init(filterInfo: FilterInfo) {
-        self.filterInfo = filterInfo
+    init(filterDeviceInfo: FilterDeviceInfo) {
+        self.filterDeviceInfo = filterDeviceInfo
         super.init(frame: .zero)
         setupLayout()
         bindCollectionViewContentSize()
@@ -66,13 +65,13 @@ final class FilterView: UIView {
     }
 }
 
-extension FilterView: UICollectionViewDelegateFlowLayout {
+extension FilterDeviceView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: 36)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 44)
+        return CGSize(width: collectionView.frame.width, height: 36)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UIEdgeInsets, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -84,22 +83,22 @@ extension FilterView: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension FilterView: UICollectionViewDataSource {
+extension FilterDeviceView: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return isSectionExpanded ? filterInfo.manufacuterers.count + 1 : 0
+        return isSectionExpanded ? filterDeviceInfo.manufacuterers.count + 1 : 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.row < filterInfo.manufacuterers.count {
+        if indexPath.row < filterDeviceInfo.manufacuterers.count {
             guard let manufacturerCell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterDeviceManufacturerCell.identifier, for: indexPath) as? FilterDeviceManufacturerCell else {
                 return UICollectionViewCell()
             }
             
-            let manufacturer = filterInfo.manufacuterers[indexPath.row]
+            let manufacturer = filterDeviceInfo.manufacuterers[indexPath.row]
             manufacturerCell.configure(with: manufacturer)
             manufacturerCell.switchValueChanged = { [weak self] isOn in
                 guard let self = self else { return }
@@ -111,7 +110,7 @@ extension FilterView: UICollectionViewDataSource {
             guard let distanceCell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterDeviceDistanceCell.identifier, for: indexPath) as? FilterDeviceDistanceCell else {
                 return UICollectionViewCell()
             }
-            distanceCell.configure(with: filterInfo.distance)
+            distanceCell.configure(with: filterDeviceInfo.distance)
             distanceCell.sliderValueChanged = { [weak self] value in
                 guard let self = self else { return }
                 self.viewModel?.updateDistanceSliderValue(value: value)
@@ -127,7 +126,7 @@ extension FilterView: UICollectionViewDataSource {
             return UICollectionReusableView()
         }
         
-        headerView.titleLabel.text = filterInfo.title
+        headerView.titleLabel.text = filterDeviceInfo.title
         headerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggleSection)))
         headerView.configure(isExpanded: isSectionExpanded)
         

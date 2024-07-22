@@ -5,7 +5,7 @@ import UIKit
 let FILTER_ORDER = ["Apple", "Google", "Samsung", "TJLABS", "Etc"]
 //let FILTER_ORDER = ["Apple", "Google", "Samsung", "TJLABS", "LG", "Microsoft", "Sony", "Etc"]
 
-struct FilterInfo: Hashable {
+struct FilterDeviceInfo: Hashable {
     var opened = Bool()
     var title = String()
     var manufacuterers: [Manufacturer]

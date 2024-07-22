@@ -8,7 +8,7 @@ import SnapKit
 
 class ScanView: UIView {
     
-    let filterInfo = FilterInfo(opened: false, title: "Device Filter", manufacuterers: [
+    let filterDeviceInfo = FilterDeviceInfo(opened: false, title: "Device Filter", manufacuterers: [
                             Manufacturer(name: "Apple"),
                             Manufacturer(name: "Google"),
                             Manufacturer(name: "Samsung"),
@@ -17,7 +17,7 @@ class ScanView: UIView {
                             rssi: RSSI(),
                             distance: Distance())
     
-    private lazy var filterView = FilterView(filterInfo: filterInfo)
+    private lazy var filterDeviceView = FilterDeviceView(filterDeviceInfo: filterDeviceInfo)
     private lazy var separatorViewForInfo: UIView = {
             let view = UIView()
             view.backgroundColor = .lightGray
@@ -48,8 +48,8 @@ class ScanView: UIView {
         setupLayout()
         bindFilterView()
         bindViewModel()
-        viewModel.setFilterModel(filterInfo: filterInfo)
-        filterView.viewModel = viewModel
+        viewModel.setFilterModel(filterDeviceInfo: filterDeviceInfo)
+        filterDeviceView.viewModel = viewModel
     }
     
     required init?(coder: NSCoder) {
@@ -57,21 +57,21 @@ class ScanView: UIView {
     }
     
     func setupLayout() {
-        addSubview(filterView)
+        addSubview(filterDeviceView)
         addSubview(separatorViewForInfo)
         addSubview(deviceInfoView)
         
         addSubview(separatorViewForCount)
         addSubview(deviceCountView)
         
-        filterView.snp.makeConstraints { make in
+        filterDeviceView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
             make.leading.trailing.equalToSuperview()
-            filterViewHeightConstraint = make.height.equalTo(44).constraint
+            filterViewHeightConstraint = make.height.equalTo(36).constraint
         }
         
         separatorViewForInfo.snp.makeConstraints { make in
-            make.top.equalTo(filterView.snp.bottom)
+            make.top.equalTo(filterDeviceView.snp.bottom)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(1) // Height of the separator line
         }
@@ -97,12 +97,12 @@ class ScanView: UIView {
     }
     
     private func bindFilterView() {
-        filterView.sectionExpandedRelay
+        filterDeviceView.sectionExpandedRelay
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] isExpanded in
                 guard let self = self else { return }
-                let contentHeight = self.filterView.contentHeight
-                self.filterViewHeightConstraint?.update(offset: isExpanded ? contentHeight : 44)
+                let contentHeight = self.filterDeviceView.contentHeight
+                self.filterViewHeightConstraint?.update(offset: isExpanded ? contentHeight : 36)
                 UIView.animate(withDuration: 0.3) {
                     self.layoutIfNeeded()
                 }
@@ -119,18 +119,6 @@ class ScanView: UIView {
         viewModel.deviceCountDataList
             .observe(on: MainScheduler.instance)
             .bind(to: deviceCountView.deviceCountDataRelay)
-            .disposed(by: disposeBag)
-        
-        filterView.sectionExpandedRelay
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] isExpanded in
-                guard let self = self else { return }
-                let contentHeight = self.filterView.contentHeight
-                self.filterViewHeightConstraint?.update(offset: isExpanded ? contentHeight : 44)
-                UIView.animate(withDuration: 0.3) {
-                    self.layoutIfNeeded()
-                }
-            })
             .disposed(by: disposeBag)
     }
 }
