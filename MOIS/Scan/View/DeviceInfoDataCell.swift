@@ -94,6 +94,7 @@ final class DeviceInfoDataCell: UICollectionViewCell {
     func configure(with data: DeviceScanData) {
         deviceCategoryLabel.text = data.category
         rssiValueLabel.text = "\(data.rssi) dBm"
-        distanceLabel.text = String(format: "%.1f m", data.distance)
+//        distanceLabel.text = String(format: "%.1f m", data.distance)
+        distanceLabel.text = "\(data.distance) m"
     }
 }

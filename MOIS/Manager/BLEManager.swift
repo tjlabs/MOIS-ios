@@ -207,7 +207,8 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                 // 3. Check Service UUID
                 let convertedService = convertService(serviceUUID: serviceUUID)
                 if convertedService == "Unknown" {
-                    companyName = "Apple, Inc."
+//                    companyName = "Apple, Inc."
+                    companyName = "Unknown"
                 } else {
                     companyName = convertedService
                 }
@@ -292,8 +293,11 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     }
     
     public func convertRSSItoDistance(RSSI: Int) -> Int {
-        var distance = 10
-        
-        return distance
+        let A: Double = -40
+        let n: Double = 3
+        let valueForPow: Double = (A-Double(RSSI))/(10*n)
+        let distance = pow(Double(10), valueForPow)
+
+        return Int(distance)
     }
 }

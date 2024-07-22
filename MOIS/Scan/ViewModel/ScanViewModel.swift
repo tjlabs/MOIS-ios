@@ -40,12 +40,14 @@ class ScanViewModel {
         for (key, value) in BLE.Info {
             let rssiValue = mean(of: value.RSSI)
             let category = BLEManager.shared.convertCompanyToCategory(company: value.manufacturer)
+            let validCategory = convertToValidCategory(category: category)
             let distance = BLEManager.shared.convertRSSItoDistance(RSSI: rssiValue)
             let scanData = DeviceScanData(state: .STATIC_STATE, category: category, rssi: rssiValue, distance: distance)
             scanDataList.append(scanData)
-            print(getLocalTimeString() + " , (BLE Scan) : scanData = \(scanData)")
+            print(getLocalTimeString() + " , (BLE Scan) : \(value.pheripherl.identifier.uuidString) , \(value.localName) , \(value.manufacturer) , \(value.serviceUUID) , \(rssiValue)")
+//            print(getLocalTimeString() + " , (BLE Scan) : scanData = \(scanData)")
             
-            let categoryKey = category
+            let categoryKey = validCategory
             if var counts = categoryCountDict[categoryKey] {
                 if scanData.state == .STATIC_STATE {
                     counts[0] += 1
@@ -67,9 +69,19 @@ class ScanViewModel {
         scanDataList.sort(by: { $0.rssi > $1.rssi })
         deviceScanDataList.accept(scanDataList)
         
-        let predefinedOrder = ["Apple", "Google", "Samsung", "TJLABS", "Etc"]
+        let predefinedOrder = FILTER_ORDER
         scanDeviceCountDataList.sort { predefinedOrder.firstIndex(of: $0.category)! < predefinedOrder.firstIndex(of: $1.category)! }
         
         deviceCountDataList.accept(scanDeviceCountDataList)
+    }
+    
+    private func convertToValidCategory(category: String) -> String {
+        var validCategoryName: String = category
+        
+        if !FILTER_ORDER.contains(validCategoryName) {
+            validCategoryName = FILTER_ORDER[FILTER_ORDER.count-1]
+        }
+        
+        return validCategoryName
     }
 }

@@ -37,7 +37,8 @@ final class FilterView: UIView {
         collectionView.dataSource = self
         collectionView.register(FilterSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: FilterSectionHeaderView.identifier)
         collectionView.register(FilterManufacturerCell.self, forCellWithReuseIdentifier: FilterManufacturerCell.identifier)
-        collectionView.register(FilterRSSICell.self, forCellWithReuseIdentifier: FilterRSSICell.identifier)
+//        collectionView.register(FilterRSSICell.self, forCellWithReuseIdentifier: FilterRSSICell.identifier)
+        collectionView.register(FilterDistanceCell.self, forCellWithReuseIdentifier: FilterDistanceCell.identifier)
         
         return collectionView
     }()
@@ -100,13 +101,22 @@ extension FilterView: UICollectionViewDataSource {
             manufacturerCell.configure(with: manufacturer)
             
             return manufacturerCell
-        } else {
-            guard let rssiCell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterRSSICell.identifier, for: indexPath) as? FilterRSSICell else {
+        }
+//        else {
+//            guard let rssiCell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterRSSICell.identifier, for: indexPath) as? FilterRSSICell else {
+//                return UICollectionViewCell()
+//            }
+//            rssiCell.configure(with: filterInfo.rssi)
+//            
+//            return rssiCell
+//        }
+        else {
+            guard let distanceCell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterDistanceCell.identifier, for: indexPath) as? FilterDistanceCell else {
                 return UICollectionViewCell()
             }
-            rssiCell.configure(with: filterInfo.rssi)
+            distanceCell.configure(with: filterInfo.distance)
             
-            return rssiCell
+            return distanceCell
         }
     }
     

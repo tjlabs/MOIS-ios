@@ -14,7 +14,8 @@ class ScanView: UIView {
                             Manufacturer(name: "Samsung"),
                             Manufacturer(name: "TJLABS"),
                             Manufacturer(name: "Etc")],
-                            rssi: RSSI())
+                            rssi: RSSI(),
+                            distance: Distance())
     
     private lazy var filterView = FilterView(filterInfo: filterInfo)
     private lazy var separatorViewForInfo: UIView = {
