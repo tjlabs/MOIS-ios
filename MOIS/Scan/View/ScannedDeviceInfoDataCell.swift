@@ -61,7 +61,7 @@ final class ScannedDeviceInfoDataCell: UICollectionViewCell {
         
         stackView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(10)
-            make.top.bottom.equalToSuperview().inset(5)
+            make.top.bottom.equalToSuperview().inset(2)
         }
             
         stateImageView.snp.makeConstraints { make in

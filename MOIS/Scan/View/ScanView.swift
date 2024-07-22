@@ -90,7 +90,6 @@ class ScanView: UIView {
         }
         
         filterDeviceView.snp.makeConstraints { make in
-//            make.top.equalToSuperview().offset(10)
             make.top.equalTo(separatorViewForDeviceFilter.snp.bottom)
             make.leading.trailing.equalToSuperview()
             filterDeviceViewHeightConstraint = make.height.equalTo(36).constraint
@@ -99,27 +98,51 @@ class ScanView: UIView {
         separatorViewForInfo.snp.makeConstraints { make in
             make.top.equalTo(filterDeviceView.snp.bottom)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(1) // Height of the separator line
+            make.height.equalTo(1)
         }
         
         deviceCountView.snp.makeConstraints { make in
-            make.bottom.equalToSuperview()
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(140)
-//            make.bottom.equalToSuperview().offset(-10)
-        }
-        
-        deviceInfoView.snp.makeConstraints { make in
             make.top.equalTo(separatorViewForInfo.snp.bottom)
             make.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(separatorViewForCount.snp.top)
+            make.height.equalTo(280)
         }
         
         separatorViewForCount.snp.makeConstraints { make in
-            make.bottom.equalTo(deviceCountView.snp.top)
+            make.top.equalTo(deviceCountView.snp.bottom)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(1)
         }
+        
+        deviceInfoView.snp.makeConstraints { make in
+            make.top.equalTo(separatorViewForCount.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
+        
+        
+//        separatorViewForInfo.snp.makeConstraints { make in
+//            make.top.equalTo(filterDeviceView.snp.bottom)
+//            make.leading.trailing.equalToSuperview()
+//            make.height.equalTo(1)
+//        }
+//        
+//        deviceCountView.snp.makeConstraints { make in
+//            make.bottom.equalToSuperview()
+//            make.leading.trailing.equalToSuperview()
+//            make.height.equalTo(140)
+//        }
+//        
+//        deviceInfoView.snp.makeConstraints { make in
+//            make.top.equalTo(separatorViewForInfo.snp.bottom)
+//            make.leading.trailing.equalToSuperview()
+//            make.bottom.equalTo(separatorViewForCount.snp.top)
+//        }
+//        
+//        separatorViewForCount.snp.makeConstraints { make in
+//            make.bottom.equalTo(deviceCountView.snp.top)
+//            make.leading.trailing.equalToSuperview()
+//            make.height.equalTo(1)
+//        }
     }
     
     private func setupViewModel() {

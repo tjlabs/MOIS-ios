@@ -5,7 +5,7 @@ final class ScannedDeviceCountSectionHeaderView: UICollectionReusableView {
     static let identifier = "ScannedDeviceCountSectionHeaderView"
     
     let deviceCategoryLabel = UILabel().then {
-        $0.font = UIFont.boldSystemFont(ofSize: 10)
+        $0.font = UIFont.boldSystemFont(ofSize: 12)
         $0.text = "Device Category"
         $0.textAlignment = .center
         $0.textColor = .black
@@ -13,7 +13,7 @@ final class ScannedDeviceCountSectionHeaderView: UICollectionReusableView {
     }
     
     let fixedCountLabel = UILabel().then {
-        $0.font = UIFont.boldSystemFont(ofSize: 10)
+        $0.font = UIFont.boldSystemFont(ofSize: 12)
         $0.text = "Fixed"
         $0.textAlignment = .center
         $0.textColor = .black
@@ -27,7 +27,7 @@ final class ScannedDeviceCountSectionHeaderView: UICollectionReusableView {
     }
     
     let staticCountLabel = UILabel().then {
-        $0.font = UIFont.boldSystemFont(ofSize: 10)
+        $0.font = UIFont.boldSystemFont(ofSize: 12)
         $0.text = "Static"
         $0.textAlignment = .center
         $0.textColor = .black
@@ -41,7 +41,7 @@ final class ScannedDeviceCountSectionHeaderView: UICollectionReusableView {
     }
     
     let dynamicCountLabel = UILabel().then {
-        $0.font = UIFont.boldSystemFont(ofSize: 10)
+        $0.font = UIFont.boldSystemFont(ofSize: 12)
         $0.text = "Dynamic"
         $0.textAlignment = .center
         $0.textColor = .black
