@@ -102,6 +102,7 @@ extension FilterDeviceView: UICollectionViewDataSource {
             manufacturerCell.configure(with: manufacturer)
             manufacturerCell.switchValueChanged = { [weak self] isOn in
                 guard let self = self else { return }
+                self.filterDeviceInfo.manufacuterers[indexPath.row].isChecked.isOn = isOn
                 self.viewModel?.updateManufacturerSwitchValue(manufacturer: manufacturer.name, isOn: isOn)
             }
             
@@ -113,6 +114,7 @@ extension FilterDeviceView: UICollectionViewDataSource {
             distanceCell.configure(with: filterDeviceInfo.distance)
             distanceCell.sliderValueChanged = { [weak self] value in
                 guard let self = self else { return }
+                self.filterDeviceInfo.distance.value = Int(value)
                 self.viewModel?.updateDistanceSliderValue(value: value)
             }
             

@@ -198,7 +198,9 @@ class ScanViewModel {
     
     func updateStateSwitchValue(state: DeviceState, isOn: Bool) {
         if isOn {
-            filterStateList.append(state)
+            if !filterStateList.contains(state) {
+                filterStateList.append(state)
+            }
         } else {
             if let idx = filterStateList.firstIndex(of: state) {
                 filterStateList.remove(at: idx)
@@ -210,7 +212,9 @@ class ScanViewModel {
  
     func updateManufacturerSwitchValue(manufacturer: String, isOn: Bool) {
         if isOn {
-            filterDeviceList.append(manufacturer)
+            if !filterDeviceList.contains(manufacturer) {
+                filterDeviceList.append(manufacturer)
+            }
         } else {
             if let idx = filterDeviceList.firstIndex(of: manufacturer) {
                 filterDeviceList.remove(at: idx)
