@@ -5,6 +5,7 @@ import RxCocoa
 class ScanViewModel {
     let deviceScanDataList = BehaviorRelay<[DeviceScanData]>(value: [])
     let deviceCountDataList = BehaviorRelay<[DeviceCountData]>(value: [])
+    private let disposeBag = DisposeBag()
     
     private let bleTimerInterval: TimeInterval
     private var bleTimer: DispatchSourceTimer?
@@ -83,5 +84,13 @@ class ScanViewModel {
         }
         
         return validCategoryName
+    }
+    
+    func updateManufacturerSwitchValue(manufacturer: String, isOn: Bool) {
+        print("Manufacturer: \(manufacturer), Switch isOn: \(isOn)")
+    }
+    
+    func updateDistanceSliderValue(value: Float) {
+        print("Distance: \(value) m")
     }
 }

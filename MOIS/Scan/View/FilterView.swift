@@ -8,13 +8,14 @@ final class FilterView: UIView {
     // MARK: - Data
     private var filterInfo: FilterInfo
     private var isSectionExpanded: Bool = false
-    
     private let disposeBag = DisposeBag()
     let sectionExpandedRelay = BehaviorRelay<Bool>(value: false)
     
     var contentHeight: CGFloat {
         return collectionView.contentSize.height
     }
+    
+    var viewModel: ScanViewModel?
     
     init(filterInfo: FilterInfo) {
         self.filterInfo = filterInfo
@@ -37,7 +38,6 @@ final class FilterView: UIView {
         collectionView.dataSource = self
         collectionView.register(FilterSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: FilterSectionHeaderView.identifier)
         collectionView.register(FilterManufacturerCell.self, forCellWithReuseIdentifier: FilterManufacturerCell.identifier)
-//        collectionView.register(FilterRSSICell.self, forCellWithReuseIdentifier: FilterRSSICell.identifier)
         collectionView.register(FilterDistanceCell.self, forCellWithReuseIdentifier: FilterDistanceCell.identifier)
         
         return collectionView
@@ -73,7 +73,7 @@ extension FilterView: UICollectionViewDelegateFlowLayout {
         return CGSize(width: collectionView.frame.width, height: 44)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UIEdgeInsets, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets.zero
     }
     
@@ -88,7 +88,7 @@ extension FilterView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return isSectionExpanded ? filterInfo.manufacuterers.count+1 : 0
+        return isSectionExpanded ? filterInfo.manufacuterers.count + 1 : 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -99,22 +99,22 @@ extension FilterView: UICollectionViewDataSource {
             
             let manufacturer = filterInfo.manufacuterers[indexPath.row]
             manufacturerCell.configure(with: manufacturer)
+            manufacturerCell.switchValueChanged = { [weak self] isOn in
+                guard let self = self else { return }
+                // Notify ScanViewModel about the switch value change
+                self.viewModel?.updateManufacturerSwitchValue(manufacturer: manufacturer.name, isOn: isOn)
+            }
             
             return manufacturerCell
-        }
-//        else {
-//            guard let rssiCell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterRSSICell.identifier, for: indexPath) as? FilterRSSICell else {
-//                return UICollectionViewCell()
-//            }
-//            rssiCell.configure(with: filterInfo.rssi)
-//            
-//            return rssiCell
-//        }
-        else {
+        } else {
             guard let distanceCell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterDistanceCell.identifier, for: indexPath) as? FilterDistanceCell else {
                 return UICollectionViewCell()
             }
             distanceCell.configure(with: filterInfo.distance)
+            distanceCell.sliderValueChanged = { [weak self] value in
+                guard let self = self else { return }
+                self.viewModel?.updateDistanceSliderValue(value: value)
+            }
             
             return distanceCell
         }

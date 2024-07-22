@@ -21,7 +21,7 @@ struct Manufacturer: Hashable {
         self.name = name
         self.isChecked = UISwitch(frame: CGRect())
         self.isChecked.onTintColor = .systemBlue
-        self.isChecked.isOn = true
+        self.isChecked.isOn = false
     }
 }
 

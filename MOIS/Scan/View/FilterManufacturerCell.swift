@@ -12,10 +12,12 @@ final class FilterManufacturerCell: UICollectionViewCell {
     let switchControl = UISwitch().then {
         $0.onTintColor = .blue
     }
+    var switchValueChanged: ((Bool) -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
+        setupActions()
     }
     
     required init?(coder: NSCoder) {
@@ -38,8 +40,17 @@ final class FilterManufacturerCell: UICollectionViewCell {
         }
     }
     
+    private func setupActions() {
+        switchControl.addTarget(self, action: #selector(switchValueChangedAction(_:)), for: .valueChanged)
+    }
+    
+    @objc private func switchValueChangedAction(_ sender: UISwitch) {
+        switchValueChanged?(sender.isOn)
+    }
+    
     func configure(with manufacturer: Manufacturer) {
         nameLabel.text = manufacturer.name
+        switchControl.isOn = manufacturer.isChecked.isOn
         switchControl.onTintColor = manufacturer.isChecked.onTintColor
     }
 }

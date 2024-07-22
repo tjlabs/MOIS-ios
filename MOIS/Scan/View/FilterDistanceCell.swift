@@ -28,6 +28,7 @@ final class FilterDistanceCell: UICollectionViewCell {
     
     private let disposeBag = DisposeBag()
     let sliderValueSubject = PublishSubject<Float>()
+    var sliderValueChanged: ((Float) -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -70,6 +71,7 @@ final class FilterDistanceCell: UICollectionViewCell {
                 
                 self.distanceLabel.text = "\(distanceLabel) m"
                 self.sliderValueSubject.onNext(value)
+                self.sliderValueChanged?(value)
             })
             .disposed(by: disposeBag)
     }

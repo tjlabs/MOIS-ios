@@ -48,10 +48,9 @@ class ScanView: UIView {
         super.init(frame: frame)
         backgroundColor = .clear
         setupLayout()
+        bindFilterView()
         bindViewModel()
-        
-//        BLEManager.shared.startScan()
-//        startTimer()
+        filterView.viewModel = viewModel
     }
     
     required init?(coder: NSCoder) {
@@ -96,30 +95,21 @@ class ScanView: UIView {
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(1)
         }
-        
-//        deviceInfoView.snp.makeConstraints { make in
-//            make.top.equalTo(separatorViewForInfo.snp.bottom).offset(0)
-////            make.bottom.equalTo(separatorViewForCount.snp.top)
-//            make.leading.trailing.equalToSuperview()
-//            make.height.equalTo(200)
-////            make.bottom.equalToSuperview().offset(-10)
-//        }
     }
     
-    
-//    private func bindFilterView() {
-//        filterView.sectionExpandedRelay
-//            .observe(on: MainScheduler.instance)
-//            .subscribe(onNext: { [weak self] isExpanded in
-//                guard let self = self else { return }
-//                let contentHeight = self.filterView.contentHeight
-//                self.filterViewHeightConstraint?.update(offset: isExpanded ? contentHeight : 44)
-//                UIView.animate(withDuration: 0.3) {
-//                    self.layoutIfNeeded()
-//                }
-//            })
-//            .disposed(by: disposeBag)
-//    }
+    private func bindFilterView() {
+        filterView.sectionExpandedRelay
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] isExpanded in
+                guard let self = self else { return }
+                let contentHeight = self.filterView.contentHeight
+                self.filterViewHeightConstraint?.update(offset: isExpanded ? contentHeight : 44)
+                UIView.animate(withDuration: 0.3) {
+                    self.layoutIfNeeded()
+                }
+            })
+            .disposed(by: disposeBag)
+    }
     
     private func bindViewModel() {
         viewModel.deviceScanDataList
