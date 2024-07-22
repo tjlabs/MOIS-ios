@@ -2,7 +2,7 @@
 import Foundation
 import UIKit
 
-let FILTER_ORDER = ["Apple", "Google", "Samsung", "TJLABS", "Etc"]
+let FILTER_ORDER = ["Apple", "Google", "Samsung", "LG", "TJLABS", "Etc"]
 //let FILTER_ORDER = ["Apple", "Google", "Samsung", "TJLABS", "LG", "Microsoft", "Sony", "Etc"]
 
 // MARK: Filter Device
@@ -55,10 +55,18 @@ struct FilterStateInfo: Hashable {
 
 struct State: Hashable {
     let name: String
+    var type: DeviceState
     var isChecked: UISwitch
     
     init(name: String) {
         self.name = name
+        if name == "Fixed" {
+            self.type = .FIXED_STATE
+        } else if name == "Static" {
+            self.type = .STATIC_STATE
+        } else {
+            self.type = .DYNAMIC_STATE
+        }
         self.isChecked = UISwitch(frame: CGRect())
         self.isChecked.onTintColor = .systemBlue
         self.isChecked.isOn = false

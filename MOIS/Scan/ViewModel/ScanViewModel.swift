@@ -10,6 +10,7 @@ class ScanViewModel {
     private let bleTimerInterval: TimeInterval
     private var bleTimer: DispatchSourceTimer?
     
+    private var filterStateInfo: FilterStateInfo?
     private var filterDeviceInfo: FilterDeviceInfo?
     
     init(bleTimerInterval: TimeInterval = 2.0) {
@@ -17,16 +18,13 @@ class ScanViewModel {
         startTimer()
     }
     
-    public func setFilterModel(filterDeviceInfo: FilterDeviceInfo) {
-        self.filterDeviceInfo = filterDeviceInfo
-        print(getLocalTimeString() + " , (BLE Scan) ScanViewModel : filterInfo = \(self.filterDeviceInfo)")
+    public func setFilterStateInfo(filterStateInfo: FilterStateInfo) {
+        self.filterStateInfo = filterStateInfo
     }
     
-    private func makeFilter() {
-        if let filterDeviceInfo = self.filterDeviceInfo {
-//            filterDeviceInfo.manufacuterers
-//            filtefilterDeviceInforInfo.distance
-        }
+    public func setFilterDeviceInfo(filterDeviceInfo: FilterDeviceInfo) {
+        self.filterDeviceInfo = filterDeviceInfo
+        print(getLocalTimeString() + " , (BLE Scan) ScanViewModel : filterInfo = \(self.filterDeviceInfo)")
     }
     
     private func startTimer() {
@@ -57,6 +55,19 @@ class ScanViewModel {
             let category = BLEManager.shared.convertCompanyToCategory(company: value.manufacturer)
             let validCategory = convertToValidCategory(category: category)
             let distance = BLEManager.shared.convertRSSItoDistance(RSSI: rssiValue)
+            
+            // Filtering
+//            if let filterState = self.filterStateInfo {
+//                for item in filterState.state {
+//                    if item.isChecked.isOn {
+//                        
+//                    } else {
+//                        
+//                    }
+//                }
+//            }
+            
+            
             let scanData = DeviceScanData(state: .DYNAMIC_STATE, category: category, rssi: rssiValue, distance: distance)
             scanDataList.append(scanData)
             print(getLocalTimeString() + " , (BLE Scan) : \(value.pheripherl.identifier.uuidString) , \(value.localName) , \(value.manufacturer) , \(value.serviceUUID) , \(rssiValue)")

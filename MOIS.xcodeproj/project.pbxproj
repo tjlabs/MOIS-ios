@@ -147,17 +147,17 @@
 				B30902C52C47AEF90032A7E4 /* FilterDeviceView.swift */,
 				B333F3A52C4E2DAC00495539 /* FilterStateView.swift */,
 				B30902C72C47BADA0032A7E4 /* FilterDeviceSectionHeaderView.swift */,
-				B333F3A12C4E208300495539 /* FilterStateSectionHeaderView.swift */,
-				B30902C92C47BB2A0032A7E4 /* FilterDeviceManufacturerCell.swift */,
 				B333F39F2C4DE54A00495539 /* FilterDeviceDistanceCell.swift */,
+				B30902C92C47BB2A0032A7E4 /* FilterDeviceManufacturerCell.swift */,
 				B30902CB2C48A5700032A7E4 /* FilterDeviceRSSICell.swift */,
+				B333F3A12C4E208300495539 /* FilterStateSectionHeaderView.swift */,
+				B333F3A72C4E2E4800495539 /* FilterStateCell.swift */,
 				B30902C32C479E8D0032A7E4 /* ScannedDeviceInfoView.swift */,
 				B30902CD2C48B4ED0032A7E4 /* ScannedDeviceInfoSectionHeaderView.swift */,
 				B30902CF2C48B6D90032A7E4 /* ScannedDeviceInfoDataCell.swift */,
 				B30902D52C49385D0032A7E4 /* ScannedDeviceCountSectionHeaderView.swift */,
 				B30902D72C4939A40032A7E4 /* ScannedDeviceCountView.swift */,
 				B30902DB2C4A06390032A7E4 /* ScannedDeviceCountDataCell.swift */,
-				B333F3A72C4E2E4800495539 /* FilterStateCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";

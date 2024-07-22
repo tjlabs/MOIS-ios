@@ -6,7 +6,6 @@ enum DeviceState: String {
     case FIXED_STATE
     case STATIC_STATE
     case DYNAMIC_STATE
-//    case UNKNOWN_STATE
 }
 
 struct DeviceScanData {

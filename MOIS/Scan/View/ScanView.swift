@@ -16,6 +16,7 @@ class ScanView: UIView {
                             Manufacturer(name: "Apple"),
                             Manufacturer(name: "Google"),
                             Manufacturer(name: "Samsung"),
+                            Manufacturer(name: "LG"),
                             Manufacturer(name: "TJLABS"),
                             Manufacturer(name: "Etc")],
                             rssi: RSSI(),
@@ -59,8 +60,7 @@ class ScanView: UIView {
         setupLayout()
         bindFilterView()
         bindViewModel()
-        viewModel.setFilterModel(filterDeviceInfo: filterDeviceInfo)
-        filterDeviceView.viewModel = viewModel
+        setupViewModel()
     }
     
     required init?(coder: NSCoder) {
@@ -120,6 +120,12 @@ class ScanView: UIView {
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(1)
         }
+    }
+    
+    private func setupViewModel() {
+        viewModel.setFilterStateInfo(filterStateInfo: filterStateInfo)
+        viewModel.setFilterDeviceInfo(filterDeviceInfo: filterDeviceInfo)
+        filterDeviceView.viewModel = viewModel
     }
     
     private func bindFilterView() {
