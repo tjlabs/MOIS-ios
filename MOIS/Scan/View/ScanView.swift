@@ -8,6 +8,10 @@ import SnapKit
 
 class ScanView: UIView {
     
+    let filterStateInfo = FilterStateInfo(opened: false, title: "State Filter", state: [
+                            State(name: "Fixed"),
+                            State(name: "Static"),
+                            State(name: "Dynamic")])
     let filterDeviceInfo = FilterDeviceInfo(opened: false, title: "Device Filter", manufacuterers: [
                             Manufacturer(name: "Apple"),
                             Manufacturer(name: "Google"),
@@ -17,6 +21,12 @@ class ScanView: UIView {
                             rssi: RSSI(),
                             distance: Distance())
     
+    private lazy var filterStateView = FilterStateView(filterStateInfo: filterStateInfo)
+    private lazy var separatorViewForDeviceFilter: UIView = {
+            let view = UIView()
+            view.backgroundColor = .lightGray
+            return view
+    }()
     private lazy var filterDeviceView = FilterDeviceView(filterDeviceInfo: filterDeviceInfo)
     private lazy var separatorViewForInfo: UIView = {
             let view = UIView()
@@ -36,7 +46,8 @@ class ScanView: UIView {
     
     private let viewModel = ScanViewModel()
     private let disposeBag = DisposeBag()
-    private var filterViewHeightConstraint: Constraint?
+    private var filterStateViewHeightConstraint: Constraint?
+    private var filterDeviceViewHeightConstraint: Constraint?
     
     let locationManager = LocationManager()
     var bleTimer: DispatchSourceTimer?
@@ -57,6 +68,8 @@ class ScanView: UIView {
     }
     
     func setupLayout() {
+        addSubview(filterStateView)
+        addSubview(separatorViewForDeviceFilter)
         addSubview(filterDeviceView)
         addSubview(separatorViewForInfo)
         addSubview(deviceInfoView)
@@ -64,10 +77,23 @@ class ScanView: UIView {
         addSubview(separatorViewForCount)
         addSubview(deviceCountView)
         
-        filterDeviceView.snp.makeConstraints { make in
+        filterStateView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
             make.leading.trailing.equalToSuperview()
-            filterViewHeightConstraint = make.height.equalTo(36).constraint
+            filterStateViewHeightConstraint = make.height.equalTo(36).constraint
+        }
+        
+        separatorViewForDeviceFilter.snp.makeConstraints { make in
+            make.top.equalTo(filterStateView.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(1)
+        }
+        
+        filterDeviceView.snp.makeConstraints { make in
+//            make.top.equalToSuperview().offset(10)
+            make.top.equalTo(separatorViewForDeviceFilter.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            filterDeviceViewHeightConstraint = make.height.equalTo(36).constraint
         }
         
         separatorViewForInfo.snp.makeConstraints { make in
@@ -97,12 +123,24 @@ class ScanView: UIView {
     }
     
     private func bindFilterView() {
+        filterStateView.sectionExpandedRelay
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] isExpanded in
+                guard let self = self else { return }
+                let contentHeight = self.filterStateView.contentHeight
+                self.filterStateViewHeightConstraint?.update(offset: isExpanded ? contentHeight : 36)
+                UIView.animate(withDuration: 0.3) {
+                    self.layoutIfNeeded()
+                }
+            })
+            .disposed(by: disposeBag)
+        
         filterDeviceView.sectionExpandedRelay
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] isExpanded in
                 guard let self = self else { return }
                 let contentHeight = self.filterDeviceView.contentHeight
-                self.filterViewHeightConstraint?.update(offset: isExpanded ? contentHeight : 36)
+                self.filterDeviceViewHeightConstraint?.update(offset: isExpanded ? contentHeight : 36)
                 UIView.animate(withDuration: 0.3) {
                     self.layoutIfNeeded()
                 }

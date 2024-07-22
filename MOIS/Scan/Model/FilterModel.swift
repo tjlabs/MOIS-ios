@@ -5,6 +5,7 @@ import UIKit
 let FILTER_ORDER = ["Apple", "Google", "Samsung", "TJLABS", "Etc"]
 //let FILTER_ORDER = ["Apple", "Google", "Samsung", "TJLABS", "LG", "Microsoft", "Sony", "Etc"]
 
+// MARK: Filter Device
 struct FilterDeviceInfo: Hashable {
     var opened = Bool()
     var title = String()
@@ -42,5 +43,24 @@ struct Distance: Hashable {
     init() {
         self.name = "Distance"
         self.value = 0
+    }
+}
+
+// MARK: Filter State
+struct FilterStateInfo: Hashable {
+    var opened = Bool()
+    var title = String()
+    var state: [State]
+}
+
+struct State: Hashable {
+    let name: String
+    var isChecked: UISwitch
+    
+    init(name: String) {
+        self.name = name
+        self.isChecked = UISwitch(frame: CGRect())
+        self.isChecked.onTintColor = .systemBlue
+        self.isChecked.isOn = false
     }
 }

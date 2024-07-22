@@ -29,6 +29,8 @@
 		B30902DC2C4A06390032A7E4 /* ScannedDeviceCountDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30902DB2C4A06390032A7E4 /* ScannedDeviceCountDataCell.swift */; };
 		B333F3A02C4DE54A00495539 /* FilterDeviceDistanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B333F39F2C4DE54A00495539 /* FilterDeviceDistanceCell.swift */; };
 		B333F3A22C4E208300495539 /* FilterStateSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B333F3A12C4E208300495539 /* FilterStateSectionHeaderView.swift */; };
+		B333F3A62C4E2DAC00495539 /* FilterStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B333F3A52C4E2DAC00495539 /* FilterStateView.swift */; };
+		B333F3A82C4E2E4800495539 /* FilterStateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B333F3A72C4E2E4800495539 /* FilterStateCell.swift */; };
 		B37069282C465B3C00A49D77 /* PagingTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37069272C465B3C00A49D77 /* PagingTabBar.swift */; };
 		B370692A2C465B9D00A49D77 /* PagingTabBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37069292C465B9D00A49D77 /* PagingTabBarCell.swift */; };
 		B370692C2C465BFE00A49D77 /* PagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B370692B2C465BFE00A49D77 /* PagingView.swift */; };
@@ -74,6 +76,8 @@
 		B30902DB2C4A06390032A7E4 /* ScannedDeviceCountDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedDeviceCountDataCell.swift; sourceTree = "<group>"; };
 		B333F39F2C4DE54A00495539 /* FilterDeviceDistanceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDeviceDistanceCell.swift; sourceTree = "<group>"; };
 		B333F3A12C4E208300495539 /* FilterStateSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterStateSectionHeaderView.swift; sourceTree = "<group>"; };
+		B333F3A52C4E2DAC00495539 /* FilterStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterStateView.swift; sourceTree = "<group>"; };
+		B333F3A72C4E2E4800495539 /* FilterStateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterStateCell.swift; sourceTree = "<group>"; };
 		B37069272C465B3C00A49D77 /* PagingTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingTabBar.swift; sourceTree = "<group>"; };
 		B37069292C465B9D00A49D77 /* PagingTabBarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingTabBarCell.swift; sourceTree = "<group>"; };
 		B370692B2C465BFE00A49D77 /* PagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingView.swift; sourceTree = "<group>"; };
@@ -141,6 +145,7 @@
 			children = (
 				B370692F2C46662800A49D77 /* ScanView.swift */,
 				B30902C52C47AEF90032A7E4 /* FilterDeviceView.swift */,
+				B333F3A52C4E2DAC00495539 /* FilterStateView.swift */,
 				B30902C72C47BADA0032A7E4 /* FilterDeviceSectionHeaderView.swift */,
 				B333F3A12C4E208300495539 /* FilterStateSectionHeaderView.swift */,
 				B30902C92C47BB2A0032A7E4 /* FilterDeviceManufacturerCell.swift */,
@@ -152,6 +157,7 @@
 				B30902D52C49385D0032A7E4 /* ScannedDeviceCountSectionHeaderView.swift */,
 				B30902D72C4939A40032A7E4 /* ScannedDeviceCountView.swift */,
 				B30902DB2C4A06390032A7E4 /* ScannedDeviceCountDataCell.swift */,
+				B333F3A72C4E2E4800495539 /* FilterStateCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -436,6 +442,7 @@
 				B370692C2C465BFE00A49D77 /* PagingView.swift in Sources */,
 				B30902CA2C47BB2A0032A7E4 /* FilterDeviceManufacturerCell.swift in Sources */,
 				B30902D22C48D04A0032A7E4 /* DeviceInfoModel.swift in Sources */,
+				B333F3A62C4E2DAC00495539 /* FilterStateView.swift in Sources */,
 				B3C622CA2C46372C00371531 /* CompanyIdentifier.swift in Sources */,
 				B30902C82C47BADA0032A7E4 /* FilterDeviceSectionHeaderView.swift in Sources */,
 				B30902BA2C477D710032A7E4 /* LoginView.swift in Sources */,
@@ -461,6 +468,7 @@
 				B30902C62C47AEF90032A7E4 /* FilterDeviceView.swift in Sources */,
 				B3C622A42C44A6F100371531 /* SceneDelegate.swift in Sources */,
 				B3C622C32C44E27200371531 /* LocationManager.swift in Sources */,
+				B333F3A82C4E2E4800495539 /* FilterStateCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
