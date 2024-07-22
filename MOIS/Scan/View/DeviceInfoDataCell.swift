@@ -11,13 +11,6 @@ final class DeviceInfoDataCell: UICollectionViewCell {
         $0.image = UIImage(named: "blackCircle")
     }
     
-//    let deviceCategoryLabel = UILabel().then {
-//        $0.font = UIFont.boldSystemFont(ofSize: 14)
-//        $0.text = "Device Category"
-//        $0.textAlignment = .left
-//        $0.textColor = .black
-//    }
-    
     let deviceCategoryLabel = PaddedLabel(padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)).then {
         $0.font = UIFont.boldSystemFont(ofSize: 14)
         $0.text = "Device Category"

@@ -68,8 +68,7 @@ final class FilterDistanceCell: UICollectionViewCell {
         slider.rx.value
             .subscribe(onNext: { [weak self] value in
                 guard let self = self else { return }
-                
-                self.distanceLabel.text = "\(distanceLabel) m"
+                self.distanceLabel.text = "\(String(format: "%.1f", value)) m"
                 self.sliderValueSubject.onNext(value)
                 self.sliderValueChanged?(value)
             })
