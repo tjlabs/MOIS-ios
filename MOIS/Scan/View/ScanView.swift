@@ -148,6 +148,7 @@ class ScanView: UIView {
     private func setupViewModel() {
         viewModel.setFilterStateInfo(filterStateInfo: filterStateInfo)
         viewModel.setFilterDeviceInfo(filterDeviceInfo: filterDeviceInfo)
+        filterStateView.viewModel = viewModel
         filterDeviceView.viewModel = viewModel
     }
     

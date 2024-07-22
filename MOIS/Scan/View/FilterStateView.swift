@@ -99,7 +99,7 @@ extension FilterStateView: UICollectionViewDataSource {
         stateCell.configure(with: stateData)
         stateCell.switchValueChanged = { [weak self] isOn in
             guard let self = self else { return }
-            self.viewModel?.updateManufacturerSwitchValue(manufacturer: stateData.name, isOn: isOn)
+            self.viewModel?.updateStateSwitchValue(state: stateData.type, isOn: isOn)
         }
         
         return stateCell
