@@ -59,6 +59,7 @@ final class FilterStateView: UIView {
                     self.sectionExpandedRelay.accept(true)
                 }
             })
+        
             .disposed(by: disposeBag)
     }
 }
