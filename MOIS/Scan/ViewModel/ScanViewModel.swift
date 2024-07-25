@@ -18,6 +18,7 @@ class ScanViewModel {
     private var filterDistance: Float = 0
     
     var BLEforState = BLEDevices(Info: [String: BLEInfo]())
+    var DeviceCountInfo = DeviceCountBuffer(Info: [String: CountInfo]())
     let TRIMMING_TIME_FOR_STATE = 10*1000
     let STATIC_THRESHOLD: Double = 10
     
@@ -53,15 +54,15 @@ class ScanViewModel {
     }
     
     private func makeDeviceScanDataList() {
+        let currentTime = getCurrentTimeInMilliseconds()
         var scanDataList = [DeviceScanData]()
         var categoryCountDict = [String: [Int]]()
         var scanDeviceCountDataList = [DeviceCountData]()
-        
+
         let BLE = BLEManager.shared.getBLE()
         for (key, value) in BLE.Info {
 //            print(getLocalTimeString() + " , (BLE Raw) : \(BLE.Info)")
             let UUID = key
-            let currentTime = getCurrentTimeInMilliseconds()
             let rssiValue = mean(of: value.RSSI)
 //            let category = BLEManager.shared.convertCompanyToCategory(company: value.manufacturer)
             let category = value.category
@@ -109,6 +110,10 @@ class ScanViewModel {
 //            if rssiValue > -60 {
 //                print(getLocalTimeString() + " , (BLE Scan) : \(value.pheripherl.identifier.uuidString) , \(value.localName) , \(value.manufacturer) , \(value.serviceUUID) , \(rssiValue)")
 //            }
+            
+            scanDataList.sort(by: { $0.rssi > $1.rssi })
+            deviceScanDataList.accept(scanDataList)
+            
             print(getLocalTimeString() + " , (BLE Scan) : \(value.pheripherl.identifier.uuidString) , \(value.localName) , \(value.category) , \(value.manufacturer), \(value.serviceUUID) , \(rssiValue)")
             
             let categoryKey = validCategory
@@ -142,15 +147,13 @@ class ScanViewModel {
 //        }
 //        print(getLocalTimeString() + " , (BLE State) : timer --------------------------------")
         
-        
         print(getLocalTimeString() + " , (BLE Count) : All Count = \(BLE.Info.keys.count)")
         for (category, counts) in categoryCountDict {
             let deviceCountData = DeviceCountData(category: category, fixedCount: counts[0], staticCount: counts[1], dynamicCount: counts[2])
             scanDeviceCountDataList.append(deviceCountData)
         }
         
-        scanDataList.sort(by: { $0.rssi > $1.rssi })
-        deviceScanDataList.accept(scanDataList)
+        
         
         let predefinedOrder = FILTER_ORDER
         scanDeviceCountDataList.sort { predefinedOrder.firstIndex(of: $0.category)! < predefinedOrder.firstIndex(of: $1.category)! }
@@ -160,6 +163,29 @@ class ScanViewModel {
         }
         
         print(getLocalTimeString() + " , (BLE Scan) : timer --------------------------------")
+        deviceCountDataList.accept(scanDeviceCountDataList)
+        
+        // Add
+        for (category, counts) in categoryCountDict {
+            if let info = DeviceCountInfo.Info[category] {
+                // 기존에 UUID에 매칭된 정보가 있음
+                let oldInfoTimeBuffer = info.timeBuffer
+                let oldInfoFixedCount = info.fixedCount
+                let oldInfoStaticCount = info.staticCount
+                let oldInfoDynamic = info.dynamicCount
+                let newInfo = CountInfo(timeBuffer: oldInfoTimeBuffer + [currentTime], fixedCount: oldInfoFixedCount + [counts[0]], staticCount: oldInfoStaticCount + [counts[1]], dynamicCount: oldInfoDynamic + [counts[2]])
+                DeviceCountInfo.Info.updateValue(newInfo, forKey: category)
+            } else {
+                // UUID에 매칭된 정보가 없음
+                let initialInfo = CountInfo(timeBuffer: [currentTime], fixedCount: [counts[0]], staticCount: [counts[1]], dynamicCount: [counts[2]])
+                DeviceCountInfo.Info.updateValue(initialInfo, forKey: category)
+            }
+            self.DeviceCountInfo = trimDeviceCountInfo(input: DeviceCountInfo, currentTime: currentTime, trimmingTime: TRIMMING_TIME_FOR_STATE)
+        }
+//        print(getLocalTimeString() + " , (BLE Count) : DeviceCountInfo = \(DeviceCountInfo)")
+        
+        scanDeviceCountDataList = makeDeviceCountDataList(deviceCountBuffer: self.DeviceCountInfo)
+//        print(getLocalTimeString() + " , (BLE Count) : scanDeviceCountDataList = \(scanDeviceCountDataList)")
         deviceCountDataList.accept(scanDeviceCountDataList)
     }
     
@@ -219,5 +245,58 @@ class ScanViewModel {
     func updateDistanceSliderValue(value: Float) {
         filterDistance = value
         print("Distance: \(value) m")
+    }
+    
+    private func trimDeviceCountInfo(input: DeviceCountBuffer, currentTime: Int, trimmingTime: Int) -> DeviceCountBuffer {
+        var result = DeviceCountBuffer(Info: [String: CountInfo]())
+        for (key, value) in input.Info {
+            var newTimeBuffer = [Int]()
+            var newFixedCount = [Int]()
+            var newStaticCount = [Int]()
+            var newDynamicCount = [Int]()
+            
+            let oldTimeBuffer = value.timeBuffer
+            let oldFixedCount = value.fixedCount
+            let oldStaticCount = value.staticCount
+            let oldDynamicCountt = value.dynamicCount
+            
+            for i in 0..<oldTimeBuffer.count {
+                let eachTime = oldTimeBuffer[i]
+                if currentTime-eachTime <= trimmingTime {
+                    newTimeBuffer.append(eachTime)
+                    newFixedCount.append(oldFixedCount[i])
+                    newStaticCount.append(oldStaticCount[i])
+                    newDynamicCount.append(oldDynamicCountt[i])
+                }
+            }
+            
+            if newTimeBuffer.isEmpty {
+                result.Info.removeValue(forKey: key)
+            } else {
+                let newInfo = CountInfo(timeBuffer: newTimeBuffer, fixedCount: newFixedCount, staticCount: newStaticCount, dynamicCount: newDynamicCount)
+                result.Info.updateValue(newInfo, forKey: key)
+            }
+        }
+        
+        return result
+    }
+    
+    private func makeDeviceCountDataList(deviceCountBuffer: DeviceCountBuffer) -> [DeviceCountData] {
+        var scanDeviceCountDataList = [DeviceCountData]()
+        
+        for (key, value) in deviceCountBuffer.Info {
+            let category = key
+            let fixedCount = value.fixedCount.min() ?? 0
+            let staticCount = value.staticCount.min() ?? 0
+            let dynamicCount = value.dynamicCount.min() ?? 0
+            
+            let deviceCountData = DeviceCountData(category: category, fixedCount: fixedCount, staticCount: staticCount, dynamicCount: dynamicCount)
+            scanDeviceCountDataList.append(deviceCountData)
+        }
+        
+        let predefinedOrder = FILTER_ORDER
+        scanDeviceCountDataList.sort { predefinedOrder.firstIndex(of: $0.category)! < predefinedOrder.firstIndex(of: $1.category)! }
+        
+        return scanDeviceCountDataList
     }
 }
