@@ -19,6 +19,7 @@ class ScanViewModel {
     
     var BLEforState = BLEDevices(Info: [String: BLEInfo]())
     let TRIMMING_TIME_FOR_STATE = 10*1000
+    let STATIC_THRESHOLD: Double = 10
     
     init(bleTimerInterval: TimeInterval = 2.0) {
         self.bleTimerInterval = bleTimerInterval
@@ -58,11 +59,12 @@ class ScanViewModel {
         
         let BLE = BLEManager.shared.getBLE()
         for (key, value) in BLE.Info {
-            print(getLocalTimeString() + " , (BLE Raw) : \(BLE.Info)")
+//            print(getLocalTimeString() + " , (BLE Raw) : \(BLE.Info)")
             let UUID = key
             let currentTime = getCurrentTimeInMilliseconds()
             let rssiValue = mean(of: value.RSSI)
-            let category = BLEManager.shared.convertCompanyToCategory(company: value.manufacturer)
+//            let category = BLEManager.shared.convertCompanyToCategory(company: value.manufacturer)
+            let category = value.category
             let validCategory = convertToValidCategory(category: category)
             var deviceState: DeviceState = .DYNAMIC_STATE
             let distance = BLEManager.shared.convertRSSItoDistance(RSSI: rssiValue)
@@ -71,11 +73,13 @@ class ScanViewModel {
                 // 기존에 UUID에 매칭된 정보가 있음
                 let oldInfoRSSI = info.RSSI
                 let oldInfoScannedTime = info.scannedTime
-                let newInfo = BLEInfo(pheripherl: value.pheripherl, type: value.type, RSSI: oldInfoRSSI + [rssiValue], scannedTime: oldInfoScannedTime + [currentTime], localName: value.localName, manufacturer: value.manufacturer, operatingSystem: value.operatingSystem, serviceUUID: value.serviceUUID)
+                let newInfo = BLEInfo(pheripherl: value.pheripherl, category: value.category, type: value.type, RSSI: oldInfoRSSI + [rssiValue], scannedTime: oldInfoScannedTime + [currentTime], localName: value.localName, manufacturer: value.manufacturer, serviceUUID: value.serviceUUID)
+                deviceState = decideDeviceState(deviceType: value.type, rssiList: newInfo.RSSI)
                 BLEforState.Info.updateValue(newInfo, forKey: UUID)
             } else {
                 // UUID에 매칭된 정보가 없음
-                let initialInfo = BLEInfo(pheripherl:  value.pheripherl, type:  value.type, RSSI: [rssiValue], scannedTime: [currentTime], localName: value.localName, manufacturer: value.manufacturer, operatingSystem: value.operatingSystem, serviceUUID: value.serviceUUID)
+                let initialInfo = BLEInfo(pheripherl:  value.pheripherl, category: value.category, type:  value.type, RSSI: [rssiValue], scannedTime: [currentTime], localName: value.localName, manufacturer: value.manufacturer, serviceUUID: value.serviceUUID)
+                deviceState = decideDeviceState(deviceType: value.type, rssiList: initialInfo.RSSI)
                 BLEforState.Info.updateValue(initialInfo, forKey: UUID)
             }
             self.BLEforState = BLEManager.shared.trimBLE(input: BLEforState, scannedTime: currentTime, trimmingTime: TRIMMING_TIME_FOR_STATE)
@@ -102,10 +106,10 @@ class ScanViewModel {
             
             let scanData = DeviceScanData(state: deviceState, category: category, rssi: rssiValue, distance: distance)
             scanDataList.append(scanData)
-            if rssiValue > -60 {
-                print(getLocalTimeString() + " , (BLE Scan) : \(value.pheripherl.identifier.uuidString) , \(value.localName) , \(value.manufacturer) , \(value.serviceUUID) , \(rssiValue)")
-            }
-//            print(getLocalTimeString() + " , (BLE Scan) : \(value.pheripherl.identifier.uuidString) , \(value.localName) , \(value.manufacturer) , \(value.serviceUUID) , \(rssiValue)")
+//            if rssiValue > -60 {
+//                print(getLocalTimeString() + " , (BLE Scan) : \(value.pheripherl.identifier.uuidString) , \(value.localName) , \(value.manufacturer) , \(value.serviceUUID) , \(rssiValue)")
+//            }
+            print(getLocalTimeString() + " , (BLE Scan) : \(value.pheripherl.identifier.uuidString) , \(value.localName) , \(value.category) , \(value.manufacturer), \(value.serviceUUID) , \(rssiValue)")
             
             let categoryKey = validCategory
             if var counts = categoryCountDict[categoryKey] {
@@ -128,15 +132,15 @@ class ScanViewModel {
             }
         }
         
-        for (key, value) in BLEforState.Info {
-            let rssiList = value.RSSI
-            let rssiVariance = calVariance(buffer: rssiList, bufferMean: mean(of: rssiList))
-            let rssiStd = calStd(buffer: rssiList, bufferMean: mean(of: rssiList))
-            if (mean(of: rssiList) > -55) {
-                print(getLocalTimeString() + " , (BLE State) : id = \(key) // list = \(rssiList) // var = \(rssiVariance) // std = \(rssiStd)")
-            }
-        }
-        print(getLocalTimeString() + " , (BLE State) : timer --------------------------------")
+//        for (key, value) in BLEforState.Info {
+//            let rssiList = value.RSSI
+//            let rssiVariance = calVariance(buffer: rssiList, bufferMean: mean(of: rssiList))
+//            let rssiStd = calStd(buffer: rssiList, bufferMean: mean(of: rssiList))
+//            if (mean(of: rssiList) > -55) {
+//                print(getLocalTimeString() + " , (BLE State) : id = \(key) // list = \(rssiList) // var = \(rssiVariance) // std = \(rssiStd)")
+//            }
+//        }
+//        print(getLocalTimeString() + " , (BLE State) : timer --------------------------------")
         
         
         print(getLocalTimeString() + " , (BLE Count) : All Count = \(BLE.Info.keys.count)")
@@ -167,6 +171,21 @@ class ScanViewModel {
         }
         
         return validCategoryName
+    }
+    
+    private func decideDeviceState(deviceType: DeviceType, rssiList: [Int]) -> DeviceState {
+        if deviceType == .ELECTRONICS {
+            return .FIXED_STATE
+        } else {
+            let rssiVariance = calVariance(buffer: rssiList, bufferMean: mean(of: rssiList))
+            let rssiStd = calStd(buffer: rssiList, bufferMean: mean(of: rssiList))
+            
+            if rssiStd <= STATIC_THRESHOLD {
+                return .STATIC_STATE
+            } else {
+                return .DYNAMIC_STATE
+            }
+        }
     }
     
     func updateStateSwitchValue(state: DeviceState, isOn: Bool) {

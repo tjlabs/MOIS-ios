@@ -15,11 +15,11 @@ struct BLEDevices {
 
 struct BLEInfo {
     let pheripherl: CBPeripheral
+    let category: String
     let type: DeviceType
     let RSSI: [Int]
     let scannedTime: [Int]
     let localName: String
     let manufacturer: String
-    let operatingSystem: String
     let serviceUUID: String
 }

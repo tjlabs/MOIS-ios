@@ -12,6 +12,7 @@ class ScanView: UIView {
                             State(name: "Fixed"),
                             State(name: "Static"),
                             State(name: "Dynamic")])
+    
     let filterDeviceInfo = FilterDeviceInfo(opened: false, title: "Device Filter", manufacuterers: [
                             Manufacturer(name: "Apple"),
                             Manufacturer(name: "Google"),

@@ -174,19 +174,19 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                 }
             }
             let companyName = getCompanyName(deviceName: scannedDeviceName, manufacturer: scannedManufacturer, serviceUUID: scannedServiceUUID)
-            let deviceType = getDeviceType(deviceName: scannedDeviceName, manufacturer: scannedManufacturer, serviceUUID: scannedServiceUUID)
-            let operatingSystem = getOperatingSystem(deviceName: scannedDeviceName, manufacturer: scannedManufacturer, serviceUUID: scannedServiceUUID)
+            let categoryAndType = getCategoryAndType(deviceName: scannedDeviceName, companyName: companyName, serviceUUID: scannedServiceUUID)
+//            let deviceCategory = getCategory(deviceName: scannedDeviceName, manufacturer: scannedManufacturer, serviceUUID: scannedServiceUUID)
             
     //        print(getLocalTimeString() + " , (BLE Scan) : UUID = \(UUID) // name = \(scannedDeviceName) // RSSI = \(scannedRSSI) // company = \(companyName)")
             if let info = BLE.Info[UUID] {
                 // 기존에 UUID에 매칭된 정보가 있음
                 let oldInfoRSSI = info.RSSI
                 let oldInfoScannedTime = info.scannedTime
-                let newInfo = BLEInfo(pheripherl: peripheral, type: deviceType, RSSI: oldInfoRSSI + [scannedRSSI], scannedTime: oldInfoScannedTime + [scannedTime], localName: scannedDeviceName, manufacturer: companyName, operatingSystem: operatingSystem, serviceUUID: scannedServiceUUID)
+                let newInfo = BLEInfo(pheripherl: peripheral, category: categoryAndType.0, type: categoryAndType.1, RSSI: oldInfoRSSI + [scannedRSSI], scannedTime: oldInfoScannedTime + [scannedTime], localName: scannedDeviceName, manufacturer: companyName, serviceUUID: scannedServiceUUID)
                 BLE.Info.updateValue(newInfo, forKey: UUID)
             } else {
                 // UUID에 매칭된 정보가 없음
-                let initialInfo = BLEInfo(pheripherl: peripheral, type: deviceType, RSSI: [scannedRSSI], scannedTime: [scannedTime], localName: scannedDeviceName, manufacturer: companyName, operatingSystem: operatingSystem, serviceUUID: scannedServiceUUID)
+                let initialInfo = BLEInfo(pheripherl: peripheral, category: categoryAndType.0, type: categoryAndType.1, RSSI: [scannedRSSI], scannedTime: [scannedTime], localName: scannedDeviceName, manufacturer: companyName, serviceUUID: scannedServiceUUID)
                 BLE.Info.updateValue(initialInfo, forKey: UUID)
             }
             self.BLE = trimBLE(input: BLE, scannedTime: scannedTime, trimmingTime: TRIMMING_TIME)
@@ -199,11 +199,11 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         // 1. Check Device Name
         let appleKeywords = ["Apple", "iPhone", "Mac", "Airpod"]
         if deviceName.contains("TJ-") {
-            companyName = "TJLABS Corp."
+            companyName = "TJLABS"
         } else if appleKeywords.contains(where: deviceName.contains) {
-            companyName = "Apple, Inc."
+            companyName = "Apple"
         } else if deviceName.contains("Galaxy") {
-            companyName = "Samsung Electronics Co. Ltd."
+            companyName = "Samsung"
         } else {
             // 2. Check Manufacturer
             let convertedManufacturer = convertManufacturer(manufacturer: manufacturer)
@@ -227,28 +227,38 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         return .UNKNOWN
     }
     
-    private func getOperatingSystem(deviceName: String, manufacturer: UInt16?, serviceUUID: String) -> String {
-        var operatingSystem = "Unknown"
-        var companyName = "Unknown"
+    private func getCategoryAndType(deviceName: String, companyName: String, serviceUUID: String) -> (String, DeviceType) {
+        var deviceCategory = "Etc"
+        var deviceType: DeviceType = .UNKNOWN
         
-        // 1. Check Manufacturer
-        let convertedManufacturer = convertManufacturer(manufacturer: manufacturer)
-        if convertedManufacturer == "Unknown" {
-            // 2. Check Service UUID
-            let convertedService = convertService(serviceUUID: serviceUUID)
-            if convertedService == "Unknown" {
-                companyName = "Unknown"
-            } else {
-                companyName = convertedService
+        // ["Apple", "Google", "Samsung", "LG", "TJLABS", "Etc"]
+        if companyName == "TJLABS" {
+            deviceCategory = companyName
+            deviceType = .ELECTRONICS
+        } else if companyName == "Apple" {
+            deviceCategory = companyName
+            for item in appleMobile { if deviceName.contains(item) { deviceType = .SMART_PHONE } }
+            for item in appleElectronics { if deviceName.contains(item) { deviceType = .ELECTRONICS } }
+            for item in appleWearable { if deviceName.contains(item) { deviceType = .WEARABLE } }
+        } else if companyName == "Samsung" {
+            for item in samsungMobile {
+                if deviceName.contains(item) {
+                    deviceCategory = "Google"
+                    deviceType = .SMART_PHONE
+                }
             }
+            for item in samsungElectronics { if deviceName.contains(item) { deviceType = .ELECTRONICS } }
+            for item in samsungWearable { if deviceName.contains(item) { deviceType = .WEARABLE } }
+        } else if companyName == "LG" {
+            deviceCategory = companyName
+        } else if companyName == "Google" {
+            deviceCategory = companyName
         } else {
-            companyName = convertedManufacturer
+            for item in unknownElectronics { if deviceName.contains(item) { deviceType = .ELECTRONICS } }
         }
+//        print(getLocalTimeString() + " , (BLE Category) : \(deviceName) // \(companyName) // \(deviceCategory) // \(deviceType)")
         
-        // 2. Check Company Name
-        operatingSystem = convertCompanyToOS(company: companyName)
-        
-        return operatingSystem
+        return (deviceCategory, deviceType)
     }
     
     private func convertManufacturer(manufacturer: UInt16?) -> String{
@@ -271,20 +281,6 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         return serviceString
     }
     
-    private func convertCompanyToOS(company: String) -> String {
-        var operatingSystem = "Unknown"
-        
-        if company.contains("Apple") {
-            operatingSystem = "iOS"
-        } else if company.contains("Samsung") {
-            operatingSystem = "Android"
-        } else {
-            operatingSystem = "Unknown"
-        }
-        
-        return operatingSystem
-    }
-    
     public func trimBLE(input: BLEDevices, scannedTime: Int, trimmingTime: Int) -> BLEDevices {
         var result = BLEDevices(Info: [String: BLEInfo]())
         for (key, value) in input.Info {
@@ -304,7 +300,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             if newRSSI.isEmpty {
                 result.Info.removeValue(forKey: key)
             } else {
-                let newInfo = BLEInfo(pheripherl: value.pheripherl, type: value.type, RSSI: newRSSI, scannedTime: newScannedTime, localName: value.localName, manufacturer: value.manufacturer, operatingSystem: value.operatingSystem, serviceUUID: value.serviceUUID)
+                let newInfo = BLEInfo(pheripherl: value.pheripherl, category: value.category, type: value.type, RSSI: newRSSI, scannedTime: newScannedTime, localName: value.localName, manufacturer: value.manufacturer, serviceUUID: value.serviceUUID)
                 result.Info.updateValue(newInfo, forKey: key)
             }
         }

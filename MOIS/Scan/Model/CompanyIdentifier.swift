@@ -68,6 +68,16 @@ import Foundation
 //    0xFEF4: "Google LLC"
 //]
 
+let appleMobile: [String] = ["iPhone"]
+let appleElectronics: [String] = ["iPad", "Mac", "TV"]
+let appleWearable: [String] = ["Watch", "Airpod"]
+
+let samsungMobile: [String] = ["Galaxy", "Flip", "Fold"]
+let samsungWearable: [String] = ["Watch", "Buds"]
+let samsungElectronics: [String] = ["TV"]
+
+let unknownElectronics: [String] = ["TV"]
+
 let companyIdentifiers: [UInt16: String] = [
     0x0006: "Microsoft",
     0x0008: "Motorola",

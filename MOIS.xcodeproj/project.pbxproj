@@ -47,7 +47,7 @@
 		B3C622C12C44C76D00371531 /* DataExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622C02C44C76D00371531 /* DataExtension.swift */; };
 		B3C622C32C44E27200371531 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622C22C44E27200371531 /* LocationManager.swift */; };
 		B3C622C52C45037000371531 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622C42C45037000371531 /* BLEManager.swift */; };
-		B3C622C82C4627EC00371531 /* BLEDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622C72C4627EC00371531 /* BLEDevice.swift */; };
+		B3C622C82C4627EC00371531 /* BLEDeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622C72C4627EC00371531 /* BLEDeviceModel.swift */; };
 		B3C622CA2C46372C00371531 /* CompanyIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622C92C46372C00371531 /* CompanyIdentifier.swift */; };
 		B3C622CC2C464ECE00371531 /* MathFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C622CB2C464ECE00371531 /* MathFunctions.swift */; };
 		DB3D5CAEDF062E1DFE763B9B /* Pods_MOIS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FF14A9EF8B2A887B772AD6 /* Pods_MOIS.framework */; };
@@ -96,7 +96,7 @@
 		B3C622C02C44C76D00371531 /* DataExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataExtension.swift; sourceTree = "<group>"; };
 		B3C622C22C44E27200371531 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		B3C622C42C45037000371531 /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
-		B3C622C72C4627EC00371531 /* BLEDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEDevice.swift; sourceTree = "<group>"; };
+		B3C622C72C4627EC00371531 /* BLEDeviceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEDeviceModel.swift; sourceTree = "<group>"; };
 		B3C622C92C46372C00371531 /* CompanyIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyIdentifier.swift; sourceTree = "<group>"; };
 		B3C622CB2C464ECE00371531 /* MathFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathFunctions.swift; sourceTree = "<group>"; };
 		B73AA56AF692D3BE78997730 /* Pods-MOIS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOIS.release.xcconfig"; path = "Target Support Files/Pods-MOIS/Pods-MOIS.release.xcconfig"; sourceTree = "<group>"; };
@@ -296,7 +296,7 @@
 		B3C622C62C46276900371531 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				B3C622C72C4627EC00371531 /* BLEDevice.swift */,
+				B3C622C72C4627EC00371531 /* BLEDeviceModel.swift */,
 				B3C622C92C46372C00371531 /* CompanyIdentifier.swift */,
 				B30902C12C47851E0032A7E4 /* FilterModel.swift */,
 				B30902D12C48D04A0032A7E4 /* DeviceInfoModel.swift */,
@@ -463,7 +463,7 @@
 				B30902C22C47851E0032A7E4 /* FilterModel.swift in Sources */,
 				B30902D42C49376D0032A7E4 /* DeviceCountModel.swift in Sources */,
 				B30902DC2C4A06390032A7E4 /* ScannedDeviceCountDataCell.swift in Sources */,
-				B3C622C82C4627EC00371531 /* BLEDevice.swift in Sources */,
+				B3C622C82C4627EC00371531 /* BLEDeviceModel.swift in Sources */,
 				B333F3A02C4DE54A00495539 /* FilterDeviceDistanceCell.swift in Sources */,
 				B30902C62C47AEF90032A7E4 /* FilterDeviceView.swift in Sources */,
 				B3C622A42C44A6F100371531 /* SceneDelegate.swift in Sources */,
