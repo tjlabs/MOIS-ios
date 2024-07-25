@@ -15,12 +15,12 @@ class ScanViewModel {
     
     private var filterStateList = [DeviceState]()
     private var filterDeviceList = [String]()
-    private var filterDistance: Float = 0
+    private var filterDistance: Float = 30
     
     var BLEforState = BLEDevices(Info: [String: BLEInfo]())
     var DeviceCountInfo = DeviceCountBuffer(Info: [String: CountInfo]())
     let TRIMMING_TIME_FOR_STATE = 10*1000
-    let STATIC_THRESHOLD: Double = 10
+    let STATIC_THRESHOLD: Double = 8
     
     init(bleTimerInterval: TimeInterval = 2.0) {
         self.bleTimerInterval = bleTimerInterval
@@ -107,14 +107,7 @@ class ScanViewModel {
             
             let scanData = DeviceScanData(state: deviceState, category: category, rssi: rssiValue, distance: distance)
             scanDataList.append(scanData)
-//            if rssiValue > -60 {
-//                print(getLocalTimeString() + " , (BLE Scan) : \(value.pheripherl.identifier.uuidString) , \(value.localName) , \(value.manufacturer) , \(value.serviceUUID) , \(rssiValue)")
-//            }
-            
-            scanDataList.sort(by: { $0.rssi > $1.rssi })
-            deviceScanDataList.accept(scanDataList)
-            
-            print(getLocalTimeString() + " , (BLE Scan) : \(value.pheripherl.identifier.uuidString) , \(value.localName) , \(value.category) , \(value.manufacturer), \(value.serviceUUID) , \(rssiValue)")
+            print(getLocalTimeString() + " , (BLE Scan) : \(value.pheripherl.identifier.uuidString) , \(value.localName) , \(value.category) , \(value.manufacturer), \(deviceState) , \(value.serviceUUID) , \(rssiValue)")
             
             let categoryKey = validCategory
             if var counts = categoryCountDict[categoryKey] {
@@ -137,6 +130,9 @@ class ScanViewModel {
             }
         }
         
+        scanDataList.sort(by: { $0.rssi > $1.rssi })
+        deviceScanDataList.accept(scanDataList)
+        
 //        for (key, value) in BLEforState.Info {
 //            let rssiList = value.RSSI
 //            let rssiVariance = calVariance(buffer: rssiList, bufferMean: mean(of: rssiList))
@@ -152,7 +148,6 @@ class ScanViewModel {
             let deviceCountData = DeviceCountData(category: category, fixedCount: counts[0], staticCount: counts[1], dynamicCount: counts[2])
             scanDeviceCountDataList.append(deviceCountData)
         }
-        
         
         
         let predefinedOrder = FILTER_ORDER
@@ -203,7 +198,7 @@ class ScanViewModel {
         if deviceType == .ELECTRONICS {
             return .FIXED_STATE
         } else {
-            let rssiVariance = calVariance(buffer: rssiList, bufferMean: mean(of: rssiList))
+//            let rssiVariance = calVariance(buffer: rssiList, bufferMean: mean(of: rssiList))
             let rssiStd = calStd(buffer: rssiList, bufferMean: mean(of: rssiList))
             
             if rssiStd <= STATIC_THRESHOLD {
@@ -244,7 +239,7 @@ class ScanViewModel {
     
     func updateDistanceSliderValue(value: Float) {
         filterDistance = value
-        print("Distance: \(value) m")
+        print("Filter Distance : \(value) m")
     }
     
     private func trimDeviceCountInfo(input: DeviceCountBuffer, currentTime: Int, trimmingTime: Int) -> DeviceCountBuffer {
@@ -286,11 +281,17 @@ class ScanViewModel {
         
         for (key, value) in deviceCountBuffer.Info {
             let category = key
-            let fixedCount = value.fixedCount.min() ?? 0
-            let staticCount = value.staticCount.min() ?? 0
-            let dynamicCount = value.dynamicCount.min() ?? 0
+            let fixedCount = value.fixedCount.filter({ $0 != 0 }).min() ?? 0
+            let staticCount = value.staticCount.filter({ $0 != 0 }).min() ?? 0
+            let dynamicCount = value.dynamicCount.filter({ $0 != 0 }).min() ?? 0
             
             let deviceCountData = DeviceCountData(category: category, fixedCount: fixedCount, staticCount: staticCount, dynamicCount: dynamicCount)
+            if category == "Etc" {
+                print(getLocalTimeString() + ", Device Count (fixed) : list = \(value.fixedCount) // min = \(fixedCount)")
+                print(getLocalTimeString() + ", Device Count (static) : list = \(value.staticCount) // min = \(staticCount)")
+                print(getLocalTimeString() + ", Device Count (dynamic) : list = \(value.dynamicCount) // min = \(dynamicCount)")
+            }
+            
             scanDeviceCountDataList.append(deviceCountData)
         }
         

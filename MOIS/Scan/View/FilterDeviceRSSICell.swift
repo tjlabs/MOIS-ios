@@ -12,7 +12,7 @@ final class FilterDeviceRSSICell: UICollectionViewCell {
     }
     
     
-    let rssiValueLabel = UILabel().then {
+    let distanceValueLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 16)
         $0.textAlignment = .right
         $0.textColor = .black
@@ -28,6 +28,7 @@ final class FilterDeviceRSSICell: UICollectionViewCell {
     
     private let disposeBag = DisposeBag()
     let sliderValueSubject = PublishSubject<Float>()
+    var sliderValueChanged: ((Float) -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -41,7 +42,7 @@ final class FilterDeviceRSSICell: UICollectionViewCell {
     
     private func setupLayout() {
         contentView.addSubview(nameLabel)
-        contentView.addSubview(rssiValueLabel)
+        contentView.addSubview(distanceValueLabel)
         contentView.addSubview(slider)
         
         
@@ -50,7 +51,7 @@ final class FilterDeviceRSSICell: UICollectionViewCell {
             make.centerY.equalToSuperview()
         }
         
-        rssiValueLabel.snp.makeConstraints { make in
+        distanceValueLabel.snp.makeConstraints { make in
             make.width.equalTo(90)
             make.trailing.equalToSuperview().inset(10)
             make.centerY.equalToSuperview()
@@ -58,7 +59,7 @@ final class FilterDeviceRSSICell: UICollectionViewCell {
         
         slider.snp.makeConstraints { make in
             make.leading.equalTo(nameLabel.snp.trailing).offset(20)
-            make.trailing.equalTo(rssiValueLabel.snp.leading).offset(-20)
+            make.trailing.equalTo(distanceValueLabel.snp.leading).offset(-20)
             make.centerY.equalToSuperview()
         }
     }
@@ -68,26 +69,35 @@ final class FilterDeviceRSSICell: UICollectionViewCell {
             .subscribe(onNext: { [weak self] value in
                 guard let self = self else { return }
                 let rssiValue = self.convertSliderToRSSIValue(value: value)
-                
-                self.rssiValueLabel.text = "\(String(format: "%.1f", rssiValue)) dBm"
-                self.sliderValueSubject.onNext(value)
+//                self.distanceValueLabel.text = "\(String(format: "%.1f", rssiValue)) dBm"
+                let distanceValue = BLEManager.shared.convertForSlider(RSSI: rssiValue)
+                distanceValueLabel.text = "\(String(format: "%.1f", distanceValue)) m"
+                self.sliderValueSubject.onNext(distanceValue)
+                self.sliderValueChanged?(distanceValue)
             })
             .disposed(by: disposeBag)
     }
     
-    func configure(with rssi: RSSI){
-        nameLabel.text = "RSSI"
+    func configure(with rssi: RSSI) {
+        nameLabel.text = "Distance"
+//        print("Init value : rssiValue = \(rssi.value)")
         let rssiValue = convertRSSItoSilderValue(value: rssi.value)
-        rssiValueLabel.text = "\(String(format: "%.1f", rssi.value)) dBm"
+//        print("Init value : sliderValue = \(rssiValue)")
+        let distanceValue = BLEManager.shared.convertForSlider(RSSI: rssi.value)
+//        print("Init value : distanceValue = \(distanceValue)")
+        distanceValueLabel.text = "\(String(format: "%.1f", distanceValue)) m"
+//        print("Init value : distanceString = \(String(format: "%.1f", distanceValue))")
         slider.value = rssiValue
     }
     
     private func convertRSSItoSilderValue(value: Float) -> Float {
-        let newValue = value + 100
+        let newValue = -value
+//        let newValue = abs(value)
         return Float(newValue)
     }
     
     private func convertSliderToRSSIValue(value: Float) -> Float {
-        return value - 100
+//        return abs(value)
+        return -value
     }
 }

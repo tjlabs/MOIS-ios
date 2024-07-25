@@ -22,6 +22,7 @@ final class FilterDeviceView: UIView {
         super.init(frame: .zero)
         setupLayout()
         bindCollectionViewContentSize()
+//        print("Wow : \(BLEManager.shared.convertDistanceToRSSI(distance: 30.0))")
     }
     
     required init?(coder: NSCoder) {
@@ -38,7 +39,8 @@ final class FilterDeviceView: UIView {
         collectionView.dataSource = self
         collectionView.register(FilterDeviceSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: FilterDeviceSectionHeaderView.identifier)
         collectionView.register(FilterDeviceManufacturerCell.self, forCellWithReuseIdentifier: FilterDeviceManufacturerCell.identifier)
-        collectionView.register(FilterDeviceDistanceCell.self, forCellWithReuseIdentifier: FilterDeviceDistanceCell.identifier)
+        collectionView.register(FilterDeviceRSSICell.self, forCellWithReuseIdentifier: FilterDeviceRSSICell.identifier)
+//        collectionView.register(FilterDeviceDistanceCell.self, forCellWithReuseIdentifier: FilterDeviceDistanceCell.identifier)
 //        collectionView.register(FilterStateSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: FilterStateSectionHeaderView.identifier)
         
         return collectionView
@@ -108,17 +110,29 @@ extension FilterDeviceView: UICollectionViewDataSource {
             
             return manufacturerCell
         } else {
-            guard let distanceCell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterDeviceDistanceCell.identifier, for: indexPath) as? FilterDeviceDistanceCell else {
+//            guard let distanceCell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterDeviceDistanceCell.identifier, for: indexPath) as? FilterDeviceDistanceCell else {
+//                return UICollectionViewCell()
+//            }
+//            distanceCell.configure(with: filterDeviceInfo.distance)
+//            distanceCell.sliderValueChanged = { [weak self] value in
+//                guard let self = self else { return }
+//                self.filterDeviceInfo.distance.value = Int(value)
+//                self.viewModel?.updateDistanceSliderValue(value: value)
+//            }
+//            
+//            return distanceCell
+            
+            guard let rssiCell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterDeviceRSSICell.identifier, for: indexPath) as? FilterDeviceRSSICell else {
                 return UICollectionViewCell()
             }
-            distanceCell.configure(with: filterDeviceInfo.distance)
-            distanceCell.sliderValueChanged = { [weak self] value in
+            rssiCell.configure(with: filterDeviceInfo.rssi)
+            rssiCell.sliderValueChanged = { [weak self] value in
                 guard let self = self else { return }
                 self.filterDeviceInfo.distance.value = Int(value)
                 self.viewModel?.updateDistanceSliderValue(value: value)
             }
             
-            return distanceCell
+            return rssiCell
         }
     }
     

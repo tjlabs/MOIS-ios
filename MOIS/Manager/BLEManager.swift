@@ -342,4 +342,22 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
 
         return Int(distance)
     }
+    
+    public func convertForSlider(RSSI: Float) -> Float {
+        let A: Float = -40
+        let n: Float = 3
+        let valueForPow: Float = (A-Float(RSSI))/(10*n)
+        let distance: Float = pow(Float(10), valueForPow)
+
+        return distance
+    }
+    
+    public func convertDistanceToRSSI(distance: Float) -> Float {
+        let A: Float = -40
+        let n: Float = 3
+        let valueForPow: Float = log10(distance)
+        let RSSI: Float = A - (10 * n * valueForPow)
+
+        return RSSI
+    }
 }
