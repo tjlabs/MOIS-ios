@@ -155,6 +155,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         let localName = advertisementData[CBAdvertisementDataLocalNameKey] as? String
         let scannedDeviceName = localName ?? peripheral.name ?? "Unknown"
         let scannedRSSI: Int = RSSI.intValue
+        
         if scannedRSSI != 127 {
             let scannedTime: Int = getCurrentTimeInMilliseconds()
             var scannedManufacturer: UInt16?
@@ -173,19 +174,22 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                 }
             }
             let companyName = getCompanyName(deviceName: scannedDeviceName, manufacturer: scannedManufacturer, serviceUUID: scannedServiceUUID)
+            let deviceType = getDeviceType(deviceName: scannedDeviceName, manufacturer: scannedManufacturer, serviceUUID: scannedServiceUUID)
+            let operatingSystem = getOperatingSystem(deviceName: scannedDeviceName, manufacturer: scannedManufacturer, serviceUUID: scannedServiceUUID)
+            
     //        print(getLocalTimeString() + " , (BLE Scan) : UUID = \(UUID) // name = \(scannedDeviceName) // RSSI = \(scannedRSSI) // company = \(companyName)")
             if let info = BLE.Info[UUID] {
                 // 기존에 UUID에 매칭된 정보가 있음
                 let oldInfoRSSI = info.RSSI
                 let oldInfoScannedTime = info.scannedTime
-                let newInfo = BLEInfo(pheripherl: peripheral, type: "Unknown", RSSI: oldInfoRSSI + [scannedRSSI], scannedTime: oldInfoScannedTime + [scannedTime], localName: scannedDeviceName, manufacturer: companyName, serviceUUID: scannedServiceUUID)
+                let newInfo = BLEInfo(pheripherl: peripheral, type: deviceType, RSSI: oldInfoRSSI + [scannedRSSI], scannedTime: oldInfoScannedTime + [scannedTime], localName: scannedDeviceName, manufacturer: companyName, operatingSystem: operatingSystem, serviceUUID: scannedServiceUUID)
                 BLE.Info.updateValue(newInfo, forKey: UUID)
             } else {
                 // UUID에 매칭된 정보가 없음
-                let initialInfo = BLEInfo(pheripherl: peripheral, type: "Unknown", RSSI: [scannedRSSI], scannedTime: [scannedTime], localName: scannedDeviceName, manufacturer: companyName, serviceUUID: scannedServiceUUID)
+                let initialInfo = BLEInfo(pheripherl: peripheral, type: deviceType, RSSI: [scannedRSSI], scannedTime: [scannedTime], localName: scannedDeviceName, manufacturer: companyName, operatingSystem: operatingSystem, serviceUUID: scannedServiceUUID)
                 BLE.Info.updateValue(initialInfo, forKey: UUID)
             }
-            self.BLE = trimBLE(input: BLE, scannedTime: scannedTime)
+            self.BLE = trimBLE(input: BLE, scannedTime: scannedTime, trimmingTime: TRIMMING_TIME)
         }
     }
     
@@ -219,6 +223,34 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         return companyName
     }
     
+    private func getDeviceType(deviceName: String, manufacturer: UInt16?, serviceUUID: String) -> DeviceType {
+        return .UNKNOWN
+    }
+    
+    private func getOperatingSystem(deviceName: String, manufacturer: UInt16?, serviceUUID: String) -> String {
+        var operatingSystem = "Unknown"
+        var companyName = "Unknown"
+        
+        // 1. Check Manufacturer
+        let convertedManufacturer = convertManufacturer(manufacturer: manufacturer)
+        if convertedManufacturer == "Unknown" {
+            // 2. Check Service UUID
+            let convertedService = convertService(serviceUUID: serviceUUID)
+            if convertedService == "Unknown" {
+                companyName = "Unknown"
+            } else {
+                companyName = convertedService
+            }
+        } else {
+            companyName = convertedManufacturer
+        }
+        
+        // 2. Check Company Name
+        operatingSystem = convertCompanyToOS(company: companyName)
+        
+        return operatingSystem
+    }
+    
     private func convertManufacturer(manufacturer: UInt16?) -> String{
         var convertedString: String = "Unknown"
         if let value = manufacturer {
@@ -239,7 +271,21 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         return serviceString
     }
     
-    private func trimBLE(input: BLEDevices, scannedTime: Int) -> BLEDevices {
+    private func convertCompanyToOS(company: String) -> String {
+        var operatingSystem = "Unknown"
+        
+        if company.contains("Apple") {
+            operatingSystem = "iOS"
+        } else if company.contains("Samsung") {
+            operatingSystem = "Android"
+        } else {
+            operatingSystem = "Unknown"
+        }
+        
+        return operatingSystem
+    }
+    
+    public func trimBLE(input: BLEDevices, scannedTime: Int, trimmingTime: Int) -> BLEDevices {
         var result = BLEDevices(Info: [String: BLEInfo]())
         for (key, value) in input.Info {
             var newRSSI = [Int]()
@@ -249,7 +295,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             let oldScannedTime = value.scannedTime
             for i in 0..<oldScannedTime.count {
                 let eachTime = oldScannedTime[i]
-                if scannedTime-eachTime <= TRIMMING_TIME {
+                if scannedTime-eachTime <= trimmingTime {
                     newRSSI.append(oldRSSI[i])
                     newScannedTime.append(eachTime)
                 }
@@ -258,7 +304,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             if newRSSI.isEmpty {
                 result.Info.removeValue(forKey: key)
             } else {
-                let newInfo = BLEInfo(pheripherl: value.pheripherl, type: value.type, RSSI: newRSSI, scannedTime: newScannedTime, localName: value.localName, manufacturer: value.manufacturer, serviceUUID: value.serviceUUID)
+                let newInfo = BLEInfo(pheripherl: value.pheripherl, type: value.type, RSSI: newRSSI, scannedTime: newScannedTime, localName: value.localName, manufacturer: value.manufacturer, operatingSystem: value.operatingSystem, serviceUUID: value.serviceUUID)
                 result.Info.updateValue(newInfo, forKey: key)
             }
         }

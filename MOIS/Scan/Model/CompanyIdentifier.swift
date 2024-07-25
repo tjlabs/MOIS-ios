@@ -73,7 +73,7 @@ let companyIdentifiers: [UInt16: String] = [
     0x0008: "Motorola",
     0x0078: "Nike",
     0x00C4: "LG",
-    0x004C: "Apple.",
+    0x004C: "Apple",
     0x000F: "Broadcom",
     0x001A: "Qualcomm",
     0x0059: "Nordic",
