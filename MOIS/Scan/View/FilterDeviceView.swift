@@ -125,11 +125,14 @@ extension FilterDeviceView: UICollectionViewDataSource {
             guard let rssiCell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterDeviceRSSICell.identifier, for: indexPath) as? FilterDeviceRSSICell else {
                 return UICollectionViewCell()
             }
+            
             rssiCell.configure(with: filterDeviceInfo.rssi)
             rssiCell.sliderValueChanged = { [weak self] value in
                 guard let self = self else { return }
-                self.filterDeviceInfo.distance.value = Int(value)
-                self.viewModel?.updateDistanceSliderValue(value: value)
+                let rssiValue = rssiCell.convertSliderToRSSIValue(value: value)
+                self.filterDeviceInfo.rssi.value = rssiValue
+                let distanceValue = BLEManager.shared.convertForSlider(RSSI: rssiValue)
+                self.viewModel?.updateDistanceSliderValue(value: distanceValue)
             }
             
             return rssiCell

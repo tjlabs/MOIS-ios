@@ -242,6 +242,7 @@ class ScanViewModel {
         print("Filter Distance : \(value) m")
     }
     
+    
     private func trimDeviceCountInfo(input: DeviceCountBuffer, currentTime: Int, trimmingTime: Int) -> DeviceCountBuffer {
         var result = DeviceCountBuffer(Info: [String: CountInfo]())
         for (key, value) in input.Info {

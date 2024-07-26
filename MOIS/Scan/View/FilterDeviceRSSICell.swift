@@ -71,33 +71,28 @@ final class FilterDeviceRSSICell: UICollectionViewCell {
                 let rssiValue = self.convertSliderToRSSIValue(value: value)
 //                self.distanceValueLabel.text = "\(String(format: "%.1f", rssiValue)) dBm"
                 let distanceValue = BLEManager.shared.convertForSlider(RSSI: rssiValue)
+                print("Slider : distanceValue = \(distanceValue)")
                 distanceValueLabel.text = "\(String(format: "%.1f", distanceValue)) m"
-                self.sliderValueSubject.onNext(distanceValue)
-                self.sliderValueChanged?(distanceValue)
+                self.sliderValueSubject.onNext(value)
+                self.sliderValueChanged?(value)
             })
             .disposed(by: disposeBag)
     }
     
     func configure(with rssi: RSSI) {
-        nameLabel.text = "Distance"
 //        print("Init value : rssiValue = \(rssi.value)")
         let rssiValue = convertRSSItoSilderValue(value: rssi.value)
-//        print("Init value : sliderValue = \(rssiValue)")
         let distanceValue = BLEManager.shared.convertForSlider(RSSI: rssi.value)
-//        print("Init value : distanceValue = \(distanceValue)")
         distanceValueLabel.text = "\(String(format: "%.1f", distanceValue)) m"
-//        print("Init value : distanceString = \(String(format: "%.1f", distanceValue))")
         slider.value = rssiValue
     }
     
-    private func convertRSSItoSilderValue(value: Float) -> Float {
-        let newValue = -value
-//        let newValue = abs(value)
+    public func convertRSSItoSilderValue(value: Float) -> Float {
+        let newValue = abs(value)
         return Float(newValue)
     }
     
-    private func convertSliderToRSSIValue(value: Float) -> Float {
-//        return abs(value)
+    public func convertSliderToRSSIValue(value: Float) -> Float {
         return -value
     }
 }

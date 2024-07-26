@@ -33,6 +33,7 @@ struct RSSI: Hashable {
     init() {
         self.name = "RSSI"
         self.value = -84.31364
+//        self.value = -100
     }
 }
 
