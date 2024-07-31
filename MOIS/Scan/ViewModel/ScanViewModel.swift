@@ -281,6 +281,7 @@ class ScanViewModel {
         var scanDeviceCountDataList = [DeviceCountData]()
         
         for (key, value) in deviceCountBuffer.Info {
+            
             let category = key
             let fixedCount = value.fixedCount.filter({ $0 != 0 }).min() ?? 0
             let staticCount = value.staticCount.filter({ $0 != 0 }).min() ?? 0

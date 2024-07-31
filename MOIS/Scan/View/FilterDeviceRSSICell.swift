@@ -80,6 +80,7 @@ final class FilterDeviceRSSICell: UICollectionViewCell {
     }
     
     func configure(with rssi: RSSI) {
+        nameLabel.text = "Distance"
 //        print("Init value : rssiValue = \(rssi.value)")
         let rssiValue = convertRSSItoSilderValue(value: rssi.value)
         let distanceValue = BLEManager.shared.convertForSlider(RSSI: rssi.value)
