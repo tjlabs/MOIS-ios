@@ -4,20 +4,21 @@ enum TrimBleDataError: Error {
     case invalidInput
     case noValidData
 }
-let NRF_UUID_SERVICE         = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E";
-let NRF_UUID_CHAR_READ       = "6E400003-B5A3-F393-E0A9-E50E24DCCA9E";
-let NRF_UUID_CHAR_WRITE      = "6E400002-B5A3-F393-E0A9-E50E24DCCA9E";
-let NI_UUID_SERVICE          = "00001530-1212-efde-1523-785feabcd123";
-let UUIDService = CBUUID(string: NRF_UUID_SERVICE)
-let UUIDRead    = CBUUID(string: NRF_UUID_CHAR_READ)
-let UUIDWrite   = CBUUID(string: NRF_UUID_CHAR_WRITE)
-let NIService   = CBUUID(string: NI_UUID_SERVICE)
 
-let TJLABS_UUID: String          = "0000FEAA-0000-1000-8000-00805f9b34fb";
+let NRF_UUID_SERVICE = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E"
+let NRF_UUID_CHAR_READ = "6E400003-B5A3-F393-E0A9-E50E24DCCA9E"
+let NRF_UUID_CHAR_WRITE = "6E400002-B5A3-F393-E0A9-E50E24DCCA9E"
+let NI_UUID_SERVICE = "00001530-1212-efde-1523-785feabcd123"
+let UUIDService = CBUUID(string: NRF_UUID_SERVICE)
+let UUIDRead = CBUUID(string: NRF_UUID_CHAR_READ)
+let UUIDWrite = CBUUID(string: NRF_UUID_CHAR_WRITE)
+let NIService = CBUUID(string: NI_UUID_SERVICE)
+
+let TJLABS_UUID: String = "0000FEAA-0000-1000-8000-00805f9b34fb"
 
 class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     static let shared = BLEManager()
-    let TRIMMING_TIME: Int = 5*1000
+    let TRIMMING_TIME: Int = 5 * 1000
     
     var BLE = BLEDevices(Info: [String: BLEInfo]())
     var centralManager: CBCentralManager!
@@ -27,12 +28,12 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     var readCharacteristic: CBCharacteristic?
     var writeCharacteristic: CBCharacteristic?
     
-    var connected:Bool = false
+    var connected: Bool = false
     var isScanning: Bool = false
     var bluetoothReady: Bool = false
     
     // TJLABS
-    let oneServiceUUID   = CBUUID(string: TJLABS_UUID)
+    let oneServiceUUID = CBUUID(string: TJLABS_UUID)
     
     override init() {
         super.init()
@@ -69,7 +70,6 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         
         if bluetoothReady {
             self.centralManager.scanForPeripherals(withServices: nil, options: [CBCentralManagerScanOptionAllowDuplicatesKey: NSNumber(value: true)])
-//            self.centralManager.scanForPeripherals(withServices: [oneServiceUUID], options: [CBCentralManagerScanOptionAllowDuplicatesKey : NSNumber(value: true as Bool)])
             self.isScanning = true
             print(getLocalTimeString() + " , (BLE Scan) : Started scanning for BLE devices")
         }
@@ -81,16 +81,25 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         print(getLocalTimeString() + " , (BLE Scan) : Stopped scanning for BLE devices")
     }
     
-    
-    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String: Any], rssi RSSI: NSNumber) {
         if discoveredPeripherals[peripheral.identifier] == nil {
             discoveredPeripherals[peripheral.identifier] = peripheral
         }
-        parseScannedData(peripheral: peripheral, advertisementData: advertisementData, rssi: RSSI)
+        
+        var localName = advertisementData[CBAdvertisementDataLocalNameKey] as? String
+        if localName == nil {
+            localName = peripheral.name
+            if localName == nil {
+                centralManager.connect(peripheral, options: nil)
+            }
+        }
+        
+        parseScannedData(peripheral: peripheral, advertisementData: advertisementData, rssi: RSSI, localName: localName)
     }
     
     func peripheralDidUpdateName(_ peripheral: CBPeripheral) {
-        print(getLocalTimeString() + " , (BLE Scan) : peripheral = \(peripheral.name)")
+//        print(getLocalTimeString() + " , (BLE Scan) : peripheral = \(peripheral.name ?? "Unknown")")
+        updatePeripheralName(peripheral)
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
@@ -99,63 +108,42 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     }
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-//        peripheral.delegate = self
-//        peripheral.discoverServices(nil)
-//        centralManager.cancelPeripheralConnection(peripheral)
-        
+        self.discoveredPeripheral = peripheral
         self.discoveredPeripheral.delegate = self
         self.connected = true
-        discoveredPeripheral.discoverServices([UUIDService])
+        peripheral.discoverServices([UUIDService])
+        if let name = peripheral.name {
+            updatePeripheralName(peripheral)
+        }
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         if let error = error {
+            print("Error discovering services: \(error.localizedDescription)")
             return
         }
         
-//        if let services = peripheral.services {
-//            for service in services {
-//                peripheral.discoverCharacteristics(nil, for: service)
-//            }
-//        }
-        
-        for service in (peripheral.services)! {
-            discoveredPeripheral.discoverCharacteristics([UUIDRead, UUIDWrite], for: service)
+        for service in peripheral.services! {
+            peripheral.discoverCharacteristics([UUIDRead, UUIDWrite], for: service)
         }
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         if let error = error {
+            print("Error discovering characteristics: \(error.localizedDescription)")
             return
         }
         
-//        if let characteristics = service.characteristics {
-//            for characteristic in characteristics {
-//                if characteristic.properties.contains(.read) {
-//                    peripheral.readValue(for: characteristic)
-//                }
-//                if characteristic.properties.contains(.notify) {
-//                    peripheral.setNotifyValue(true, for: characteristic)
-//                }
-//                if characteristic.properties.contains(.write) {
-//                    writeCharacteristic = characteristic
-//                }
-//            }
-//        }
-        
-        for characteristic in (service.characteristics)! {
-            if characteristic.uuid.isEqual(UUIDRead) {
-                
+        for characteristic in service.characteristics! {
+            if characteristic.uuid == UUIDRead {
                 readCharacteristic = characteristic
-                if readCharacteristic!.isNotifying != true {
-                    discoveredPeripheral.setNotifyValue(true, for: readCharacteristic!)
-                    
+                if !characteristic.isNotifying {
+                    peripheral.setNotifyValue(true, for: readCharacteristic!)
                 }
             }
-            if characteristic.uuid.isEqual(UUIDWrite) {
+            if characteristic.uuid == UUIDWrite {
                 writeCharacteristic = characteristic
             }
-            
         }
     }
     
@@ -185,80 +173,68 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         }
     }
     
-    private func parseScannedData(peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+    private func parseScannedData(peripheral: CBPeripheral, advertisementData: [String: Any], rssi RSSI: NSNumber, localName: String?) {
         discoveredPeripheral = peripheral
         
         let UUID = peripheral.identifier.uuidString
         
-        var hasManufacturer: Bool = false
-        var hasService: Bool = false
+        var hasManufacturer = false
+        var hasService = false
         
-        let localName = advertisementData[CBAdvertisementDataLocalNameKey] as? String
-        let scannedDeviceName = localName ?? peripheral.name ?? "Unknown"
+        let scannedDeviceName = localName ?? "Unknown"
         let scannedRSSI: Int = RSSI.intValue
         var scannedTxPower = -100
         if scannedRSSI != 127 {
             let scannedTime: Int = getCurrentTimeInMilliseconds()
             var scannedManufacturer: UInt16?
             var scannedServiceUUID: String = "Unknown"
-           
+            
             if let manufacturer = advertisementData[CBAdvertisementDataManufacturerDataKey] as? Data {
-    //            print(getLocalTimeString() + " , (BLE Scan) : manufacturer = \(manufacturer.dataToHexString)")
                 hasManufacturer = true
                 scannedManufacturer = manufacturer.firstTwoBytesAsUInt16
             }
             if let serviceUUIDs = advertisementData[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID] {
                 for uuid in serviceUUIDs {
-    //                print(getLocalTimeString() + " , (BLE Scan) : Service UUID = \(uuid.uuidString)")
                     hasService = true
                     scannedServiceUUID = uuid.uuidString
                 }
             }
             let companyName = getCompanyName(deviceName: scannedDeviceName, manufacturer: scannedManufacturer, serviceUUID: scannedServiceUUID)
             let categoryAndType = getCategoryAndType(deviceName: scannedDeviceName, companyName: companyName, serviceUUID: scannedServiceUUID)
-            if let txPower =  advertisementData[CBAdvertisementDataTxPowerLevelKey] as? Int {
-//                print(getLocalTimeString() + " , (BLE Scan) : Tx Power = \(txPower) // id = \(UUID)")
+            if let txPower = advertisementData[CBAdvertisementDataTxPowerLevelKey] as? Int {
                 scannedTxPower = txPower
-//                let companyName = getCompanyName(deviceName: scannedDeviceName, manufacturer: scannedManufacturer, serviceUUID: scannedServiceUUID)
-//                let categoryAndType = getCategoryAndType(deviceName: scannedDeviceName, companyName: companyName, serviceUUID: scannedServiceUUID)
-//    //            let deviceCategory = getCategory(deviceName: scannedDeviceName, manufacturer: scannedManufacturer, serviceUUID: scannedServiceUUID)
-//                
-//        //        print(getLocalTimeString() + " , (BLE Scan) : UUID = \(UUID) // name = \(scannedDeviceName) // RSSI = \(scannedRSSI) // company = \(companyName)")
-//                if let info = BLE.Info[UUID] {
-//                    // 기존에 UUID에 매칭된 정보가 있음
-//                    let oldInfoRSSI = info.RSSI
-//                    let oldInfoScannedTime = info.scannedTime
-//                    let newInfo = BLEInfo(pheripherl: peripheral, category: categoryAndType.0, type: categoryAndType.1, RSSI: oldInfoRSSI + [scannedRSSI], scannedTime: oldInfoScannedTime + [scannedTime], localName: scannedDeviceName, manufacturer: companyName, serviceUUID: scannedServiceUUID)
-//                    BLE.Info.updateValue(newInfo, forKey: UUID)
-//                } else {
-//                    // UUID에 매칭된 정보가 없음
-//                    let initialInfo = BLEInfo(pheripherl: peripheral, category: categoryAndType.0, type: categoryAndType.1, RSSI: [scannedRSSI], scannedTime: [scannedTime], localName: scannedDeviceName, manufacturer: companyName, serviceUUID: scannedServiceUUID)
-//                    BLE.Info.updateValue(initialInfo, forKey: UUID)
-//                }
-//                self.BLE = trimBLE(input: BLE, scannedTime: scannedTime, trimmingTime: TRIMMING_TIME)
             }
-                
-//            print(getLocalTimeString() + " , (BLE Scan) : UUID = \(UUID) // name = \(scannedDeviceName) // RSSI = \(scannedRSSI) // company = \(companyName)")
-            print(getLocalTimeString() + " (BLE Raw),\(scannedTime),\(UUID),\(scannedDeviceName),\(scannedRSSI),\(companyName),\(scannedServiceUUID),\(scannedTxPower)")
+            
+//            print(getLocalTimeString() + " (BLE Raw),\(scannedTime),\(UUID),\(scannedDeviceName),\(scannedRSSI),\(companyName),\(scannedServiceUUID),\(scannedTxPower)")
             if let info = BLE.Info[UUID] {
-                // 기존에 UUID에 매칭된 정보가 있음
                 let oldInfoRSSI = info.RSSI
                 let oldInfoScannedTime = info.scannedTime
-                let newInfo = BLEInfo(pheripherl: peripheral, category: categoryAndType.0, type: categoryAndType.1, RSSI: oldInfoRSSI + [scannedRSSI], scannedTime: oldInfoScannedTime + [scannedTime], localName: scannedDeviceName, manufacturer: companyName, serviceUUID: scannedServiceUUID)
-                BLE.Info.updateValue(newInfo, forKey: UUID)
+                var newInfo = info
+                newInfo.RSSI = oldInfoRSSI + [scannedRSSI]
+                newInfo.scannedTime = oldInfoScannedTime + [scannedTime]
+                newInfo.localName = scannedDeviceName
+                BLE.Info[UUID] = newInfo
             } else {
-                // UUID에 매칭된 정보가 없음
                 let initialInfo = BLEInfo(pheripherl: peripheral, category: categoryAndType.0, type: categoryAndType.1, RSSI: [scannedRSSI], scannedTime: [scannedTime], localName: scannedDeviceName, manufacturer: companyName, serviceUUID: scannedServiceUUID)
-                BLE.Info.updateValue(initialInfo, forKey: UUID)
+                BLE.Info[UUID] = initialInfo
             }
             self.BLE = trimBLE(input: BLE, scannedTime: scannedTime, trimmingTime: TRIMMING_TIME)
+        }
+    }
+    
+    private func updatePeripheralName(_ peripheral: CBPeripheral) {
+        if let localName = peripheral.name {
+            if let info = BLE.Info[peripheral.identifier.uuidString] {
+                var updatedInfo = info
+                updatedInfo.localName = localName
+                BLE.Info[peripheral.identifier.uuidString] = updatedInfo
+            }
         }
     }
     
     private func getCompanyName(deviceName: String, manufacturer: UInt16?, serviceUUID: String) -> String {
         var companyName: String = ""
         
-        // 1. Check Device Name
         let appleKeywords = ["Apple", "iPhone", "Mac", "Airpod"]
         if deviceName.contains("TJ-") {
             companyName = "TJLABS"
@@ -267,13 +243,10 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         } else if deviceName.contains("Galaxy") {
             companyName = "Samsung"
         } else {
-            // 2. Check Manufacturer
             let convertedManufacturer = convertManufacturer(manufacturer: manufacturer)
             if convertedManufacturer == "Unknown" {
-                // 3. Check Service UUID
                 let convertedService = convertService(serviceUUID: serviceUUID)
                 if convertedService == "Unknown" {
-//                    companyName = "Apple, Inc."
                     companyName = "Unknown"
                 } else {
                     companyName = convertedService
@@ -293,7 +266,6 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         var deviceCategory = "Etc"
         var deviceType: DeviceType = .UNKNOWN
         
-        // ["Apple", "Google", "Samsung", "LG", "TJLABS", "Etc"]
         if companyName == "TJLABS" {
             deviceCategory = companyName
             deviceType = .ELECTRONICS
@@ -318,12 +290,11 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         } else {
             for item in unknownElectronics { if deviceName.contains(item) { deviceType = .ELECTRONICS } }
         }
-//        print(getLocalTimeString() + " , (BLE Category) : \(deviceName) // \(companyName) // \(deviceCategory) // \(deviceType)")
         
         return (deviceCategory, deviceType)
     }
     
-    private func convertManufacturer(manufacturer: UInt16?) -> String{
+    private func convertManufacturer(manufacturer: UInt16?) -> String {
         var convertedString: String = "Unknown"
         if let value = manufacturer {
             if let matchedCompany = companyIdentifiers[value] {
@@ -353,7 +324,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             let oldScannedTime = value.scannedTime
             for i in 0..<oldScannedTime.count {
                 let eachTime = oldScannedTime[i]
-                if scannedTime-eachTime <= trimmingTime {
+                if scannedTime - eachTime <= trimmingTime {
                     newRSSI.append(oldRSSI[i])
                     newScannedTime.append(eachTime)
                 }
@@ -392,25 +363,25 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         } else if company.contains("Sony") {
             category = "Sony"
         }
-
+        
         return category
     }
     
     public func convertRSSItoDistance(RSSI: Int) -> Int {
         let A: Double = -40
         let n: Double = 3
-        let valueForPow: Double = (A-Double(RSSI))/(10*n)
+        let valueForPow: Double = (A - Double(RSSI)) / (10 * n)
         let distance = pow(Double(10), valueForPow)
-
+        
         return Int(distance)
     }
     
     public func convertForSlider(RSSI: Float) -> Float {
         let A: Float = -40
         let n: Float = 3
-        let valueForPow: Float = (A-Float(RSSI))/(10*n)
+        let valueForPow: Float = (A - Float(RSSI)) / (10 * n)
         let distance: Float = pow(Float(10), valueForPow)
-
+        
         return distance
     }
     
@@ -419,7 +390,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         let n: Float = 3
         let valueForPow: Float = log10(distance)
         let RSSI: Float = A - (10 * n * valueForPow)
-
+        
         return RSSI
     }
 }

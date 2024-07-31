@@ -14,12 +14,12 @@ struct BLEDevices {
 }
 
 struct BLEInfo {
-    let pheripherl: CBPeripheral
-    let category: String
-    let type: DeviceType
-    let RSSI: [Int]
-    let scannedTime: [Int]
-    let localName: String
-    let manufacturer: String
-    let serviceUUID: String
+    var pheripherl: CBPeripheral
+    var category: String
+    var type: DeviceType
+    var RSSI: [Int]
+    var scannedTime: [Int]
+    var localName: String
+    var manufacturer: String
+    var serviceUUID: String
 }
