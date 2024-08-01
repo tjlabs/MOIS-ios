@@ -229,12 +229,15 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                 scannedTxPower = txPower
             }
 
-//            print(getLocalTimeString() + " (BLE Raw),\(scannedTime),\(UUID),\(scannedDeviceName),\(scannedRSSI),\(scannedManufacturer),\(companyName),\(scannedServiceUUID),\(scannedTxPower)")
+            print(getLocalTimeString() + " (BLE Raw),\(scannedTime),\(UUID),\(scannedDeviceName),\(scannedRSSI),\(scannedManufacturer),\(companyName),\(categoryAndType.1),\(scannedServiceUUID),\(scannedTxPower)")
 
             if let info = BLE.Info[UUID] {
                 let oldInfoRSSI = info.RSSI
                 let oldInfoScannedTime = info.scannedTime
                 var newInfo = info
+                newInfo.category = categoryAndType.0
+                newInfo.type = categoryAndType.1
+                newInfo.manufacturer = companyName
                 newInfo.RSSI = oldInfoRSSI + [scannedRSSI]
                 newInfo.scannedTime = oldInfoScannedTime + [scannedTime]
                 newInfo.localName = scannedDeviceName
@@ -260,7 +263,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     private func getCompanyName(deviceName: String, manufacturer: UInt16?, serviceUUID: String) -> String {
         var companyName: String = ""
 
-        let appleKeywords = ["Apple", "iPhone", "Mac", "Airpod"]
+        let appleKeywords = ["Apple", "iPhone", "iPad", "Mac", "Airpod"]
         if deviceName.contains("TJ-") {
             companyName = "TJLABS"
         } else if appleKeywords.contains(where: deviceName.contains) {
@@ -300,7 +303,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             for item in appleElectronics { if deviceName.contains(item) { deviceType = .ELECTRONICS } }
             for item in appleWearable { if deviceName.contains(item) { deviceType = .WEARABLE } }
         } else if companyName == "Samsung" {
-            deviceCategory = "Google"
+            deviceCategory = serviceUUID=="Unknown" ? "Google" : companyName
             for item in samsungMobile {
                 if deviceName.contains(item) {
 //                    deviceCategory = "Google"

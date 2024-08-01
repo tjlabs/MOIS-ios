@@ -68,8 +68,8 @@ import Foundation
 //    0xFEF4: "Google LLC"
 //]
 
-let appleMobile: [String] = ["iPhone"]
-let appleElectronics: [String] = ["iPad", "Mac", "TV"]
+let appleMobile: [String] = ["iPhone", "iPad"]
+let appleElectronics: [String] = ["Mac", "TV"]
 let appleWearable: [String] = ["Watch", "Airpod"]
 
 let samsungMobile: [String] = ["Galaxy", "Flip", "Fold"]
