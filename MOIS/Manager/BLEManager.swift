@@ -212,6 +212,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             let scannedTime: Int = getCurrentTimeInMilliseconds()
             var scannedManufacturer: UInt16?
             var scannedServiceUUID: String = "Unknown"
+            var scannedServiceData: String = "Unknown"
 
             if let manufacturer = advertisementData[CBAdvertisementDataManufacturerDataKey] as? Data {
                 hasManufacturer = true
@@ -223,6 +224,11 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                     scannedServiceUUID = uuid.uuidString
                 }
             }
+            if let serviceData = advertisementData[CBAdvertisementDataServiceDataKey] {
+                print(getLocalTimeString() + " (BLE Service) : \(serviceData)")
+//                scannedServiceData = serviceData
+            }
+            
             let companyName = getCompanyName(deviceName: scannedDeviceName, manufacturer: scannedManufacturer, serviceUUID: scannedServiceUUID)
             let categoryAndType = getCategoryAndType(deviceName: scannedDeviceName, companyName: companyName, serviceUUID: scannedServiceUUID)
             if let txPower = advertisementData[CBAdvertisementDataTxPowerLevelKey] as? Int {
@@ -303,15 +309,27 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             for item in appleElectronics { if deviceName.contains(item) { deviceType = .ELECTRONICS } }
             for item in appleWearable { if deviceName.contains(item) { deviceType = .WEARABLE } }
         } else if companyName == "Samsung" {
-            deviceCategory = serviceUUID=="Unknown" ? "Google" : companyName
-            for item in samsungMobile {
-                if deviceName.contains(item) {
-//                    deviceCategory = "Google"
-                    deviceType = .SMART_PHONE
-                }
+            var isSmartPhone: Bool = true
+            for item in samsungElectronics { if deviceName.contains(item) {
+                deviceType = .ELECTRONICS
+                isSmartPhone = false
+            } }
+            for item in samsungWearable { if deviceName.contains(item) {
+                deviceType = .WEARABLE
+                isSmartPhone = false
+            } }
+            
+            if (isSmartPhone) {
+                deviceCategory = "Google"
+                deviceType = .SMART_PHONE
             }
-            for item in samsungElectronics { if deviceName.contains(item) { deviceType = .ELECTRONICS } }
-            for item in samsungWearable { if deviceName.contains(item) { deviceType = .WEARABLE } }
+//            deviceCategory = serviceUUID=="Unknown" ? "Google" : companyName
+//            for item in samsungMobile {
+//                if deviceName.contains(item) {
+//                    deviceCategory = "Google"
+//                    deviceType = .SMART_PHONE
+//                }
+//            }
         } else if companyName == "LG" {
             deviceCategory = companyName
         } else if companyName == "Google" {
@@ -415,6 +433,8 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     }
 
     public func convertDistanceToRSSI(distance: Float) -> Float {
+        // Not using this...
+        
         let A: Float = -40
         let n: Float = 3
         let valueForPow: Float = log10(distance)

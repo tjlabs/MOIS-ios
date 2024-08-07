@@ -72,7 +72,7 @@ let appleMobile: [String] = ["iPhone", "iPad"]
 let appleElectronics: [String] = ["Mac", "TV"]
 let appleWearable: [String] = ["Watch", "Airpod"]
 
-let samsungMobile: [String] = ["Galaxy", "Flip", "Fold"]
+let samsungMobile: [String] = ["Galaxy", "Flip", "Fold", "S", "A", "Note"]
 let samsungWearable: [String] = ["Watch", "Buds"]
 let samsungElectronics: [String] = ["TV"]
 

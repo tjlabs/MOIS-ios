@@ -99,7 +99,7 @@ class ScanViewModel {
             }
             
             if self.filterDistance != 0 {
-                if Float(distance) > filterDistance {
+                if Float(distance) > filterDistance && validCategory != "Google" {
                     continue
                 }
             }
@@ -158,7 +158,7 @@ class ScanViewModel {
         }
         
         print(getLocalTimeString() + " , (BLE Scan) : timer --------------------------------")
-        deviceCountDataList.accept(scanDeviceCountDataList)
+//        deviceCountDataList.accept(scanDeviceCountDataList)
         
         // Add
         for (category, counts) in categoryCountDict {
@@ -281,20 +281,32 @@ class ScanViewModel {
         var scanDeviceCountDataList = [DeviceCountData]()
         
         for (key, value) in deviceCountBuffer.Info {
-            
             let category = key
-            let fixedCount = value.fixedCount.filter({ $0 != 0 }).min() ?? 0
-            let staticCount = value.staticCount.filter({ $0 != 0 }).min() ?? 0
-            let dynamicCount = value.dynamicCount.filter({ $0 != 0 }).min() ?? 0
             
-            let deviceCountData = DeviceCountData(category: category, fixedCount: fixedCount, staticCount: staticCount, dynamicCount: dynamicCount)
-            if category == "Etc" {
-                print(getLocalTimeString() + ", Device Count (fixed) : list = \(value.fixedCount) // min = \(fixedCount)")
-                print(getLocalTimeString() + ", Device Count (static) : list = \(value.staticCount) // min = \(staticCount)")
-                print(getLocalTimeString() + ", Device Count (dynamic) : list = \(value.dynamicCount) // min = \(dynamicCount)")
+            if !self.filterDeviceList.isEmpty {
+                if !filterDeviceList.contains(category) {
+                    continue
+                }
             }
             
-            scanDeviceCountDataList.append(deviceCountData)
+            if category == "Etc" {
+                let fixedCount = value.fixedCount.filter({ $0 != 0 }).min() ?? 0
+                let staticCount = value.staticCount.filter({ $0 != 0 }).min() ?? 0
+                let dynamicCount = value.dynamicCount.filter({ $0 != 0 }).min() ?? 0
+                
+                let deviceCountData = DeviceCountData(category: category, fixedCount: fixedCount, staticCount: staticCount, dynamicCount: dynamicCount)
+                scanDeviceCountDataList.append(deviceCountData)
+//                print(getLocalTimeString() + ", Device Count (fixed) : list = \(value.fixedCount) // min = \(fixedCount)")
+//                print(getLocalTimeString() + ", Device Count (static) : list = \(value.staticCount) // min = \(staticCount)")
+//                print(getLocalTimeString() + ", Device Count (dynamic) : list = \(value.dynamicCount) // min = \(dynamicCount)")
+            } else {
+                let fixedCount = value.fixedCount.filter({ $0 != 0 }).max() ?? 0
+                let staticCount = value.staticCount.filter({ $0 != 0 }).max() ?? 0
+                let dynamicCount = value.dynamicCount.filter({ $0 != 0 }).max() ?? 0
+                
+                let deviceCountData = DeviceCountData(category: category, fixedCount: fixedCount, staticCount: staticCount, dynamicCount: dynamicCount)
+                scanDeviceCountDataList.append(deviceCountData)
+            }
         }
         
         let predefinedOrder = FILTER_ORDER
