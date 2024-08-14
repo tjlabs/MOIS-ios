@@ -57,11 +57,11 @@ final class FilterDeviceSectionHeaderView: UICollectionReusableView {
     func configure(isExpanded: Bool) {
         if isExpanded {
             backgroundColor = .systemGray5
-            titleLabel.textColor = .black
+//            titleLabel.textColor = .black
             toggleImageView.image = UIImage(named: "showInfo_toggle")
         } else {
             backgroundColor = .clear
-            titleLabel.textColor = .black
+//            titleLabel.textColor = .black
             toggleImageView.image = UIImage(named: "closeInfo_toggle")
         }
     }
